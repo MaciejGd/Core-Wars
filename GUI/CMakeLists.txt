@@ -9,11 +9,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 qt_standard_project_setup()
 
+file(GLOB SRC_FILES "src/*.cpp")
+file(GLOB HDR_FILES "inc/*.h")
+
 qt_add_library(GUI STATIC
-    src/mainwindow.cpp
-    src/gui_field.cpp
-    inc/mainwindow.h
-    inc/gui_field.h
+    ${SRC_FILES}
+    ${HDR_FILES}
 )
 
 target_link_libraries(GUI PUBLIC Qt::Widgets)
