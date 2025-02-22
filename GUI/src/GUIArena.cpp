@@ -1,7 +1,7 @@
-#include "gui_field.h"
-#include "custom_events.cpp"
+#include "GUIArena.h"
+#include "GUICustomEvents.cpp"
 
-GuiField::GuiField(int rows, int cols, QWidget *parent) : m_rows(rows), m_cols(cols), QWidget(parent) {
+GUIArena::GUIArena(int rows, int cols, QWidget *parent) : m_rows(rows), m_cols(cols), QWidget(parent) {
     QGridLayout *layout = new QGridLayout(this);
     layout->setHorizontalSpacing(0);
     layout->setVerticalSpacing(0);
@@ -28,7 +28,7 @@ GuiField::GuiField(int rows, int cols, QWidget *parent) : m_rows(rows), m_cols(c
     setLayout(layout);
 }
 
-bool GuiField::event(QEvent *event) {
+bool GUIArena::event(QEvent *event) {
     if (event->type() == PlayerMoveEvent::EventType) {
         PlayerMoveEvent* e = reinterpret_cast<PlayerMoveEvent*>(event);
         int row = e->GetRow();
@@ -42,7 +42,7 @@ bool GuiField::event(QEvent *event) {
     return false;
 }
 
-bool GuiField::eventFilter(QObject* obj, QEvent* event) {
+bool GUIArena::eventFilter(QObject* obj, QEvent* event) {
     // for testing purposes
     if (event->type() == QEvent::MouseButtonPress) {
         QLabel* cell = qobject_cast<QLabel*>(obj);
