@@ -1,4 +1,4 @@
-#include "custom_events.h"
+#include "GUICustomEvents.h"
 
 // register event number for custom event
 const QEvent::Type PlayerMoveEvent::EventType = static_cast<QEvent::Type>(QEvent::registerEventType());
