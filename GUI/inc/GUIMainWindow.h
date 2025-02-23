@@ -5,7 +5,6 @@
 #include "GUIArena.h"
 #include "GUIToolBar.h"
 
-
 class GUIMainWindow : public QMainWindow {
     Q_OBJECT
     std::unique_ptr<GUIArena> m_arena;
