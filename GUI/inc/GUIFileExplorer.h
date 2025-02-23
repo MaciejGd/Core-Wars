@@ -21,5 +21,11 @@ private:
 
     void m_InitTextFieldWrapper();
     void m_OnFileSelected(const QItemSelection &selected, const QItemSelection &deselected);
+    QTreeView* m_InitFileSystemView();
 
+private slots:
+    void m_OnLoadButtonPressed();
+
+// signals:
+//     void LoadFilePath();
 };
