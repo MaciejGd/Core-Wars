@@ -1,8 +1,7 @@
 #include "GUIMainWindow.h"
 
-
 GUIMainWindow::GUIMainWindow(int width, int height, QWidget* parent): QMainWindow(parent) {
-    
+    setWindowTitle("Core Wars");
     setFixedSize(width, height);
 
     // set batlle field
