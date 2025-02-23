@@ -1,8 +1,8 @@
 #include "GUIMainWindow.h"
 #include "GUIFileExplorer.h"
 
-const int WIDTH = 1200;
-const int HEIGHT = 800;
+const int WIDTH = 1400;
+const int HEIGHT = 900;
 
 
 int main(int argc, char *argv[])
