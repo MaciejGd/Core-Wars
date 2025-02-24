@@ -59,5 +59,7 @@ void GUIFileExplorer::m_OnFileSelected(const QItemSelection &selected, const QIt
 
 void GUIFileExplorer::m_OnLoadButtonPressed() {
     // what we want to do in here is to emit signal with path and close the window
+    QString file_path = m_textfield->toPlainText();
+    emit FilePathChanged(file_path);
     done(0);
 }
