@@ -26,6 +26,6 @@ private:
 private slots:
     void m_OnLoadButtonPressed();
 
-// signals:
-//     void LoadFilePath();
+signals:
+    void FilePathChanged(QString& file_path);
 };

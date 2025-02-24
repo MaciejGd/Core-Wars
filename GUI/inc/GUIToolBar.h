@@ -20,4 +20,5 @@ public:
 
 private slots:
     void ChoosePlayersCb();
+    void PlayerPathChangedCb(QString& path);
 };
