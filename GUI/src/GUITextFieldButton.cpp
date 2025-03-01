@@ -19,11 +19,12 @@ void GUITextFieldButton::SetReadOnly(bool read_only) {
     m_textfield->setReadOnly(read_only);
 }
 
-// void GUITextFieldButton::SetButtonCallback(QWidget* wgt, btnCallback cb) {
-//     connect(m_btn, &QPushButton::pressed, wgt, cb);
-// }
 void GUITextFieldButton::SetText(const QString& text) {
     m_textfield->setText(text);
+}
+
+const QString GUITextFieldButton::GetText() const {
+    return m_textfield->toPlainText();
 }
 
 void GUITextFieldButton::m_InitButton() {

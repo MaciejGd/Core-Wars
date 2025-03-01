@@ -16,9 +16,7 @@ GUIFileExplorer::GUIFileExplorer(QWidget* parent): QDialog(parent) {
 
     // initialize widget for text field and add it to layout
     m_InitTextField();
-    layout->addWidget(m_textfield_wrapper);
-
-    //setLayout(layout);
+    layout->addWidget(m_textfield);
 }
 
 QTreeView* GUIFileExplorer::m_InitFileSystemView() {
@@ -35,31 +33,22 @@ QTreeView* GUIFileExplorer::m_InitFileSystemView() {
 }
 
 void GUIFileExplorer::m_InitTextField() {
-    // init push button
-    m_load_btn = new QPushButton("Load", this);
-    m_load_btn->setFixedSize(LOAD_BTN_WIDTH, TEXT_FIELD_HEIGHT);
-    connect(m_load_btn, &QPushButton::released, this, &GUIFileExplorer::m_OnLoadButtonPressed);
-    // init text field
-    m_textfield = new QTextEdit(this);
-    m_textfield->setFixedHeight(TEXT_FIELD_HEIGHT);
-    // init text field wrapper and layout
-    m_textfield_wrapper = new QWidget(this);
-    QHBoxLayout* layout = new QHBoxLayout{m_textfield_wrapper};
-    layout->addWidget(m_textfield);
-    layout->addWidget(m_load_btn);
-    m_textfield_wrapper->setLayout(layout);
-    m_textfield_wrapper->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    // init text field with button as GUITextFieldButton widget
+    m_textfield = new GUITextFieldButton{LOAD_BTN_WIDTH, TEXT_FIELD_HEIGHT, "LOAD"};
+    m_textfield->SetButtonCallback(this, &GUIFileExplorer::m_OnLoadButtonPressed);
+    m_textfield->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 }
 
 void GUIFileExplorer::m_OnFileSelected(const QItemSelection &selected, const QItemSelection &deselected) {
     QModelIndex index = selected.indexes().first();
     QString file_path = m_filesystem->filePath(index);
-    m_textfield->setText(file_path);
+    //m_textfield->setText(file_path);
+    m_textfield->SetText(file_path);
 }
 
 void GUIFileExplorer::m_OnLoadButtonPressed() {
     // what we want to do in here is to emit signal with path and close the window
-    QString file_path = m_textfield->toPlainText();
+    QString file_path = m_textfield->GetText();
     emit FilePathChanged(file_path);
     done(0);
 }

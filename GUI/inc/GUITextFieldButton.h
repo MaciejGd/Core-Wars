@@ -11,11 +11,12 @@ public:
 
     void SetReadOnly(bool read_only);
     void SetText(const QString& text);
+    const QString GetText() const;
 
     template<typename T>
     void SetButtonCallback(T* wgt,  void (T::*cb)()) {
         connect(m_btn, &QPushButton::pressed, wgt, cb);
-    };
+    }; // setting method as a callback
 private:
 
     QTextEdit* m_textfield;
