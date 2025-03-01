@@ -19,7 +19,7 @@ private:
     QWidget* m_textfield_wrapper;
     QFileSystemModel* m_filesystem;
 
-    void m_InitTextFieldWrapper();
+    void m_InitTextField();
     void m_OnFileSelected(const QItemSelection &selected, const QItemSelection &deselected);
     QTreeView* m_InitFileSystemView();
 

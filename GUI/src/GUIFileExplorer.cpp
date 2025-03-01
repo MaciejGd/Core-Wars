@@ -15,10 +15,10 @@ GUIFileExplorer::GUIFileExplorer(QWidget* parent): QDialog(parent) {
     layout->addWidget(tree);
 
     // initialize widget for text field and add it to layout
-    m_InitTextFieldWrapper();
+    m_InitTextField();
     layout->addWidget(m_textfield_wrapper);
 
-    setLayout(layout);
+    //setLayout(layout);
 }
 
 QTreeView* GUIFileExplorer::m_InitFileSystemView() {
@@ -34,7 +34,7 @@ QTreeView* GUIFileExplorer::m_InitFileSystemView() {
     return tree;
 }
 
-void GUIFileExplorer::m_InitTextFieldWrapper() {
+void GUIFileExplorer::m_InitTextField() {
     // init push button
     m_load_btn = new QPushButton("Load", this);
     m_load_btn->setFixedSize(LOAD_BTN_WIDTH, TEXT_FIELD_HEIGHT);
