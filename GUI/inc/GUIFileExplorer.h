@@ -17,9 +17,6 @@ class GUIFileExplorer : public QDialog {
 public:
     GUIFileExplorer(QWidget* parent = nullptr);
 private:
-    // QTextEdit* m_textfield;
-    // QPushButton* m_load_btn;
-    QWidget* m_textfield_wrapper;
     QFileSystemModel* m_filesystem;
     GUITextFieldButton* m_textfield;
 
