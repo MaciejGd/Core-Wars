@@ -10,27 +10,11 @@ GUIPlayerTextField::GUIPlayerTextField(const QString& player_name, QWidget* pare
     outer_layout->setSpacing(0);
     outer_layout->setContentsMargins(0, 0, 0, 0);
     outer_layout->setAlignment(Qt::AlignTop);
-    // resonsible for setting button next to textfield
-    // QWidget* inner_wgt = new QWidget{};
-    // inner_wgt->setFixedHeight(TEXT_FIELD_HEIGHT);
-    // QHBoxLayout* inner_layout = new QHBoxLayout{inner_wgt};
-    // m_btn = new QPushButton{};
-    // m_btn->setFixedSize(BTN_WIDTH, TEXT_FIELD_HEIGHT);
-    // m_btn->setText("TEST");
-    m_textfield = new GUITextFieldButton(TEXT_FIELD_HEIGHT, BTN_WIDTH, "TEST");
-    // m_InitTextField();
+
+    m_textfield = new GUITextFieldButton(BTN_WIDTH, TEXT_FIELD_HEIGHT, "TEST");
     m_InitLabel(player_name);
-
-    // inner horizontal layout for text field and button
-    // inner_layout->addWidget(m_textfield);
-    // inner_layout->addWidget(m_btn);
-    // inner_layout->setSpacing(0);
-    // inner_layout->setContentsMargins(0,0,0,0);
-    // added for testing
-    //inner_wgt->setLayout(inner_layout);
-
-    //connect(m_btn, &QPushButton::pressed, this, &GUIPlayerTextField::ChoosePlayersCb);
     m_textfield->SetButtonCallback(this, &GUIPlayerTextField::ChoosePlayersCb);
+    m_textfield->setFixedHeight(40); // need to find a way on how to ommit that
     // for testing adding QLabel
 
 
@@ -41,20 +25,12 @@ GUIPlayerTextField::GUIPlayerTextField(const QString& player_name, QWidget* pare
     setLayout(outer_layout);
 }
 
-// void GUIPlayerTextField::m_InitTextField() {
-//     m_textfield = new QTextEdit{QString{m_player_path.c_str()}};
-//     m_textfield->setFixedHeight(TEXT_FIELD_HEIGHT);
-//     m_textfield->setReadOnly(true);
-// }
-
 void GUIPlayerTextField::m_InitLabel(const QString& player_name) {
     m_player_id = new QLabel{};
     m_player_id->setText("Player's name");
     m_player_id->setAlignment(Qt::AlignCenter);
     m_player_id->setFixedHeight(TEXT_FIELD_HEIGHT);
 }
-
-
 
 void GUIPlayerTextField::ChoosePlayersCb() {
     m_file_explorer = std::make_unique<GUIFileExplorer>(this);
@@ -66,10 +42,6 @@ void GUIPlayerTextField::ChoosePlayersCb() {
 
 void GUIPlayerTextField::PlayerPathChangedCb(QString& path) {
     std::cout << "New path for a player is: " << path.toStdString() << std::endl;
-    // update text field
-    // m_textfield->setReadOnly(false);
-    // m_textfield->setPlainText(path);
-    // m_textfield->setReadOnly(true);
     m_textfield->SetText(path);
     m_player_path = path.toStdString();
 }

@@ -1,6 +1,9 @@
 #pragma once
 
+#include "GUITextFieldButton.h"
+
 #include <QtWidgets>
+
 
 namespace GUIFileExplorerData {
     const int TEXT_FIELD_HEIGHT = 30;
@@ -14,10 +17,11 @@ class GUIFileExplorer : public QDialog {
 public:
     GUIFileExplorer(QWidget* parent = nullptr);
 private:
-    QTextEdit* m_textfield;
-    QPushButton* m_load_btn;
+    // QTextEdit* m_textfield;
+    // QPushButton* m_load_btn;
     QWidget* m_textfield_wrapper;
     QFileSystemModel* m_filesystem;
+    GUITextFieldButton* m_textfield;
 
     void m_InitTextField();
     void m_OnFileSelected(const QItemSelection &selected, const QItemSelection &deselected);
