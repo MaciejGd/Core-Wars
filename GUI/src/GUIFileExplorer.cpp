@@ -42,7 +42,6 @@ void GUIFileExplorer::m_InitTextField() {
 void GUIFileExplorer::m_OnFileSelected(const QItemSelection &selected, const QItemSelection &deselected) {
     QModelIndex index = selected.indexes().first();
     QString file_path = m_filesystem->filePath(index);
-    //m_textfield->setText(file_path);
     m_textfield->SetText(file_path);
 }
 
