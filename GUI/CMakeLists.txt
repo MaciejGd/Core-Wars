@@ -19,7 +19,13 @@ qt_add_library(GUI STATIC
 
 target_link_libraries(GUI PUBLIC Qt::Widgets)
 
-target_include_directories(GUI PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inc)
+set(INCLUDE_DIRS 
+    ${CMAKE_CURRENT_SOURCE_DIR}/inc
+    ${CMAKE_CURRENT_SOURCE_DIR}/../logger
+)
+
+
+target_include_directories(GUI PUBLIC ${INCLUDE_DIRS})
 
 set_target_properties(GUI PROPERTIES
     WIN32_EXECUTABLE ON

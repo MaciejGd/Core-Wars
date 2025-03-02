@@ -1,4 +1,6 @@
 #include "GUIPlayerTextField.h"
+#include "logger.h"
+
 #include <iostream>
 
 #include "dbg.h" // debug purposes
@@ -41,7 +43,7 @@ void GUIPlayerTextField::ChoosePlayersCb() {
 }
 
 void GUIPlayerTextField::PlayerPathChangedCb(QString& path) {
-    std::cout << "New path for a player is: " << path.toStdString() << std::endl;
+    LOG_DBG("New path for a player is {}", path.toStdString());
     m_textfield->SetText(path);
     m_player_path = path.toStdString();
 }
