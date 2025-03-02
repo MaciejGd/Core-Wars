@@ -33,7 +33,7 @@ void GUIPlayerTextField::m_InitLabel(const QString& player_name) {
 }
 
 void GUIPlayerTextField::ChoosePlayersCb() {
-    m_file_explorer = std::make_unique<GUIFileExplorer>(this);
+    m_file_explorer = std::make_unique<GUIFileExplorer>(m_textfield->GetText(), this);
     m_file_explorer->show();
     // connect tool bar with file search window (will be moved to another widget)
     connect(m_file_explorer.get(), &GUIFileExplorer::FilePathChanged, 

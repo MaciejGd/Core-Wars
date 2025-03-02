@@ -2,7 +2,7 @@
 
 using namespace GUIFileExplorerData;
 
-GUIFileExplorer::GUIFileExplorer(QWidget* parent): QDialog(parent) {
+GUIFileExplorer::GUIFileExplorer(const QString& file_path, QWidget* parent): QDialog(parent) {
 
     setWindowTitle("File Explorer");
     resize(600, 400); // Set the window size (optional)
@@ -15,7 +15,7 @@ GUIFileExplorer::GUIFileExplorer(QWidget* parent): QDialog(parent) {
     layout->addWidget(tree);
 
     // initialize widget for text field and add it to layout
-    m_InitTextField();
+    m_InitTextField(file_path);
     layout->addWidget(m_textfield);
 }
 
@@ -32,11 +32,12 @@ QTreeView* GUIFileExplorer::m_InitFileSystemView() {
     return tree;
 }
 
-void GUIFileExplorer::m_InitTextField() {
+void GUIFileExplorer::m_InitTextField(const QString& file_path) {
     // init text field with button as GUITextFieldButton widget
     m_textfield = new GUITextFieldButton{LOAD_BTN_WIDTH, TEXT_FIELD_HEIGHT, "LOAD"};
     m_textfield->SetButtonCallback(this, &GUIFileExplorer::m_OnLoadButtonPressed);
     m_textfield->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    m_textfield->SetText(file_path);
 }
 
 void GUIFileExplorer::m_OnFileSelected(const QItemSelection &selected, const QItemSelection &deselected) {
