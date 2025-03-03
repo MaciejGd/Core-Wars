@@ -13,6 +13,8 @@
 
 #define FILENAME std::filesystem::path(__FILE__).filename().string()
 
+
+/// @brief Enumerated type defining possible log text's color
 enum TextColor 
 {
     RED,
@@ -21,8 +23,14 @@ enum TextColor
     TEXT_COLOR_COUNT
 };
 
-
-//std::cout << __FILE__ << "(" << __LINE__ << "): " << string(80-strlen(__FILE__), ' ')  << msg << std::endl
+/// @brief Simple logger function for debug purposes
+/// @tparam ...Args     template for variadic arguments
+/// @param prefix       prefix of log to be used, ex. DEBUG, ERROR
+/// @param msg          message to be logged to console, should follow syntax "{} msg {}"
+/// @param color        color of the log message
+/// @param filename     name of the filed that log was print in
+/// @param fileline     line of the file in which log has been printed
+/// @param ...args      variadic arguments to be placed in {} in the msg
 template<typename ...Args>
 void _log(std::string_view prefix, std::string_view msg, TextColor color, std::string_view filename, int fileline, Args... args) 
 {
@@ -45,7 +53,6 @@ void _log(std::string_view prefix, std::string_view msg, TextColor color, std::s
 
 
     std::cout << output.c_str() << "\n";
-    //std::puts(output.c_str());
 };
 
 #define LOG_DBG(msg, ...) _log("DEBUG", msg, TextColor::WHITE, FILENAME, __LINE__, ##__VA_ARGS__);
