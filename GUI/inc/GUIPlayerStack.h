@@ -2,6 +2,8 @@
 
 #include <QtWidgets>
 
+
+/// @brief Widget for displaying currently executed operations
 class GUIPlayerStack : public QTextEdit {
     Q_OBJECT
 public:

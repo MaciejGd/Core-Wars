@@ -2,7 +2,8 @@
 
 
 
-GUIPlayersPanel::GUIPlayersPanel(QWidget* parent): QWidget(parent) {
+GUIPlayersPanel::GUIPlayersPanel(QWidget* parent): QWidget(parent) 
+{
     QVBoxLayout* layout = new QVBoxLayout{this};
     m_first_player = new GUIPlayerTextField{};
     m_second_player = new GUIPlayerTextField{};

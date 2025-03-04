@@ -34,8 +34,7 @@ enum TextColor
 template<typename ...Args>
 void _log(std::string_view prefix, std::string_view msg, TextColor color, std::string_view filename, int fileline, Args... args) 
 {
-    static const char* textColorTable[TEXT_COLOR_COUNT] = 
-    {
+    static const char* textColorTable[TEXT_COLOR_COUNT] = {
         "\033[31m", // color code for red
         "\033[0m",  // color code for white
         "\033[33m"  // color code for yellow
