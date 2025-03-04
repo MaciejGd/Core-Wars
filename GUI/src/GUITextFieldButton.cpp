@@ -15,25 +15,30 @@ GUITextFieldButton::GUITextFieldButton(int btn_width, int height, const QString&
     layout->setContentsMargins(0,0,0,0);
 }
 
-void GUITextFieldButton::SetReadOnly(bool read_only) {
+void GUITextFieldButton::SetReadOnly(bool read_only) 
+{
     m_textfield->setReadOnly(read_only);
 }
 
-void GUITextFieldButton::SetText(const QString& text) {
+void GUITextFieldButton::SetText(const QString& text) 
+{
     m_textfield->setText(text);
 }
 
-const QString GUITextFieldButton::GetText() const {
+const QString GUITextFieldButton::GetText() const 
+{
     return m_textfield->toPlainText();
 }
 
-void GUITextFieldButton::m_InitButton() {
+void GUITextFieldButton::m_InitButton() 
+{
     m_btn = new QPushButton{};
     m_btn->setFixedSize(m_btn_width, m_height);
     m_btn->setText(m_btn_txt);
 }
 
-void GUITextFieldButton::m_InitTextField() {
+void GUITextFieldButton::m_InitTextField() 
+{
     m_textfield = new QTextEdit(QString{m_player_path.c_str()});
     m_textfield->setFixedHeight(m_height);
     m_textfield->setReadOnly(true);
