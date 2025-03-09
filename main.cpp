@@ -8,7 +8,7 @@ const int HEIGHT = 900;
 
 const char* path = "/home/maciekzgk/code/cpp/studia/qt_project/test.txt";
 
-
+//test
 int main(int argc, char *argv[])
 {
     Lexer* lexer = Lexer::GetInstance();
