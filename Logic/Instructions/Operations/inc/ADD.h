@@ -5,5 +5,7 @@
 
 
 class CADD : public COperation {
-
+public:
+private:
+protected:
 };
