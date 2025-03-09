@@ -14,6 +14,8 @@ std::string Token::m_TokenTypeToString() const
             return "ADDRESS_MODE";
         case TokenType::LABEL:
             return "LABEL";
+        case TokenType::ARITHM_OPS:
+            return "ARITHM_OPS";
         default:
             return "WRONG_TYPE";
     }
@@ -43,6 +45,11 @@ void Token::m_AddCategory(std::string_view lex)
     if (std::find(tkn_address_modes.begin(), tkn_address_modes.end(), lex[0]) != tkn_address_modes.end())
     {
         m_type = TokenType::ADDRESS_MODE;
+        return;
+    }
+    if (std::find(tkn_ar_ops.begin(), tkn_ar_ops.end(), lex[0]) != tkn_ar_ops.end())
+    {
+        m_type = TokenType::ARITHM_OPS;
         return;
     }
     m_type = TokenType::LABEL;
