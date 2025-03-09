@@ -80,6 +80,12 @@ void Lexer::m_TokenizeLine(const std::string& line, std::vector<Token>& tokens)
             actual = "";
             tokens.push_back(Token{TokenType::ADDRESS_MODE, std::string{line[idx]}});
         }
+        if (std::find(tkn_ar_ops.begin(), tkn_ar_ops.end(), line[idx]) != tkn_ar_ops.end()) 
+        {
+            add_not_empty(actual);
+            actual = "";
+            tokens.push_back(Token{TokenType::ARITHM_OPS, std::string{line[idx]}});
+        }
         // if coma spotted, add token to the list and continue
         else if (line[idx] == tkn_coma) {
             add_not_empty(actual);

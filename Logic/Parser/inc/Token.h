@@ -10,13 +10,15 @@ enum TokenType {
     SEPARATOR,
     LABEL,
     MODIFIERS,
-    ADDRESS_MODE
+    ADDRESS_MODE,
+    ARITHM_OPS
 };
 
 
 constexpr std::array<std::string, 7> tkn_modifiers = {".a", ".b", ".ab", ".ba", ".f", ".x", ".i"};
 constexpr std::array<std::string, 19> tkn_operations = {"dat", "mov", "add", "sub", "mul", "div", "mod", 
                     "jmp", "jmz", "jmn", "djn", "spl", "cmp", "seq", "sne", "slt", "ldp", "stp", "nop"};
+constexpr std::array<char, 5> tkn_ar_ops = {'+', '-', '/', '*', '%'}; // five arithmetic operations
 //constexpr std::array<char, 2> tkn_separators = {',', ';'}; // this is actually not needed as ; will handle 
 constexpr char tkn_comment = ';'; // wont be parsed
 constexpr char tkn_coma = ',';
