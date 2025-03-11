@@ -80,7 +80,7 @@ void Lexer::m_TokenizeLine(const std::string& line, TokenContainer& tokens)
             actual = "";
             tokens_row.push_back(Token{TokenType::ADDRESS_MODE, std::string{line[idx]}});
         }
-        if (std::find(tkn_ar_ops.begin(), tkn_ar_ops.end(), line[idx]) != tkn_ar_ops.end()) 
+        else if (std::find(tkn_ar_ops.begin(), tkn_ar_ops.end(), line[idx]) != tkn_ar_ops.end()) 
         {
             add_not_empty(actual);
             actual = "";

@@ -16,6 +16,8 @@ std::string Token::m_TokenTypeToString() const
             return "LABEL";
         case TokenType::ARITHM_OPS:
             return "ARITHM_OPS";
+        case TokenType::NUMERICAL_VAL:
+            return "NUMERICAL_VAL";
         default:
             return "WRONG_TYPE";
     }
@@ -33,6 +35,22 @@ void Token::m_AddCategory(std::string_view lex)
         m_type = TokenType::OPERATIONS;
         return;
     }
+    // check if token is numerical value
+    bool numerical = true;
+    for (int i = 0; i < lex.size(); i++) 
+    {
+        if (!std::isdigit(lex[i]))
+        {
+            numerical = false;
+            break;
+        }
+    }
+    if (numerical) 
+    {
+        m_type = TokenType::NUMERICAL_VAL;
+        return;
+    }
+    // if none of above and size not 1 then add label
     if (lex.size() != 1) {
         m_type = TokenType::LABEL;
         return;

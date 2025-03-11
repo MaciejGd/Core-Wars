@@ -11,7 +11,8 @@ enum TokenType {
     LABEL,
     MODIFIERS,
     ADDRESS_MODE,
-    ARITHM_OPS
+    ARITHM_OPS,
+    NUMERICAL_VAL
 };
 
 
