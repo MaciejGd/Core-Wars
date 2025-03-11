@@ -14,6 +14,7 @@ set(INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/Instructions/Parameters/inc
     ${CMAKE_CURRENT_SOURCE_DIR}/Platform/inc
     ${CMAKE_CURRENT_SOURCE_DIR}/Parser/inc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Parser/AbstractSyntaxTree/inc
     ${CMAKE_CURRENT_SOURCE_DIR}/../logger/
 )
 
@@ -21,12 +22,14 @@ file(GLOB SRC_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/Instructions/Parameters/src/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Instructions/Operations/src/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Parser/src/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Parser/AbstractSyntaxTree/src/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Platform/src/*.cpp
 )
 file(GLOB HDR_FILES 
     ${CMAKE_CURRENT_SOURCE_DIR}/Instructions/Operations/inc/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Instructions/Parameters/inc/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Parser/inc/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Parser/AbstractSyntaxTree/inc/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Platform/inc/*.h
 )
 

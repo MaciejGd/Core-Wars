@@ -5,7 +5,6 @@
 #include <cerrno>
 #include <algorithm>
 
-
 Lexer* Lexer::m_instance = nullptr;
 
 Lexer *Lexer::GetInstance()
@@ -16,14 +15,14 @@ Lexer *Lexer::GetInstance()
     return m_instance;
 }
 
-const std::vector<Token> Lexer::GetTokens(std::string_view file_path)
+const TokenContainer Lexer::GetTokens(std::string_view file_path)
 {
-    std::vector<Token> tokens;
+    TokenContainer tokens;
     std::ifstream file_contents{std::string(file_path)};
     if (!file_contents.is_open()) 
     {
         LOG_ERR("Error for path: {} {}", file_path, std::strerror(errno));
-        return std::vector<Token>();
+        return TokenContainer();
     }
     std::string line;
     while (std::getline(file_contents, line)) 
@@ -33,22 +32,23 @@ const std::vector<Token> Lexer::GetTokens(std::string_view file_path)
             continue;
         }
         m_TokenizeLine(line, tokens);
-        LOG_ERR("In getline loop")
     }
     LOG_DBG("END");
     file_contents.close();
 
     /// DEBUG
-    for (int i = 0; i < tokens.size(); i++) 
+    for (int i = 0; i < tokens.size(); i++){
+    for (int j = 0; j < tokens[i].size(); j++) 
     {
-        LOG_DBG("Token lexed: {}", tokens[i].PrintFormat());
-    }
-
-    return std::vector<Token>();
+        LOG_DBG("Token lexed: {}", tokens[i][j].PrintFormat());
+    }}
+    LOG_DBG("Tokenized file: {}", file_path);
+    return tokens;
 }
 
-void Lexer::m_TokenizeLine(const std::string& line, std::vector<Token>& tokens) 
+void Lexer::m_TokenizeLine(const std::string& line, TokenContainer& tokens) 
 {
+    std::vector<Token> tokens_row;
     int idx = 0;
     int len = line.size();
     // lambda function for stripping spaces
@@ -57,7 +57,7 @@ void Lexer::m_TokenizeLine(const std::string& line, std::vector<Token>& tokens)
             || line[idx]=='\b' || line[idx]==' '); idx++);
     };
     // lambda for turning string lower case and adding to token if it is not empty
-    auto add_not_empty = [&tokens] (auto s) {
+    auto add_not_empty = [&tokens_row] (auto s) {
         if (s.empty()) 
         {
             return;
@@ -65,7 +65,7 @@ void Lexer::m_TokenizeLine(const std::string& line, std::vector<Token>& tokens)
         std::transform(s.begin(), s.end(), s.begin(), [](auto c) {
             return std::tolower(c);
         });
-        tokens.push_back(Token{s});
+        tokens_row.push_back(Token{s});
     };
 
     strip_spaces();
@@ -78,25 +78,24 @@ void Lexer::m_TokenizeLine(const std::string& line, std::vector<Token>& tokens)
         {
             add_not_empty(actual);
             actual = "";
-            tokens.push_back(Token{TokenType::ADDRESS_MODE, std::string{line[idx]}});
+            tokens_row.push_back(Token{TokenType::ADDRESS_MODE, std::string{line[idx]}});
         }
         if (std::find(tkn_ar_ops.begin(), tkn_ar_ops.end(), line[idx]) != tkn_ar_ops.end()) 
         {
             add_not_empty(actual);
             actual = "";
-            tokens.push_back(Token{TokenType::ARITHM_OPS, std::string{line[idx]}});
+            tokens_row.push_back(Token{TokenType::ARITHM_OPS, std::string{line[idx]}});
         }
         // if coma spotted, add token to the list and continue
         else if (line[idx] == tkn_coma) {
             add_not_empty(actual);
             // add token with separator
-            tokens.push_back(Token{TokenType::SEPARATOR, std::string{line[idx]}});
+            tokens_row.push_back(Token{TokenType::SEPARATOR, std::string{line[idx]}});
             actual = "";
         }
-        else if (line[idx] == ';') 
+        else if (line[idx] == ';') // if comment spotted break immidiately
         {
-            add_not_empty(actual);
-            return;
+            break;
         }
         // if we spotted modifier (.) then we can instanly check for next letters
         else if (line[idx] == '.') 
@@ -120,4 +119,5 @@ void Lexer::m_TokenizeLine(const std::string& line, std::vector<Token>& tokens)
         idx++;
     }
     add_not_empty(actual);
+    tokens.push_back(std::move(tokens_row));
 }
