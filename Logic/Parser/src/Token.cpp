@@ -6,6 +6,8 @@ std::string Token::m_TokenTypeToString() const
 {
     switch (m_type) 
     {
+        case TokenType::MODIFIERS:
+            return "MODIFIERS";
         case TokenType::SEPARATOR:
             return "SEPARATOR";
         case TokenType::OPERATIONS:
@@ -73,12 +75,12 @@ void Token::m_AddCategory(std::string_view lex)
     m_type = TokenType::LABEL;
 }
 
-Token::Token(std::string_view lex): m_val(lex)
+Token::Token(int _line, int _idx, std::string_view lex): m_val(lex), m_line(_line), m_idx(_idx)
 {
     m_AddCategory(m_val);
 }
 
 std::string Token::PrintFormat() const
 {
-    return "[type:" + m_TokenTypeToString() + "|val:" + m_val + "]";
+    return "[loc:{line:" + std::to_string(m_line) + "}{idx:"+ std::to_string(m_idx) + "}]->[type:" + m_TokenTypeToString() + "|val:" + m_val + "]";
 }

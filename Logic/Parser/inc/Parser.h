@@ -2,6 +2,8 @@
 
 #include "Lexer.h"
 
+#include <map>
+
 // need to prepare some semantics for that
 
 // what will be the dictionary for RedCode
@@ -20,7 +22,6 @@
 
 class Parser {
 public:
-
 private:
-    void GenerateAst(TokenContainer tokens);
+    void m_GenerateAst(TokenContainer tokens);
 }

@@ -25,13 +25,15 @@ const TokenContainer Lexer::GetTokens(std::string_view file_path)
         return TokenContainer();
     }
     std::string line;
+    int line_counter = 1;
     while (std::getline(file_contents, line)) 
     {
         if (line.empty()) 
         {
             continue;
         }
-        m_TokenizeLine(line, tokens);
+        m_TokenizeLine(line, tokens, line_counter);
+        line_counter++;
     }
     LOG_DBG("END");
     file_contents.close();
@@ -46,7 +48,7 @@ const TokenContainer Lexer::GetTokens(std::string_view file_path)
     return tokens;
 }
 
-void Lexer::m_TokenizeLine(const std::string& line, TokenContainer& tokens) 
+void Lexer::m_TokenizeLine(const std::string& line, TokenContainer& tokens, int line_counter) 
 {
     std::vector<Token> tokens_row;
     int idx = 0;
@@ -57,7 +59,7 @@ void Lexer::m_TokenizeLine(const std::string& line, TokenContainer& tokens)
             || line[idx]=='\b' || line[idx]==' '); idx++);
     };
     // lambda for turning string lower case and adding to token if it is not empty
-    auto add_not_empty = [&tokens_row] (auto s) {
+    auto add_not_empty = [&tokens_row, &idx, line_counter] (auto s) {
         if (s.empty()) 
         {
             return;
@@ -65,7 +67,8 @@ void Lexer::m_TokenizeLine(const std::string& line, TokenContainer& tokens)
         std::transform(s.begin(), s.end(), s.begin(), [](auto c) {
             return std::tolower(c);
         });
-        tokens_row.push_back(Token{s});
+        std::cout << "In lambda " << s << std::endl;
+        tokens_row.push_back(Token{line_counter, idx, s});
     };
 
     strip_spaces();
@@ -78,19 +81,19 @@ void Lexer::m_TokenizeLine(const std::string& line, TokenContainer& tokens)
         {
             add_not_empty(actual);
             actual = "";
-            tokens_row.push_back(Token{TokenType::ADDRESS_MODE, std::string{line[idx]}});
+            tokens_row.push_back(Token{line_counter, idx, TokenType::ADDRESS_MODE, std::string{line[idx]}});
         }
         else if (std::find(tkn_ar_ops.begin(), tkn_ar_ops.end(), line[idx]) != tkn_ar_ops.end()) 
         {
             add_not_empty(actual);
+            tokens_row.push_back(Token{line_counter, idx, TokenType::ARITHM_OPS, std::string{line[idx]}});
             actual = "";
-            tokens_row.push_back(Token{TokenType::ARITHM_OPS, std::string{line[idx]}});
         }
         // if coma spotted, add token to the list and continue
         else if (line[idx] == tkn_coma) {
             add_not_empty(actual);
             // add token with separator
-            tokens_row.push_back(Token{TokenType::SEPARATOR, std::string{line[idx]}});
+            tokens_row.push_back(Token{line_counter, idx, TokenType::SEPARATOR, std::string{line[idx]}});
             actual = "";
         }
         else if (line[idx] == ';') // if comment spotted break immidiately

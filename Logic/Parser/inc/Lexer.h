@@ -19,5 +19,5 @@ private:
     Lexer() {};
     static Lexer* m_instance;
     
-    void m_TokenizeLine(const std::string& line, TokenContainer &tokens);
+    void m_TokenizeLine(const std::string& line, TokenContainer &tokens, int line_counter);
 };
