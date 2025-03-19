@@ -81,19 +81,19 @@ void Lexer::m_TokenizeLine(const std::string& line, TokenContainer& tokens, int 
         {
             add_not_empty(actual);
             actual = "";
-            tokens_row.push_back(Token{line_counter, idx, TokenType::ADDRESS_MODE, std::string{line[idx]}});
+            tokens_row.push_back(Token{line_counter, idx+1, TokenType::ADDRESS_MODE, std::string{line[idx]}});
         }
         else if (std::find(tkn_ar_ops.begin(), tkn_ar_ops.end(), line[idx]) != tkn_ar_ops.end()) 
         {
             add_not_empty(actual);
-            tokens_row.push_back(Token{line_counter, idx, TokenType::ARITHM_OPS, std::string{line[idx]}});
+            tokens_row.push_back(Token{line_counter, idx+1, TokenType::ARITHM_OPS, std::string{line[idx]}});
             actual = "";
         }
         // if coma spotted, add token to the list and continue
         else if (line[idx] == tkn_coma) {
             add_not_empty(actual);
             // add token with separator
-            tokens_row.push_back(Token{line_counter, idx, TokenType::SEPARATOR, std::string{line[idx]}});
+            tokens_row.push_back(Token{line_counter, idx+1, TokenType::SEPARATOR, std::string{line[idx]}});
             actual = "";
         }
         else if (line[idx] == ';') // if comment spotted break immidiately

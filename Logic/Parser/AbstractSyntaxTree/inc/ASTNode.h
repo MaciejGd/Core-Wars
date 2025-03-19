@@ -1,30 +1,24 @@
 #pragma once
 
-// we need to set rules for parsing 
-// eval should return return codes 
+#include "Token.h"
+#include "logger.h"
 
+#include <vector>
+#include <memory>
+#include <deque> // for token queue
+#include <stack>
 
+// parsing return codes
 enum ParseResult {
     PARSE_END,
-    PARSE_OK,
-    PARSE_FAIL
+    PARSE_OK, // tells parser that Node has been parsed proprly (token SHALL NOT be removed)
+    PARSE_NEXT_TOKEN, // tells parser to skip current token, as it is valid
+    PARSE_FAIL // indicates unproper Node during the parsing
 };
 
 
-// grammar rules:  (ε is used for epsilo)
-// Program = Line + newLine  # at least one line of code is needed
-// newLine = (line + NewLine) | ε // main abstract grammar in the redcode code
-// line = label + operation + param + separator + param
-// line = operation + param + separator + param
-// 
-// operation = operation(TOKEN_TYPE::OPERATION);
-// operation = operation + modifier
-
-
 // evaluation of node
-class ASTNode {
+class CASTNode {
 public:
-    ASTNode(){};
-    virtual void Eval() = 0;
-private:
+    virtual ParseResult Eval(std::deque<Token>& token, std::stack<CASTNode*>& nodes) = 0;
 };
