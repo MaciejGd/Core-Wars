@@ -20,5 +20,5 @@ enum ParseResult {
 // evaluation of node
 class CASTNode {
 public:
-    virtual ParseResult Eval(std::deque<Token>& token, std::stack<CASTNode*>& nodes) = 0;
+    virtual ParseResult Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes) = 0;
 };

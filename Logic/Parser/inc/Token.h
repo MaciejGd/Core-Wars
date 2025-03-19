@@ -1,10 +1,28 @@
 #pragma once
 
 #include <array>
-#include <set>
 #include <string>
 #include <string_view>
 
+/// @brief Enumeration type representing types of tokens 
+/// identified during lexical analysis
+/// 
+/// Token types are:
+///
+/// - OPERATIONS: operation from RedCode lang, ex. mov, dat, etc. 
+///
+/// - SEPARATOR: separators ... TODO - remove that???
+///
+/// - LABEL: labels that user can name lines of code with 
+///
+/// - MODIFIERS: modifiers to operation in RedCode, ex. .a, .ab, etc.
+///
+/// - ADDRESS_MODE: address modes available in RedCode, ex. #, $, etc.
+///
+/// - ARITHM_OPS: arithmetic operators, that can be used in params declaration
+///
+/// - NUMERICAL_VAL: numerical values indicating memory regions
+/// 
 enum TokenType {
     OPERATIONS,
     SEPARATOR,
@@ -15,17 +33,32 @@ enum TokenType {
     NUMERICAL_VAL
 };
 
-
+// possible modifiers in RedCode language
 constexpr std::array<std::string, 7> tkn_modifiers = {".a", ".b", ".ab", ".ba", ".f", ".x", ".i"};
+// possible operations in RedCode language
 constexpr std::array<std::string, 19> tkn_operations = {"dat", "mov", "add", "sub", "mul", "div", "mod", 
                     "jmp", "jmz", "jmn", "djn", "spl", "cmp", "seq", "sne", "slt", "ldp", "stp", "nop"};
-constexpr std::array<char, 5> tkn_ar_ops = {'+', '-', '/', '*', '%'}; // five arithmetic operations
-//constexpr std::array<char, 2> tkn_separators = {',', ';'}; // this is actually not needed as ; will handle 
-constexpr char tkn_comment = ';'; // wont be parsed
+// five basic arithmetic operations
+constexpr std::array<char, 5> tkn_ar_ops = {'+', '-', '/', '*', '%'}; 
+// semicolon indicates comment and will be skipped during lexing
+constexpr char tkn_comment = ';'; 
 constexpr char tkn_coma = ',';
+// address modes in RedCode language
 constexpr std::array<char, 6> tkn_address_modes = {'#', '$', '<', '>', '{', '}'};
 
 
+/// @brief Class representing single lexical unit of RedCode code
+/// 
+/// Token is described by four main attributes:
+///
+/// 1. line - line of token's occurence
+/// 
+/// 2. idx - column of token's ending
+///
+/// 3. type - type of Token, described in TokenType enum
+///
+/// 4. value - string representing part of text, that token describes
+/// 
 class Token {
 private:
     int m_line; // number of line in which token was gathered
@@ -38,8 +71,17 @@ public:
     Token() {};
     Token(int _line, int _idx, std::string_view lex);
     Token(int _line, int _idx, TokenType type, std::string_view value): m_type(type), m_val(value), m_line(_line), m_idx(_idx) {};
+
+    // setters
+    void SetType(TokenType type) { m_type = type; };
+    void SetValue(std::string_view value) { m_val = value; };
+    // getters
     const TokenType type() const { return m_type; };
     const std::string value() const { return m_val; };
+
+    /// @brief Function helping in debug, showing Token's 
+    /// params in form of formatted string
+    /// @return string consisting Token's params
     std::string PrintFormat() const;   
 };
 

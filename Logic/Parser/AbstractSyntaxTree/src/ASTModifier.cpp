@@ -1,8 +1,8 @@
 #include "ASTModifier.h"
 
-// Modifier GRAMMAR rule: 
+// MODIFIER GRAMMAR RULE: 
 // Modifier:=  mod | epsilon
-// where: mod:= .a , .b, .ab, etc.
+// where mod:= .a , .b, .ab, etc.
 
 
 ParseResult CASTModifier::Eval(std::deque<Token>& tokens, std::stack<CASTNode*>& nodes)
