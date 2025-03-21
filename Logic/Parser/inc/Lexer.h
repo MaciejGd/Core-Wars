@@ -14,7 +14,7 @@ public:
     /// @brief Function to lexically analyze input file
     /// @param file_path path to the file to be analyzed
     /// @return vector of tokens retrieved
-    const TokenContainer GetTokens(std::string_view file_path);
+    TokenContainer GetTokens(std::string_view file_path);
 private:
     Lexer() {};
     static Lexer* m_instance;

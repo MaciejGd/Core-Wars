@@ -44,7 +44,7 @@ constexpr std::array<char, 5> tkn_ar_ops = {'+', '-', '/', '*', '%'};
 constexpr char tkn_comment = ';'; 
 constexpr char tkn_coma = ',';
 // address modes in RedCode language
-constexpr std::array<char, 6> tkn_address_modes = {'#', '$', '<', '>', '{', '}'};
+constexpr std::array<char, 7> tkn_address_modes = {'#', '$', '<', '>', '{', '}', '@'};
 
 
 /// @brief Class representing single lexical unit of RedCode code
@@ -78,6 +78,8 @@ public:
     // getters
     const TokenType type() const { return m_type; };
     const std::string value() const { return m_val; };
+    const int line() const { return m_line; };
+    const int idx() const { return m_idx; };
 
     /// @brief Function helping in debug, showing Token's 
     /// params in form of formatted string

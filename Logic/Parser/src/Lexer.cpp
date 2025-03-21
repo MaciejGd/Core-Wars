@@ -15,7 +15,7 @@ Lexer *Lexer::GetInstance()
     return m_instance;
 }
 
-const TokenContainer Lexer::GetTokens(std::string_view file_path)
+TokenContainer Lexer::GetTokens(std::string_view file_path)
 {
     TokenContainer tokens;
     std::ifstream file_contents{std::string(file_path)};
@@ -28,10 +28,6 @@ const TokenContainer Lexer::GetTokens(std::string_view file_path)
     int line_counter = 1;
     while (std::getline(file_contents, line)) 
     {
-        if (line.empty()) 
-        {
-            continue;
-        }
         m_TokenizeLine(line, tokens, line_counter);
         line_counter++;
     }
@@ -43,7 +39,9 @@ const TokenContainer Lexer::GetTokens(std::string_view file_path)
     for (int j = 0; j < tokens[i].size(); j++) 
     {
         LOG_DBG("Token lexed: {}", tokens[i][j].PrintFormat());
-    }}
+    }
+    LOG_ERR("New line");
+}
     LOG_DBG("Tokenized file: {}", file_path);
     return tokens;
 }
@@ -67,7 +65,6 @@ void Lexer::m_TokenizeLine(const std::string& line, TokenContainer& tokens, int 
         std::transform(s.begin(), s.end(), s.begin(), [](auto c) {
             return std::tolower(c);
         });
-        std::cout << "In lambda " << s << std::endl;
         tokens_row.push_back(Token{line_counter, idx, s});
     };
 
@@ -122,5 +119,8 @@ void Lexer::m_TokenizeLine(const std::string& line, TokenContainer& tokens, int 
         idx++;
     }
     add_not_empty(actual);
+    // do not add tokens row if it is empty
+    if (tokens_row.empty()) 
+        return;
     tokens.push_back(std::move(tokens_row));
 }

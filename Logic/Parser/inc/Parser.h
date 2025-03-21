@@ -1,9 +1,6 @@
 #pragma once
 
 #include "Lexer.h"
-
-#include <map>
-
 // need to prepare some semantics for that
 
 // what will be the dictionary for RedCode
@@ -20,8 +17,19 @@
 
 
 
+/// @brief Class checking if grammar rules of RedCode language 
+/// has been met. Analyze tokens retrieved during the process of lexical
+/// analysis.
 class Parser {
 public:
+    /// @brief 
+    /// @param tokens 
+    void test_RemoveLables(TokenContainer& tokens);
 private:
-    void m_GenerateAst(TokenContainer tokens);
-}
+    void m_GenerateAst(TokenContainer& tokens);
+
+    /// @brief Removes labels and place relative numbers in its place
+    /// @param tokens two dimensional array of tokens
+    /// @return bool indicating status removing labels operation
+    bool m_RemoveLabels(TokenContainer& tokens);
+};
