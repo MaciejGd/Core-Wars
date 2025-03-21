@@ -7,6 +7,7 @@
 
 Lexer* Lexer::m_instance = nullptr;
 
+
 Lexer *Lexer::GetInstance()
 {
     if (m_instance == nullptr) {
@@ -17,6 +18,7 @@ Lexer *Lexer::GetInstance()
 
 TokenContainer Lexer::GetTokens(std::string_view file_path)
 {
+    s_file_name = file_path;
     TokenContainer tokens;
     std::ifstream file_contents{std::string(file_path)};
     if (!file_contents.is_open()) 
@@ -26,6 +28,7 @@ TokenContainer Lexer::GetTokens(std::string_view file_path)
     }
     std::string line;
     int line_counter = 1;
+    // analyze file line by line
     while (std::getline(file_contents, line)) 
     {
         m_TokenizeLine(line, tokens, line_counter);
@@ -36,12 +39,12 @@ TokenContainer Lexer::GetTokens(std::string_view file_path)
 
     /// DEBUG
     for (int i = 0; i < tokens.size(); i++){
-    for (int j = 0; j < tokens[i].size(); j++) 
-    {
-        LOG_DBG("Token lexed: {}", tokens[i][j].PrintFormat());
+        for (int j = 0; j < tokens[i].size(); j++) 
+        {
+            LOG_DBG("Token lexed: {}", tokens[i][j].PrintFormat());
+        }
+        LOG_ERR("New line");
     }
-    LOG_ERR("New line");
-}
     LOG_DBG("Tokenized file: {}", file_path);
     return tokens;
 }
@@ -73,44 +76,46 @@ void Lexer::m_TokenizeLine(const std::string& line, TokenContainer& tokens, int 
     std::string actual; 
     while (idx < len) 
     {   
-        // if address mode sign spotted, add it to vector of token and continue
-        if (std::find(tkn_address_modes.begin(), tkn_address_modes.end(), line[idx]) != tkn_address_modes.end()) 
+        if (findInArray(tkn_address_modes, line[idx]))
         {
+            // if address mode sign spotted, add it to vector of token and continue
             add_not_empty(actual);
             actual = "";
             tokens_row.push_back(Token{line_counter, idx+1, TokenType::ADDRESS_MODE, std::string{line[idx]}});
         }
-        else if (std::find(tkn_ar_ops.begin(), tkn_ar_ops.end(), line[idx]) != tkn_ar_ops.end()) 
+        else if (findInArray(tkn_ar_ops, line[idx]))
         {
+            // if arithmetic operator found, add new token
             add_not_empty(actual);
             tokens_row.push_back(Token{line_counter, idx+1, TokenType::ARITHM_OPS, std::string{line[idx]}});
             actual = "";
         }
-        // if coma spotted, add token to the list and continue
-        else if (line[idx] == tkn_coma) {
+        else if (findInArray(tkn_separators, line[idx]))
+        {
+            // if separator found, add new token
             add_not_empty(actual);
-            // add token with separator
             tokens_row.push_back(Token{line_counter, idx+1, TokenType::SEPARATOR, std::string{line[idx]}});
             actual = "";
         }
-        else if (line[idx] == ';') // if comment spotted break immidiately
+        else if (line[idx] == ';') 
         {
+            // if comment spotted break immidiately
             break;
         }
-        // if we spotted modifier (.) then we can instanly check for next letters
         else if (line[idx] == '.') 
         {   
+            // if we spotted modifier (.) then we can instanly check for next letters
             add_not_empty(actual);
-            // start lexing modifier
             actual = ".";
         }
-        // if white-space add Token to list and skip all white-spaces
         else if (line[idx] == ' ' || line[idx] == '\t' || line[idx] == '\b') 
         {   
+            // if white-space add Token to list and skip all white-spaces
             add_not_empty(actual);
             actual = "";
             strip_spaces();
-            idx--; // need to decrement in here as we will increment it 
+            idx--; // we need to decrement because it is incremented in strip spaces 
+                    // as well as in this loop
         }
         else 
         {

@@ -1,6 +1,5 @@
 #include "Token.h"
 #include "logger.h"
-#include <algorithm>
 
 std::string Token::m_TokenTypeToString() const
 {
@@ -25,14 +24,14 @@ std::string Token::m_TokenTypeToString() const
     }
 }
 
-void Token::m_AddCategory(std::string_view lex)
+void Token::m_AddCategory(const std::string& lex)
 {
-    if (std::find(tkn_modifiers.begin(), tkn_modifiers.end(), lex) != tkn_modifiers.end()) 
+    if (findInArray(tkn_modifiers, lex)) 
     {
         m_type = TokenType::MODIFIERS;
         return;
     }
-    if (std::find(tkn_operations.begin(), tkn_operations.end(), lex) != tkn_operations.end()) 
+    if (findInArray(tkn_operations, lex)) 
     {
         m_type = TokenType::OPERATIONS;
         return;
@@ -57,17 +56,17 @@ void Token::m_AddCategory(std::string_view lex)
         m_type = TokenType::LABEL;
         return;
     } 
-    if (lex[0] == tkn_coma) 
+    if (findInArray(tkn_separators, lex[0]))
     {
         m_type = TokenType::SEPARATOR;
         return;
     }
-    if (std::find(tkn_address_modes.begin(), tkn_address_modes.end(), lex[0]) != tkn_address_modes.end())
+    if (findInArray(tkn_address_modes, lex[0]))
     {
         m_type = TokenType::ADDRESS_MODE;
         return;
     }
-    if (std::find(tkn_ar_ops.begin(), tkn_ar_ops.end(), lex[0]) != tkn_ar_ops.end())
+    if (findInArray(tkn_ar_ops, lex[0]))
     {
         m_type = TokenType::ARITHM_OPS;
         return;

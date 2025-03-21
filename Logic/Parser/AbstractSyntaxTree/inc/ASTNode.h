@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Token.h"
 #include "logger.h"
+#include "Lexer.h" // we need to know Token class def and name of the file
+// currently analyzed
 
 #include <vector>
 #include <memory>

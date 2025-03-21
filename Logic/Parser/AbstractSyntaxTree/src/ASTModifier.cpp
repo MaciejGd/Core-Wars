@@ -10,12 +10,8 @@ ParseResult CASTModifier::Eval(std::deque<Token>& tokens, std::stack<std::unique
     Token& token = tokens.front();
     if (token.type() == TokenType::MODIFIERS)
     {
-        // modifier present in operation
-        return ParseResult::PARSE_NEXT_TOKEN;
+        // modifier present in operation, so pop it from the queue
+        tokens.pop_front();
     }
-    else 
-    {
-        // modifier is not present in operation
-        return ParseResult::PARSE_OK;
-    }
+    return ParseResult::PARSE_OK;
 }

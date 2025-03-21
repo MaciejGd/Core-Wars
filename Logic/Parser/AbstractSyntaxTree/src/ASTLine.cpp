@@ -7,8 +7,12 @@
 
 ParseResult CASTLine::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes) 
 {
-    if (true)
-    {
-        ;
-    }
+    // push to stack of nodes below grammar rule:
+    // Line := operation param coma param
+    nodes.push(std::make_unique<CASTParameter>());
+    nodes.push(std::make_unique<CASTComa>());
+    nodes.push(std::make_unique<CASTParameter>());
+    nodes.push(std::make_unique<CASTOperation>());
+    return ParseResult::PARSE_OK;
+    
 }

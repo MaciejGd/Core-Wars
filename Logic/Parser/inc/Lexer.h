@@ -7,9 +7,13 @@
 
 using TokenContainer = std::vector<std::vector<Token>>;
 
+
 /// @brief Singleton for creating token list from input file
 class Lexer {
 public:
+    /// name of the file currently lexed
+    inline static std::string s_file_name;
+
     static Lexer* GetInstance();
     /// @brief Function to lexically analyze input file
     /// @param file_path path to the file to be analyzed

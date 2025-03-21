@@ -3,6 +3,7 @@
 #include <array>
 #include <string>
 #include <string_view>
+#include <algorithm>
 
 /// @brief Enumeration type representing types of tokens 
 /// identified during lexical analysis
@@ -11,7 +12,7 @@
 ///
 /// - OPERATIONS: operation from RedCode lang, ex. mov, dat, etc. 
 ///
-/// - SEPARATOR: separators ... TODO - remove that???
+/// - SEPARATOR: separators like , or ) ( ... TODO
 ///
 /// - LABEL: labels that user can name lines of code with 
 ///
@@ -42,9 +43,26 @@ constexpr std::array<std::string, 19> tkn_operations = {"dat", "mov", "add", "su
 constexpr std::array<char, 5> tkn_ar_ops = {'+', '-', '/', '*', '%'}; 
 // semicolon indicates comment and will be skipped during lexing
 constexpr char tkn_comment = ';'; 
-constexpr char tkn_coma = ',';
+constexpr std::array<char, 3> tkn_separators = {',', '(', ')'};
 // address modes in RedCode language
 constexpr std::array<char, 7> tkn_address_modes = {'#', '$', '<', '>', '{', '}', '@'};
+
+
+/// @brief wrapper for checking if element is in array
+/// @tparam T type of an array and searched element
+/// @tparam N size of an array
+/// @param arr array to perform search on
+/// @param value value to be searched
+/// @return true if element found, false otherwise
+template<typename T, size_t N>
+bool findInArray(const std::array<T, N>& arr, T value) 
+{
+    if (std::find(arr.begin(), arr.end(), value) != arr.end()) 
+    {
+        return true;
+    }
+    return false;
+};
 
 
 /// @brief Class representing single lexical unit of RedCode code
@@ -66,7 +84,7 @@ private:
     TokenType m_type;
     std::string m_val;
     std::string m_TokenTypeToString() const;
-    void m_AddCategory(std::string_view lex);
+    void m_AddCategory(const std::string& lex);
 public:
     Token() {};
     Token(int _line, int _idx, std::string_view lex);
