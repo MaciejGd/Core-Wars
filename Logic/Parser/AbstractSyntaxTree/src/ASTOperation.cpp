@@ -1,12 +1,6 @@
 #include "ASTOperation.h"
 #include "ASTModifier.h"
 
-
-// OPERATION GRAMMAR RULE 
-// Operation:= Op ModifierPrefix
-// where Op:= dat, mov, add, etc.
-
-
 ParseResult CASTOperation::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes)
 {
     // if token type is operation then parsing succeed and add CASTModifier to m_rhs

@@ -3,5 +3,5 @@
 
 class CASTLine : public CASTNode {
 public:
-    ParseResult Eval(std::deque<Token>& token, sted::stack<std::unique_ptr<CASTNode>>& nodes) override;
+    ParseResult Eval(std::deque<Token>& token, std::stack<std::unique_ptr<CASTNode>>& nodes) override;
 };

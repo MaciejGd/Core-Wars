@@ -1,4 +1,5 @@
 #include "ASTExpression.h"
+#include "ASTTerm.h"
 
 // grammar rule for CASTExpression
 // EXPRESSION := TERM NEWEXPRESSION
@@ -7,6 +8,7 @@ ParseResult CASTExpression::Eval(std::deque<Token> &tokens, std::stack<std::uniq
 {
     nodes.push(std::make_unique<CASTNewExpression>());
     nodes.push(std::make_unique<CASTTerm>());
+    return ParseResult::PARSE_OK;
 }
 
 // grammar rule for CASTNewExpression

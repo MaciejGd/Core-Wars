@@ -19,6 +19,8 @@ std::string Token::m_TokenTypeToString() const
             return "ARITHM_OPS";
         case TokenType::NUMERICAL_VAL:
             return "NUMERICAL_VAL";
+        case TokenType::END_LINE:
+            return "END_LINE";
         default:
             return "WRONG_TYPE";
     }

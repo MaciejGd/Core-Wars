@@ -20,6 +20,7 @@ enum TextColor
     RED,
     WHITE,
     YELLOW,
+    GREEN,
     TEXT_COLOR_COUNT
 };
 
@@ -37,7 +38,8 @@ void _log(std::string_view prefix, std::string_view msg, TextColor color, std::s
     static const char* textColorTable[TEXT_COLOR_COUNT] = {
         "\033[31m", // color code for red
         "\033[0m",  // color code for white
-        "\033[33m"  // color code for yellow
+        "\033[33m",  // color code for yellow
+        "\033[32m"  // color code for green
     };
 
     std::string prefix_spacing = std::string(PREFIX_LEN - prefix.size(), ' ');
@@ -57,33 +59,4 @@ void _log(std::string_view prefix, std::string_view msg, TextColor color, std::s
 #define LOG_DBG(msg, ...) _log("DEBUG", msg, TextColor::WHITE, FILENAME, __LINE__, ##__VA_ARGS__);
 #define LOG_ERR(msg, ...) _log("ERROR", msg, TextColor::RED, FILENAME, __LINE__, ##__VA_ARGS__);
 #define LOG_WRN(msg, ...) _log("WARN",  msg, TextColor::YELLOW, FILENAME, __LINE__, ##__VA_ARGS__);
-
-// template<typename ...Args>
-// void _log(const char* prefix, const char* msg, TextColor color, std::string_view filename_, int fileline, Args... args) 
-// {
-//     static const char* textColorTable[TEXT_COLOR_COUNT] = 
-//     {
-//         "\033[31m", // color code for red
-//         "\033[0m",  // color code for white
-//         "\033[33m"  // color code for yellow
-//     };
-
-//     std::string prefix_spacing = std::string(PREFIX_LEN - strlen(prefix), ' ');
-
-//     std::string filename = std::string(filename_);
-//     std::string filename_part = std::string(filename) + ":" + std::to_string(fileline);
-//     std::string filename_spacing = std::string(FILENAME_LEN - filename_part.size(), ' ');
-//     filename_part += filename_spacing;
-
-//     char formatBuffer[8192] = {};
-//     sprintf(formatBuffer, "%s [%s]%s%s %s \033[0m", textColorTable[color], prefix, prefix_spacing.c_str(), filename_part.c_str(), msg);
-
-//     char textBuffer[8192] = {};
-//     sprintf(textBuffer, formatBuffer, args...);
-
-//     puts(textBuffer);
-// };
-
-// #define LOG_DBG(msg, ...) _log("DEBUG", msg, TextColor::WHITE, FILENAME, __LINE__, ##__VA_ARGS__);
-// #define LOG_ERR(msg, ...) _log("ERROR", msg, TextColor::RED, FILENAME, __LINE__, ##__VA_ARGS__);
-// #define LOG_WRN(msg, ...) _log("WARN",  msg, TextColor::YELLOW, FILENAME, __LINE__, ##__VA_ARGS__);
+#define LOG_PSS(msg, ...) _log("",  msg, TextColor::GREEN, FILENAME, __LINE__, ##__VA_ARGS__);

@@ -4,5 +4,5 @@
 
 class CASTAdressMode : public CASTNode {
 public:
-    ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes);
+    ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes) override;
 };

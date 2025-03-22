@@ -1,0 +1,6 @@
+;FAIL
+        ORG START
+
+START   MOV @#1, 0
+
+; should fail, cannot combine two address modes!

@@ -8,6 +8,22 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 add_subdirectory(GUI)
 add_subdirectory(Logic)
 
-add_executable(main main.cpp)
+set(INCLUDE_DIRS
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestSuite/inc/
+)
 
+file(GLOB SRC_FILES 
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestSuite/src/*.cpp
+)
+file(GLOB HDR_FILES 
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestSuite/inc/*.h
+)
+
+add_executable(main
+    main.cpp
+    ${SRC_FILES}
+    ${HDR_FILES}
+)
+
+target_include_directories(main PUBLIC ${INCLUDE_DIRS})
 target_link_libraries(main PRIVATE GUI Logic)

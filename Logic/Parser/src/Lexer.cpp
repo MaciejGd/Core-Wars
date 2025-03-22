@@ -5,17 +5,6 @@
 #include <cerrno>
 #include <algorithm>
 
-Lexer* Lexer::m_instance = nullptr;
-
-
-Lexer *Lexer::GetInstance()
-{
-    if (m_instance == nullptr) {
-        m_instance = new Lexer{};
-    }
-    return m_instance;
-}
-
 TokenContainer Lexer::GetTokens(std::string_view file_path)
 {
     s_file_name = file_path;
@@ -34,18 +23,8 @@ TokenContainer Lexer::GetTokens(std::string_view file_path)
         m_TokenizeLine(line, tokens, line_counter);
         line_counter++;
     }
-    LOG_DBG("END");
     file_contents.close();
 
-    /// DEBUG
-    for (int i = 0; i < tokens.size(); i++){
-        for (int j = 0; j < tokens[i].size(); j++) 
-        {
-            LOG_DBG("Token lexed: {}", tokens[i][j].PrintFormat());
-        }
-        LOG_ERR("New line");
-    }
-    LOG_DBG("Tokenized file: {}", file_path);
     return tokens;
 }
 
@@ -127,5 +106,6 @@ void Lexer::m_TokenizeLine(const std::string& line, TokenContainer& tokens, int 
     // do not add tokens row if it is empty
     if (tokens_row.empty()) 
         return;
+    tokens_row.push_back(Token{line_counter, idx+1, TokenType::END_LINE, ""});
     tokens.push_back(std::move(tokens_row));
 }

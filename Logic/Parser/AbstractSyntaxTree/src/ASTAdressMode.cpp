@@ -6,7 +6,7 @@ ParseResult CASTAdressMode::Eval(std::deque<Token> &tokens, std::stack<std::uniq
     Token next_token = tokens.front();
     if (next_token.type() == TokenType::ADDRESS_MODE)
     {
-        tokens.pop();
+        tokens.pop_front();
     }
     return ParseResult::PARSE_OK;
 }

@@ -24,6 +24,8 @@
 ///
 /// - NUMERICAL_VAL: numerical values indicating memory regions
 /// 
+/// - END_LINE: indicates end of line, and is pushed at the end of every token row lexed 
+///
 enum TokenType {
     OPERATIONS,
     SEPARATOR,
@@ -31,14 +33,15 @@ enum TokenType {
     MODIFIERS,
     ADDRESS_MODE,
     ARITHM_OPS,
-    NUMERICAL_VAL
+    NUMERICAL_VAL,
+    END_LINE
 };
 
 // possible modifiers in RedCode language
 constexpr std::array<std::string, 7> tkn_modifiers = {".a", ".b", ".ab", ".ba", ".f", ".x", ".i"};
 // possible operations in RedCode language
-constexpr std::array<std::string, 19> tkn_operations = {"dat", "mov", "add", "sub", "mul", "div", "mod", 
-                    "jmp", "jmz", "jmn", "djn", "spl", "cmp", "seq", "sne", "slt", "ldp", "stp", "nop"};
+constexpr std::array<std::string, 17> tkn_operations = {"dat", "mov", "add", "sub", "mul", "div", "mod", 
+                    "jmp", "jmz", "jmn", "djn", "spl", "cmp", "seq", "org", "equ", "end"};
 // five basic arithmetic operations
 constexpr std::array<char, 5> tkn_ar_ops = {'+', '-', '/', '*', '%'}; 
 // semicolon indicates comment and will be skipped during lexing

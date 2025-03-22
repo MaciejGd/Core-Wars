@@ -1,0 +1,8 @@
+;PASS
+        ORG START
+
+START   MOV #7*3-2, 0   ; Should resolve to 19
+        ADD #-4+2, 1    ; Should resolve to -2
+        JMP START + (5 * 2) - 1
+
+; should be properly parsed

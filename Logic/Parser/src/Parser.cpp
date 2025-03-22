@@ -1,13 +1,45 @@
 #include "Parser.h"
 
 #include "logger.h"
+#include "ASTLine.h"
 
 #include <string>
 #include <unordered_map>
+#include <stack>
+#include <deque>
 
 void Parser::test_RemoveLables(TokenContainer &tokens)
 {
     m_RemoveLabels(tokens);
+}
+
+bool Parser::ParseFile(TokenContainer &tokens)
+{
+     // remove labels from the line starts perform some initial checking
+    if (!m_RemoveLabels(tokens))
+    {
+        return false;
+    }
+    for (int i = 0; i < tokens.size(); i++) 
+    {
+        if (!m_ParseLine(tokens[i]))
+        {
+            LOG_ERR("Error in parsing, quiting execution");        
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Parser::m_ParseLine(const std::vector<Token> &tokens_row)
+{
+    // initialize node stack and tokens queue needed for parsing
+    std::stack<std::unique_ptr<CASTNode>> node_stack;
+    std::deque<Token> tokens_queue(tokens_row.begin(), tokens_row.end());
+    // add line node to the stack
+    node_stack.push(std::make_unique<CASTLine>());
+
+    return m_TraverseAST(tokens_queue, node_stack);
 }
 
 bool Parser::m_RemoveLabels(TokenContainer &tokens)
@@ -15,7 +47,6 @@ bool Parser::m_RemoveLabels(TokenContainer &tokens)
     // map holding 
     std::unordered_map<std::string, int> labels;
     int n = tokens.size();
-    LOG_ERR("BEFORE PARSING LABELS");
     for (int i = 0; i < n; i++) 
     {   
         // if first token of the line is label, add it to the map
@@ -24,13 +55,13 @@ bool Parser::m_RemoveLabels(TokenContainer &tokens)
             continue;
         }
         const Token& first_token = tokens[i][0];
-        LOG_ERR("Line size: {}", tokens[i].size());
         if (first_token.type() != TokenType::LABEL) 
         {
             continue;
         }
         if (labels.find(first_token.value()) != labels.end())
         {
+            // if label is redefined throw an error
             int prev_occ = labels[first_token.value()];
             const Token& prevFound = tokens[prev_occ][0];
             LOG_ERR("Error in parsing, line: {}, Label {} already declared in code in line: {}",
@@ -40,8 +71,7 @@ bool Parser::m_RemoveLabels(TokenContainer &tokens)
         // psuh label to the labels map
         labels[first_token.value()] = i;
     }
-    LOG_ERR("AFTER PARSING LABELS");
-    // after finding labels, and their associated line nums, switch labels with relative nums
+    // after finding labels, and their associated line nums, switch labels names with relative nums
     for (int i = 0; i < tokens.size(); i++) 
     {
         // we can skip first token in line 
@@ -78,4 +108,30 @@ bool Parser::m_RemoveLabels(TokenContainer &tokens)
         tokens[idx].erase(tokens[idx].begin());
     }
     return true;
+}
+
+bool Parser::m_TraverseAST(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes)
+{
+
+    if (tokens.size() == 0 && nodes.size() != 0) 
+    {
+        return false;
+    }
+    if (tokens.size() != 0 && nodes.size() == 0)
+    {
+        return false;
+    }
+    if (tokens.size() == 0 && nodes.size() == 0)
+    {
+        return true;
+    }
+
+    std::unique_ptr<CASTNode> next_node = std::move(nodes.top());
+    nodes.pop();
+
+    if (next_node->Eval(tokens, nodes) == ParseResult::PARSE_FAIL)
+    {
+        return false;
+    }
+    return m_TraverseAST(tokens, nodes);
 }

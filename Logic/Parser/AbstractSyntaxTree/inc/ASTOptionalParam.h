@@ -3,8 +3,7 @@
 
 #include "ASTNode.h"
 
-
-class CASTNumber : public CASTNode {
+class CASTOptionalParam : public CASTNode {
 public:
     ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes) override;
 };
