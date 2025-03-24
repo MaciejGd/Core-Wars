@@ -9,7 +9,7 @@ ParseResult CASTNumber::Eval(std::deque<Token> &tokens, std::stack<std::unique_p
     {
         return ParseResult::PARSE_OK; // TODO fill it in    
     }
-    LOG_ERR("Error in parsign file {}, in line {}, idx {}", Lexer::s_file_name, next_token.line(), next_token.idx());
+    PARSING_FAIL(CLexer::s_file_name, next_token);
     LOG_ERR("Numerical value expected, got: {}", next_token.PrintFormat());
     return ParseResult::PARSE_FAIL;
 }

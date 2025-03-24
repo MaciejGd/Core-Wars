@@ -9,7 +9,7 @@ using TokenContainer = std::vector<std::vector<Token>>;
 
 
 /// @brief Singleton for creating token list from input file
-class Lexer {
+class CLexer {
 public:
     /// name of the file currently lexed
     inline static std::string s_file_name;

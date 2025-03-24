@@ -11,11 +11,11 @@ void ParserTestMachine::RunTest(const std::string& file_name)
     std::string result = m_GetParsingResult(file_path);
     if (m_CompareResults(file_path, result))
     {
-        LOG_PSS("testcase: {} [PASSED]", file_name);
+        LOG_PASS("testcase: {} [PASSED]", file_name);
     }
     else 
     {
-        LOG_ERR("testcase: {} [FAILED]", file_name);
+        LOG_FAIL("testcase: {} [FAILED]", file_name);
     }
 }
 
@@ -29,11 +29,11 @@ void ParserTestMachine::RunTests()
         std::string result = m_GetParsingResult(file_name);
         if (m_CompareResults(file_name, result))
         {
-            LOG_PSS("testcase: {} [PASSED]", file_name);
+            LOG_PASS("testcase: {} [PASSED]", file_name);
         }
         else 
         {
-            LOG_ERR("testcase: {} [FAILED]", file_name);
+            LOG_FAIL("testcase: {} [FAILED]", file_name);
         }
     }
 }

@@ -18,7 +18,7 @@ ParseResult CASTOptionalParam::Eval(std::deque<Token> &tokens, std::stack<std::u
         nodes.push(std::make_unique<CASTParameter>());
         return ParseResult::PARSE_OK;
     }
-    LOG_ERR("Error in parsing file {}, in line {}, idx {}", Lexer::s_file_name, next_token.line(), next_token.idx());
+    PARSING_FAIL(CLexer::s_file_name, next_token);
     LOG_ERR("Line should end in here, or coma indicating second parameter should be passed" );
     return ParseResult::PARSE_FAIL;
 }

@@ -5,7 +5,7 @@
 #include <cerrno>
 #include <algorithm>
 
-TokenContainer Lexer::GetTokens(std::string_view file_path)
+TokenContainer CLexer::GetTokens(std::string_view file_path)
 {
     s_file_name = file_path;
     TokenContainer tokens;
@@ -28,7 +28,7 @@ TokenContainer Lexer::GetTokens(std::string_view file_path)
     return tokens;
 }
 
-void Lexer::m_TokenizeLine(const std::string& line, TokenContainer& tokens, int line_counter) 
+void CLexer::m_TokenizeLine(const std::string& line, TokenContainer& tokens, int line_counter) 
 {
     std::vector<Token> tokens_row;
     int idx = 0;

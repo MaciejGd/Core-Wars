@@ -9,6 +9,11 @@
 #include <deque> // for token queue
 #include <stack>
 
+
+#define PARSING_FAIL(file_name, failing_token) \
+    LOG_ERR("Error in parsing file {} line: {}, idx: {}, ", \
+        file_name, failing_token.line(), failing_token.idx());\
+
 // parsing return codes
 enum ParseResult {
     PARSE_END,

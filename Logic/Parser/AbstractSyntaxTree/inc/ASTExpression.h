@@ -15,6 +15,13 @@
 /// - NewExpression:= ARITHM_OP Expression
 /// 
 class CASTExpression : public CASTNode {
+private:
+    int m_PrecedenceHigher(Token& first_sign, Token& second_sign);
+    
+    ParseResult m_ParseArithmeticExpression(std::deque<Token>& tokens, 
+        std::stack<std::unique_ptr<CASTNode>>& nodes, std::deque<Token>& output_tokens);
+
+    ParseResult m_EvaluateParameter(std::deque<Token>& tokens, int& result);
 public:
     ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes) override;
 };

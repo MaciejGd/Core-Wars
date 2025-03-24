@@ -1,5 +1,5 @@
 #include "ASTParameter.h"
-#include "ASTAdressMode.h"
+#include "ASTAddressMode.h"
 #include "ASTExpression.h"
 
 // parameter to operation can be
@@ -8,6 +8,8 @@
 ParseResult CASTParameter::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes)
 {
     nodes.push(std::make_unique<CASTExpression>());
-    nodes.push(std::make_unique<CASTAdressMode>());
+    nodes.push(std::make_unique<CASTAddressMode>());
     return ParseResult::PARSE_OK;
 }
+
+

@@ -8,7 +8,7 @@ ParseResult CASTEndLine::Eval(std::deque<Token> &tokens, std::stack<std::unique_
     {
         return ParseResult::PARSE_OK;
     }
-    LOG_ERR("Error in parsing file {}, in line {}, idx {}", Lexer::s_file_name, next_token.line(), next_token.idx());
+    PARSING_FAIL(CLexer::s_file_name, next_token);
     LOG_ERR("EndLine token expected but present token is {}", next_token.PrintFormat());
     return ParseResult::PARSE_FAIL;
 }

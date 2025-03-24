@@ -93,8 +93,9 @@ bool Parser::m_RemoveLabels(TokenContainer &tokens)
             int label_declaration_idx = labels[curr.value()];
                         
             std::string label_switch_val = std::to_string(label_declaration_idx - i);
-            // change only value for now as we need to check grammar rules for labels 
+            // change value and type of the token
             curr.SetValue(label_switch_val);
+            curr.SetType(TokenType::NUMERICAL_VAL);
 
             LOG_DBG("Successfully switched label with numerical value in line {}, idx {}", 
                 curr.line(), curr.idx());

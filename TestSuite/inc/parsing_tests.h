@@ -11,7 +11,7 @@ public:
 private:
     const std::string m_test_path = "../tests/parsing_tests/";
 
-    Lexer m_lexer;
+    CLexer m_lexer;
     Parser m_parser;
 
     std::string m_GetParsingResult(const std::string& file_name);

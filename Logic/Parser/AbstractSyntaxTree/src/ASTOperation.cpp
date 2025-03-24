@@ -9,8 +9,7 @@ ParseResult CASTOperation::Eval(std::deque<Token>& tokens, std::stack<std::uniqu
     // if type of next token is not operation, then parsing shoul fail
     if (next_token.type() != TokenType::OPERATIONS) 
     {
-        LOG_ERR("Error in file {} line: {}, idx: {}, ", 
-            Lexer::s_file_name, next_token.line(), next_token.idx());
+        PARSING_FAIL(CLexer::s_file_name, next_token);
         LOG_ERR("Line should start with operator but starts with token => {}", next_token.PrintFormat());
         return ParseResult::PARSE_FAIL;
     }
