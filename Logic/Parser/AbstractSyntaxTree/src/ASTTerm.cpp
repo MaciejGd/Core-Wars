@@ -2,7 +2,7 @@
 
 #include "ASTClosingBracket.h"
 #include "ASTNumber.h"
-#include "ASTExpression.h"
+#include "ASTArithmExpression.h"
 
 ParseResult CASTTerm::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes)
 {
@@ -11,16 +11,17 @@ ParseResult CASTTerm::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr
     tokens.pop_front();
     if (next_token.type() == TokenType::LABEL)
     {
+        // wont be needed in a future when labels will be removed
         return ParseResult::PARSE_OK;
     }
-    else if (next_token.type() == TokenType::NUMERICAL_VAL)
+    if (next_token.type() == TokenType::NUMERICAL_VAL)
     {
         return ParseResult::PARSE_OK;
     }
     else if (next_token.value() == "(")
     {
         nodes.push(std::make_unique<CASTClosingBracket>());
-        nodes.push(std::make_unique<CASTExpression>());
+        nodes.push(std::make_unique<CASTArithmExpression>());
         return ParseResult::PARSE_OK;
     }
     else if (next_token.value() == "+" || next_token.value() == "-")

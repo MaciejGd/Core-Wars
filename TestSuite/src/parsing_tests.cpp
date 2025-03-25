@@ -2,12 +2,13 @@
 
 #include <filesystem>
 #include <fstream>
+#include <set>
 
 namespace fs = std::filesystem;
 
 void ParserTestMachine::RunTest(const std::string& file_name)
 {
-    std::string file_path = m_test_path + file_name;
+    std::string file_path = m_test_path + m_testsuite + file_name;
     std::string result = m_GetParsingResult(file_path);
     if (m_CompareResults(file_path, result))
     {
@@ -22,10 +23,16 @@ void ParserTestMachine::RunTest(const std::string& file_name)
 
 void ParserTestMachine::RunTests()
 {
-    for (const auto& entry : fs::directory_iterator(m_test_path))
+    std::string test_path = m_test_path + m_testsuite;
+    // analyze files in alphabetical order so use set
+    std::set<std::string> test_files;
+    for (const auto& entry : fs::directory_iterator(test_path))
     {
         fs::path test_name = entry.path();
         std::string file_name = test_name.string();
+        test_files.insert(file_name);
+    }
+    for (const auto& file_name : test_files) {
         std::string result = m_GetParsingResult(file_name);
         if (m_CompareResults(file_name, result))
         {

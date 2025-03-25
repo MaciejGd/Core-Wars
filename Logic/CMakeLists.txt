@@ -8,6 +8,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 #     ${CMAKE_CURRENT_SOURCE_DIR}/Instructions/src
 #     ${CMAKE_CURRENT_SOURCE_DIR}/Platform/src
 # )
+# enable symbols for debugging
+set(CMAKE_BUILD_TYPE Debug)
+
+
 
 set(INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/Instructions/Operations/inc

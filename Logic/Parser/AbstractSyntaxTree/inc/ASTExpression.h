@@ -2,37 +2,23 @@
 
 #include "ASTNode.h"
 
-/// @brief Class representing Expression node in Abstract Syntax Tree
-/// 
-/// Grammar rules for expressions are 
-///
-/// 1. Expression := Term 
-/// 
-/// 2. Expression := Term NewExpression
-///
-/// Where NewExpression is described as follows:
-/// 
-/// - NewExpression:= ARITHM_OP Expression
-/// 
+
 class CASTExpression : public CASTNode {
 private:
-    int m_PrecedenceHigher(Token& first_sign, Token& second_sign);
     
-    ParseResult m_ParseArithmeticExpression(std::deque<Token>& tokens, 
-        std::stack<std::unique_ptr<CASTNode>>& nodes, std::deque<Token>& output_tokens);
+    ParseResult m_ParseArithmeticExpression(std::deque<Token>& tokens);
 
-    ParseResult m_EvaluateParameter(std::deque<Token>& tokens, int& result);
+    ParseResult m_TraverseNodes(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes);
+    
+    int m_EvaluateArithmeticExpression(std::deque<Token>& tokens);
+
+    /// @brief Function to translate arithmetic expression from infix to postfix
+    /// @param input input queue of tokens to be translated
+    /// @param postfix tokens translated to postfix notation
+    /// @return 
+    bool m_TranslateToPostfix(std::deque<Token>& input, std::deque<Token>& postfix);
+
+    int m_PrecedenceHigher(Token& first_sign, Token& second_sign);
 public:
-    ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes) override;
-};
-
-/// @brief Class representing NewExpression node in Abstract Syntax Tree
-///
-/// Introduced as fullfill to Expression node. CASTNewExpression can be skipped, its
-/// grammar rule is like follow
-///
-/// - NewExpression := ARITHM_OP Expression |
-///
-class CASTNewExpression : public CASTNode {
     ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes) override;
 };

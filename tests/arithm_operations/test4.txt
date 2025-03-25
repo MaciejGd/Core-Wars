@@ -1,0 +1,4 @@
+;FAIL
+; double minus should not be possible
+
+MOV.A @--4

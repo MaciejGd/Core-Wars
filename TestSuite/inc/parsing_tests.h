@@ -2,14 +2,17 @@
 
 #include "Lexer.h"
 #include "Parser.h"
+#include <string_view>
 
 class ParserTestMachine {
 public:
     ParserTestMachine() = default;
     void RunTest(const std::string& file_name);
     void RunTests();
+    void SetTestsuiteDir(std::string_view testsuite_dir) { m_testsuite = testsuite_dir; };
 private:
-    const std::string m_test_path = "../tests/parsing_tests/";
+    const std::string m_test_path = "../tests/";
+    std::string m_testsuite = "parsing_tests";
 
     CLexer m_lexer;
     Parser m_parser;

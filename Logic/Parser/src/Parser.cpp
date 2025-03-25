@@ -96,7 +96,7 @@ bool Parser::m_RemoveLabels(TokenContainer &tokens)
             // change value and type of the token
             curr.SetValue(label_switch_val);
             curr.SetType(TokenType::NUMERICAL_VAL);
-
+            //LOG_WRN("Switched to value {}", curr.value());
             LOG_DBG("Successfully switched label with numerical value in line {}, idx {}", 
                 curr.line(), curr.idx());
 

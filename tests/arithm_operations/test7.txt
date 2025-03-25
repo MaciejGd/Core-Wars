@@ -1,0 +1,4 @@
+;FAIL
+;opening and closing bracket should not be next to each other
+
+MOV.A #(2)(2)
