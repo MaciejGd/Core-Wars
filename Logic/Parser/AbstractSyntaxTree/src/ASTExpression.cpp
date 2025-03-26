@@ -3,22 +3,6 @@
 #include "ASTArithmExpression.h"
 #include <string>
 
-int CASTExpression::m_PrecedenceHigher(Token& first_sign, Token& second_sign)
-{
-    std::string f_val = first_sign.value();
-    std::string s_val = second_sign.value();
-    if ((f_val == "+" || f_val == "-") && (s_val == "*" || s_val == "/"))
-    {
-        return 1; // resturn 1 when second_sign has higher precedence
-    }
-    else if ((s_val == "*" || s_val == "/") && (f_val == "*" ||   f_val == "/"))
-    {
-        // return 2 when first_sign precedence is equal to secod's sign precedendce
-        return 2;
-    }
-    return 0;
-}
-
 ParseResult CASTExpression::m_ParseArithmeticExpression(std::deque<Token> &tokens)
 {
     // we assume proper tokens has been already prepared for us
@@ -53,12 +37,15 @@ ParseResult CASTExpression::m_TraverseNodes(std::deque<Token> &tokens, std::stac
     return m_TraverseNodes(tokens, nodes);
 }
 
-int CASTExpression::m_EvaluateArithmeticExpression(std::deque<Token>& tokens)
-{   
-    std::deque<Token> postfix;
-    m_TranslateToPostfix(tokens, postfix);
-
-    return ParseResult::PARSE_OK;
+int CASTExpression::m_PrecedenceHigher(Token& first_sign, Token& second_sign)
+{
+    std::string f_val = first_sign.value();
+    std::string s_val = second_sign.value();
+    if ((f_val == "+" || f_val == "-") && (s_val == "*" || s_val == "/"))
+    {
+        return 1; // resturn 1 when second_sign has higher precedence
+    }
+    return 0;
 }
 
 bool CASTExpression::m_TranslateToPostfix(std::deque<Token>& input, std::deque<Token> &postfix)
@@ -120,16 +107,64 @@ bool CASTExpression::m_TranslateToPostfix(std::deque<Token>& input, std::deque<T
     {
         postfix.push_back(op.top());
         op.pop();
-    }
-    // std::string reverse_polish_not_string = "";
-    // for (const auto& x: postfix)
-    // {
-    //     reverse_polish_not_string += std::string(x.value());
-    //     reverse_polish_not_string += " ";
-    // }
-    // LOG_WRN("Parameter in POLISH notation: {}", reverse_polish_not_string);
+    }    
     return true;
 }
+
+int CASTExpression::m_EvaluatePostifxExpression(std::deque<Token> &postfix)
+{
+    std::stack<Token> numbers;
+    while (!postfix.empty())
+    {
+        Token next_token = std::move(postfix.front());
+        postfix.pop_front();
+        if (next_token.type() == TokenType::NUMERICAL_VAL)
+        {
+            // if number spotted, simply push it to numbers stack
+            numbers.push(next_token);
+        }
+        else if (next_token.type() == TokenType::ARITHM_OPS) 
+        {
+            std::string op = next_token.value();
+            // we need to pop top token from stack and take its value as int 
+            int pop_token = std::stoi(numbers.top().value()); 
+            numbers.pop();
+            // we take next token's value and transform it to int
+            int top_token_value = std::stoi(numbers.top().value());
+            if (op == "+")
+            {
+                numbers.top().SetValue(std::to_string(top_token_value + pop_token));
+            }
+            else if (op == "-")
+            {
+                numbers.top().SetValue(std::to_string(top_token_value - pop_token));
+            }
+            else if (op == "*")
+            {
+                numbers.top().SetValue(std::to_string(top_token_value * pop_token));
+            }
+            else if (op == "/")
+            {
+                numbers.top().SetValue(std::to_string(top_token_value / pop_token));
+            }
+        }
+    }
+    return std::stoi(numbers.top().value());
+}
+
+int CASTExpression::m_EvaluateArithmeticExpression(std::deque<Token>& tokens)
+{   
+    int line_of_occurence = tokens.front().line(); // for debug purposes
+    // translate arithmetic expression to postfix Polish notation and evaluate
+    std::deque<Token> postfix;
+    static_cast<void>(m_TranslateToPostfix(tokens, postfix)); // discard boolean reasult for now
+    int parameter_value = m_EvaluatePostifxExpression(postfix);
+    LOG_WRN("In parsed file: {} in line: {} value evaluated from arithm expression is: {}", 
+        CLexer::s_file_name, line_of_occurence, parameter_value);
+
+    return parameter_value;
+}
+
 
 ParseResult CASTExpression::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes)
 {
@@ -137,13 +172,14 @@ ParseResult CASTExpression::Eval(std::deque<Token> &tokens, std::stack<std::uniq
     std::deque<Token> arithmetic_tokens(tokens.begin(), tokens.end());
     if (m_ParseArithmeticExpression(arithmetic_tokens) == ParseResult::PARSE_FAIL)
     {
+        // if parsing arithmetic expression failed, quit with exit error code
         return ParseResult::PARSE_FAIL;
     }
 
     // check how many tokens has been popped from queue of tokens
     int tokens_to_parse = tokens.size() - arithmetic_tokens.size();
 
-    // create queue of tokens to be evaluated as in arihtm expression by popping from original queue
+    // create queue of tokens to be evaluated as arihtm expression by popping from original queue
     std::deque<Token> expression_tokens;
     for (int i = 0; i < tokens_to_parse; i++)
     {

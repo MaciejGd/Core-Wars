@@ -17,6 +17,7 @@ private:
     /// @param postfix tokens translated to postfix notation
     /// @return 
     bool m_TranslateToPostfix(std::deque<Token>& input, std::deque<Token>& postfix);
+    int m_EvaluatePostifxExpression(std::deque<Token> &postfix);
 
     int m_PrecedenceHigher(Token& first_sign, Token& second_sign);
 public:
