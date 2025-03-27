@@ -7,6 +7,7 @@ ParseResult CASTAddressMode::Eval(std::deque<Token> &tokens, std::stack<std::uni
     if (next_token.type() == TokenType::ADDRESS_MODE)
     {
         tokens.pop_front();
+        return ParseResult::PARSE_OK;
     }
     return ParseResult::PARSE_OK;
 }
