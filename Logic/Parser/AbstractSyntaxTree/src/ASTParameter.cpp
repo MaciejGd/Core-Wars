@@ -5,7 +5,8 @@
 // parameter to operation can be
 // PARAM := adressmode expression
 
-ParseResult CASTParameter::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes)
+ParseResult CASTParameter::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
+                        std::unique_ptr<CInstruction>& instruction)
 {
     nodes.push(std::make_unique<CASTExpression>());
     nodes.push(std::make_unique<CASTAddressMode>());

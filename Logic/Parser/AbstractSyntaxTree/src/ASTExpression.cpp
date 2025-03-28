@@ -29,7 +29,9 @@ ParseResult CASTExpression::m_TraverseNodes(std::deque<Token> &tokens, std::stac
     std::unique_ptr<CASTNode> top_node = std::move(nodes.top());
     nodes.pop();
     //LOG_WRN("Top token to be parsed: {}", tokens.front().PrintFormat());
-    if (top_node->Eval(tokens, nodes) == ParseResult::PARSE_FAIL)
+    // needed dummy CInstruction pointer to use Eval function 
+    std::unique_ptr<CInstruction> dummy_instruction = nullptr; 
+    if (top_node->Eval(tokens, nodes, dummy_instruction) == ParseResult::PARSE_FAIL)
     {
         return ParseResult::PARSE_FAIL;
     }
@@ -166,7 +168,8 @@ int CASTExpression::m_EvaluateArithmeticExpression(std::deque<Token>& tokens)
 }
 
 
-ParseResult CASTExpression::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes)
+ParseResult CASTExpression::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
+                        std::unique_ptr<CInstruction>& instruction)
 {
     // parse arithmetic expression
     std::deque<Token> arithmetic_tokens(tokens.begin(), tokens.end());

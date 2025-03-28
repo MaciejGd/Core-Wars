@@ -5,7 +5,8 @@
 // where mod:= .a , .b, .ab, etc.
 
 
-ParseResult CASTModifier::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes)
+ParseResult CASTModifier::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes, 
+    std::unique_ptr<CInstruction>& instruction)
 {
     Token& token = tokens.front();
     if (token.type() == TokenType::MODIFIERS)

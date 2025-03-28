@@ -2,7 +2,8 @@
 #include "ASTParameter.h"
 #include "ASTEndLine.h"
 
-ParseResult CASTOptionalParam::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes)
+ParseResult CASTOptionalParam::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
+                        std::unique_ptr<CInstruction>& instruction)
 {
     Token& next_token = tokens.front();
     tokens.pop_front();

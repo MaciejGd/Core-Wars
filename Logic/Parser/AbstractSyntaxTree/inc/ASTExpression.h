@@ -21,5 +21,6 @@ private:
 
     int m_PrecedenceHigher(Token& first_sign, Token& second_sign);
 public:
-    ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes) override;
+    ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
+                        std::unique_ptr<CInstruction>& instruction) override;
 };

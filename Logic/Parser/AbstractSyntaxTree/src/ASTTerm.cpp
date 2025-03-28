@@ -4,7 +4,8 @@
 #include "ASTNumber.h"
 #include "ASTArithmExpression.h"
 
-ParseResult CASTTerm::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes)
+ParseResult CASTTerm::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
+                        std::unique_ptr<CInstruction>& instruction)
 {
     Token next_token = tokens.front();
     // number can be signed, so we need to check if + or - is present

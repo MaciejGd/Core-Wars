@@ -6,14 +6,14 @@ bool CInstruction::CreateParameter(std::unique_ptr<CParameter> param)
     // if A param has not been yet created, create it
     if (m_A_param == nullptr) 
     {
-        m_A_param.reset(std::move(param));
+        m_A_param = std::move(param);
         LOG_DBG("A parameter has been set as {}", m_A_param->Identify());
         return true;
     }
     // if B param has not been yet set, create it
     if (m_B_param == nullptr)
     {
-        m_B_param.reset(std::move(param));
+        m_B_param = std::move(param);
         LOG_DBG("B parameter has been set as {}", m_A_param->Identify());
         return true;
     }
@@ -55,12 +55,12 @@ bool CInstruction::CreateParamValue(int value)
 
 void CInstruction::SetAParameter(std::unique_ptr<CParameter> param)
 {
-    m_A_param.reset(std::move(param));
+    m_A_param = (std::move(param));
 }
 
 void CInstruction::SetBParameter(std::unique_ptr<CParameter> param)
 {
-    m_B_param.reset(std::move(param));
+    m_B_param = (std::move(param));
 }
 
 

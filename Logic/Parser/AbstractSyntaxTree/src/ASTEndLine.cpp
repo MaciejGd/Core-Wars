@@ -1,6 +1,7 @@
 #include "ASTEndLine.h"
 
-ParseResult CASTEndLine::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes)
+ParseResult CASTEndLine::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
+                        std::unique_ptr<CInstruction>& instruction)
 {
     Token& next_token = tokens.front();
     tokens.pop_front();

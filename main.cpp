@@ -23,6 +23,8 @@ int main(int argc, char *argv[])
     //     LOG_ERR("Failed to parse input file {}", path);
     // }
     ParserTestMachine test_harness;
+    //test_harness.SetTestsuiteDir("arithm_operations");
+    test_harness.RunTests();
     test_harness.SetTestsuiteDir("arithm_operations");
     test_harness.RunTests();
     // CArena ar;

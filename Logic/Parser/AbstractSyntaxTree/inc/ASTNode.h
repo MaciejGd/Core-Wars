@@ -2,6 +2,7 @@
 
 #include "logger.h"
 #include "Lexer.h" // we need to know Token class def and name of the file
+#include "Instruction.h"
 // currently analyzed
 
 #include <vector>
@@ -26,5 +27,6 @@ enum ParseResult {
 // evaluation of node
 class CASTNode {
 public:
-    virtual ParseResult Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes) = 0;
+    virtual ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
+        std::unique_ptr<CInstruction>& instruction) = 0;
 };

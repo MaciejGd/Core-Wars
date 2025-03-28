@@ -1,7 +1,8 @@
 #include "ASTAddressMode.h"
 
 // address mode is optional so do not throw error if it is not present
-ParseResult CASTAddressMode::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes)
+ParseResult CASTAddressMode::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
+                        std::unique_ptr<CInstruction>& instruction)
 {
     Token next_token = tokens.front();
     if (next_token.type() == TokenType::ADDRESS_MODE)

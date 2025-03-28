@@ -1,7 +1,8 @@
 #include "ASTOperation.h"
 #include "ASTModifier.h"
 
-ParseResult CASTOperation::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes)
+ParseResult CASTOperation::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes, 
+    std::unique_ptr<CInstruction>& instruction)
 {
     // if token type is operation then parsing succeed and add CASTModifier to m_rhs
     Token& next_token = tokens.front();

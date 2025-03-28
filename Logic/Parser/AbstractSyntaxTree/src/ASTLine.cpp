@@ -9,7 +9,8 @@
 // modifier can start with label however it got removed 
 // before so we do not need to care about that
 
-ParseResult CASTLine::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes) 
+ParseResult CASTLine::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes, 
+    std::unique_ptr<CInstruction>& instruction)
 {
     // push to stack of nodes below grammar rule:
     // Line := operation param coma param

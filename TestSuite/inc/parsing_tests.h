@@ -15,7 +15,6 @@ private:
     std::string m_testsuite = "parsing_tests";
 
     CLexer m_lexer;
-    Parser m_parser;
 
     std::string m_GetParsingResult(const std::string& file_name);
     bool m_CompareResults(const std::string& file_path, const std::string& parsing_result);

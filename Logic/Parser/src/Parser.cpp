@@ -8,12 +8,7 @@
 #include <stack>
 #include <deque>
 
-void Parser::test_RemoveLables(TokenContainer &tokens)
-{
-    m_RemoveLabels(tokens);
-}
-
-bool Parser::ParseFile(TokenContainer &tokens)
+bool CParser::ParseFile(TokenContainer &tokens, std::vector<std::unique_ptr<CInstruction>>& instructions)
 {
      // remove labels from the line starts perform some initial checking
     if (!m_RemoveLabels(tokens))
@@ -22,7 +17,8 @@ bool Parser::ParseFile(TokenContainer &tokens)
     }
     for (int i = 0; i < tokens.size(); i++) 
     {
-        if (!m_ParseLine(tokens[i]))
+        instructions.push_back(std::make_unique<CInstruction>());
+        if (!m_ParseLine(tokens[i], instructions.back()))
         {
             LOG_ERR("Error in parsing, quiting execution");        
             return false;
@@ -31,18 +27,19 @@ bool Parser::ParseFile(TokenContainer &tokens)
     return true;
 }
 
-bool Parser::m_ParseLine(const std::vector<Token> &tokens_row)
+bool CParser::m_ParseLine(const std::vector<Token> &tokens_row, std::unique_ptr<CInstruction>& instruction)
 {
     // initialize node stack and tokens queue needed for parsing
     std::stack<std::unique_ptr<CASTNode>> node_stack;
     std::deque<Token> tokens_queue(tokens_row.begin(), tokens_row.end());
+    // Instruction to be created based on parsed line
     // add line node to the stack
     node_stack.push(std::make_unique<CASTLine>());
 
-    return m_TraverseAST(tokens_queue, node_stack);
+    return m_TraverseAST(tokens_queue, node_stack, instruction);
 }
 
-bool Parser::m_RemoveLabels(TokenContainer &tokens)
+bool CParser::m_RemoveLabels(TokenContainer &tokens)
 {   
     // map holding 
     std::unordered_map<std::string, int> labels;
@@ -111,7 +108,8 @@ bool Parser::m_RemoveLabels(TokenContainer &tokens)
     return true;
 }
 
-bool Parser::m_TraverseAST(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes)
+bool CParser::m_TraverseAST(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
+                            std::unique_ptr<CInstruction>& instruction)
 {
 
     if (tokens.size() == 0 && nodes.size() != 0) 
@@ -130,9 +128,9 @@ bool Parser::m_TraverseAST(std::deque<Token> &tokens, std::stack<std::unique_ptr
     std::unique_ptr<CASTNode> next_node = std::move(nodes.top());
     nodes.pop();
 
-    if (next_node->Eval(tokens, nodes) == ParseResult::PARSE_FAIL)
+    if (next_node->Eval(tokens, nodes, instruction) == ParseResult::PARSE_FAIL)
     {
         return false;
     }
-    return m_TraverseAST(tokens, nodes);
+    return m_TraverseAST(tokens, nodes, instruction);
 }
