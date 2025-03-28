@@ -12,10 +12,13 @@ public:
     CCodeBuilder() = default;
     CCodeBuilder(std::string file_name);
 
-    private:
-    std::vector<CInstruction> m_instructions;
+    void SetFileName(const std::string& file_name) { m_file_name = file_name; };
+    bool ProduceInstructions();
+    
+private:
+    std::vector<std::unique_ptr<CInstruction>> m_instructions;
     CLexer m_lexer;
     std::string m_file_name;
 
-    void m_ProcessProgramFile();
+    bool m_ProcessProgramFile();
 };

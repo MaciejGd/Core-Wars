@@ -6,7 +6,7 @@
 #include <Token.h>
 
 using TokenContainer = std::vector<std::vector<Token>>;
-
+// TODO - turn it into a class with only static fields as Parser??? to consider that
 
 /// @brief Singleton for creating token list from input file
 class CLexer {

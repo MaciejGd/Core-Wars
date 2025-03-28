@@ -7,6 +7,7 @@ class CParameterPostInc : public CParameter {
 public:
     CParameterPostInc() = default;
     CParameterPostInc(int val): CParameter(val) {}
+    const std::string Identify() const override { return "PostInc"; };
 private:
 
 protected:

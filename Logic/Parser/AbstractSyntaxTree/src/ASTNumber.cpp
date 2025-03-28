@@ -8,7 +8,7 @@ ParseResult CASTNumber::Eval(std::deque<Token> &tokens, std::stack<std::unique_p
     tokens.pop_front();
     if (next_token.type() == TokenType::NUMERICAL_VAL)
     {
-        return ParseResult::PARSE_OK; // TODO fill it in    
+        return ParseResult::PARSE_OK;
     }
     PARSING_FAIL(CLexer::s_file_name, next_token);
     LOG_ERR("Numerical value expected, got: {}", next_token.PrintFormat());

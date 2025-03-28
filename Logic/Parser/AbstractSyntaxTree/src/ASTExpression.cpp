@@ -191,6 +191,8 @@ ParseResult CASTExpression::Eval(std::deque<Token> &tokens, std::stack<std::uniq
     }
 
     int param_value = m_EvaluateArithmeticExpression(expression_tokens);
+    // set value of the parameter in instruction
+    instruction->CreateParamValue(param_value);
 
     return ParseResult::PARSE_OK;
 }
