@@ -8,6 +8,8 @@ public:
     CParameterPreDecr() = default;
     CParameterPreDecr(int val): CParameter(val) {}
     const std::string Identify() const override { return "PreDecr"; };
+
+    void EvaluateParameter(int pc) override;
 private:
 
 protected:

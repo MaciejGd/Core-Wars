@@ -1,19 +1,46 @@
 #pragma once
 
-#include <memory>
-#include <vector>
-// what should arena do???
-
 #include "Operation.h"
 
-/// @brief Class holding logic behind arena
+#include <memory>
+#include <vector>
+
+#define ARENA_SIZE 8000
+#define RW_LIMIT 500
+
+class CInstruction;
+
+/// @brief Singleton class holding logic behind arena
+/// 
+/// Many other classes will reference Arena, so retrieving pointer to instance
+/// without caring about passing reference or pointer in function calls will 
+/// be big plus of using Singleton pattern.
+///
+/// Another plus of using Singleton in this case is that constructor of Arena shouldn't
+/// be called explicitly, only one instance of arena should be created during program execution
 class CArena {
 public:
-    CArena();
     void TestPrint();
 
-    void InitPlayers();
+    // we should delete copy constructor, move constructor, copy and move assignements operators
+    CArena(const CArena& arena) = delete; 
+    CArena(CArena && arena) = delete;
+    CArena& operator=(const CArena& arena) = delete;
+    CArena& operator=(CArena&& arena) = delete;
+
+    static CArena& GetInstance();
+
+    /// @brief Function to fold addresses going out of limit set
+    /// @param pointer pointer to fold to desired range
+    /// @param limit limit of the range
+    /// @return size_t indicating position after folding
+    static size_t Fold(size_t pointer);
+    std::unique_ptr<CInstruction>& operator[](size_t idx);
+
 private:
-    static const int MAX_TAPE_LEN = 8000; // len of turing tape arena
-    std::vector<std::unique_ptr<COperation>> arena;
+    CArena();
+    // instance of Arena created on startup, reference to it will be returned from GetInstance
+    static CArena s_instance;
+
+    std::vector<std::unique_ptr<CInstruction>> m_arena;
 };

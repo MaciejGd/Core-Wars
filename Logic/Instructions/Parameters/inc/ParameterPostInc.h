@@ -8,6 +8,8 @@ public:
     CParameterPostInc() = default;
     CParameterPostInc(int val): CParameter(val) {}
     const std::string Identify() const override { return "PostInc"; };
+
+    void EvaluateParameter(int pc) override;
 private:
 
 protected:

@@ -27,7 +27,7 @@ ParseResult CASTModifier::Eval(std::deque<Token>& tokens, std::stack<std::unique
 bool CASTModifier::m_SetModifier(Token &token, std::unique_ptr<CInstruction> &instruction)
 {
     std::string modifier = token.value();
-    LOG_ERR("Modifier value: {}", modifier)
+    LOG_DBG("Modifier value: {}", modifier)
     if (modifier == ".a")
     {
         instruction->SetModifier(ModifierType::A);

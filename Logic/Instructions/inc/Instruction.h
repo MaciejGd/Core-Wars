@@ -50,6 +50,10 @@ public:
 
     /// @brief Debug function for printing instruction
     std::string PrintInstruction() const;
+
+    const int GetAParamValue() const { return m_A_param->GetValue(); };
+    const int GetBParamValue() const { return m_B_param->GetValue(); };
+
 private:
     bool m_SetParamValue(std::unique_ptr<CParameter>& arg, int value);
     std::unique_ptr<CParameter> m_A_param;
