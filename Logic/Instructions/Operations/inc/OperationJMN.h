@@ -5,5 +5,6 @@
 
 
 class COperationJMN : public COperation {
-
+public:
+    COperationJMN();
 };

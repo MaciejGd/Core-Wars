@@ -5,5 +5,6 @@
 
 
 class COperationSUB : public COperation {
-
+public:
+    COperationSUB();
 };

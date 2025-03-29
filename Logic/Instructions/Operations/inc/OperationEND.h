@@ -5,5 +5,6 @@
 
 
 class COperationEND : public COperation {
-
+public:
+    COperationEND();
 };

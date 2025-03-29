@@ -5,5 +5,6 @@
 
 
 class COperationDJN : public COperation {
-
+public:
+    COperationDJN();
 };

@@ -5,5 +5,6 @@
 
 
 class COperationSPL : public COperation {
-
+public:
+    COperationSPL();
 };

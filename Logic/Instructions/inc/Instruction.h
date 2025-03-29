@@ -3,6 +3,13 @@
 #include "Parameter.h"
 #include <memory>
 
+/// @brief Class representing single instruction to be placed on game arena
+///
+/// Consists of:
+///
+/// - COperation: operation that instruction executes
+///
+/// - two CParameter: parameters to instruction
 class CInstruction {
 public:
     /// @brief Function that creates parameter during parsing of RedCode program
@@ -12,9 +19,23 @@ public:
     /// @brief Function that sets value for parameter, created during parsing of RedCode program
     /// @param value value of the parameter to be set
     bool CreateParamValue(int value);
+
+    /// @brief Set A parameter of the instruction
+    /// @param param pointer to be set as the A parameter of the instruction
     void SetAParameter(std::unique_ptr<CParameter> param);
+
+    /// @brief Set value of the A parameter of the instruction
+    /// @param value integer representing value of the parameter
+    /// @return boolean indicating if operation succeeded 
     bool SetAParamValue(int value);
+
+    /// @brief Set B parameter of the instruction
+    /// @param param pointer to be set as the B parameter of the instruction
     void SetBParameter(std::unique_ptr<CParameter> param);
+
+    /// @brief Set value of the A parameter of the instruction
+    /// @param value integer representing value of the parameter
+    /// @return boolean indicating if operation succeeded 
     bool SetBParamValue(int value);
 private:
     bool m_SetParamValue(std::unique_ptr<CParameter>& arg, int value);

@@ -5,5 +5,6 @@
 
 
 class COperationDIV : public COperation {
-
+public:
+    COperationDIV();
 };

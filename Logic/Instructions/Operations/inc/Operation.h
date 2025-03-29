@@ -2,6 +2,8 @@
 
 #include "Operation.h"
 
+#include <string>
+
 enum ModifierType {
     A,
     B,
@@ -18,4 +20,6 @@ public:
     const ModifierType GetModifier() const { return m_modifier; }
 private:
     ModifierType m_modifier;
+protected:
+    std::string m_name="";
 };

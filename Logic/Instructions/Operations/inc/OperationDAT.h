@@ -5,5 +5,6 @@
 
 
 class COperationDAT : public COperation {
-
+public:
+    COperationDAT();
 };

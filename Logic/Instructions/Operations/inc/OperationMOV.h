@@ -5,5 +5,6 @@
 
 
 class COperationMOV : public COperation {
-
+public:
+    COperationMOV();
 };

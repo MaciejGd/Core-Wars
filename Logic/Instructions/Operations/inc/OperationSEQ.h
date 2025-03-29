@@ -5,5 +5,6 @@
 
 
 class COperationSEQ : public COperation {
-
+public:
+    COperationSEQ();
 };

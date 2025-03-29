@@ -5,5 +5,6 @@
 
 
 class COperationMUL : public COperation {
-
+public:
+    COperationMUL();
 };

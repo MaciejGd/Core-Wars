@@ -5,5 +5,6 @@
 
 
 class COperationMOD : public COperation {
-
+public:
+    COperationMOD();
 };

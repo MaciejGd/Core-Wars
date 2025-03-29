@@ -5,5 +5,6 @@
 
 
 class COperationCMP : public COperation {
-
+public:
+    COperationCMP();
 };

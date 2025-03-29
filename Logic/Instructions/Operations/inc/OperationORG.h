@@ -5,5 +5,6 @@
 
 
 class COperationORG : public COperation {
-
+public:
+    COperationORG();
 };

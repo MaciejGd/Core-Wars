@@ -5,5 +5,6 @@
 
 
 class COperationJMP : public COperation {
-
+public:
+    COperationJMP();
 };
