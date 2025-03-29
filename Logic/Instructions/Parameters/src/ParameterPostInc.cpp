@@ -2,6 +2,11 @@
 #include "Arena.h"
 #include "Instruction.h"
 
+std::unique_ptr<CParameter> CParameterPostInc::clone() const
+{
+    return std::unique_ptr<CParameter>(new CParameterPostInc{*this});
+}
+
 void CParameterPostInc::EvaluateParameter(int pc)
 {
     m_FoldPointers();

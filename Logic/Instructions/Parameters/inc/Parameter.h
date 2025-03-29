@@ -1,11 +1,21 @@
 #pragma once
 
 #include <string>
+#include <memory>
 
 class CParameter {
 public:
     CParameter() = default;
     CParameter(int val);
+    
+    /// @brief copy contructor needed for MOV operation which copies instructions
+    /// @param other parameter of instruction to be copied
+    CParameter(const CParameter& other) = default;
+
+    /// @brief Virtual function needed for copying Param object
+    /// @return unique pointer to newly created object
+    virtual std::unique_ptr<CParameter> clone() const = 0;
+
     const int GetValue() const { return m_val; }
     virtual const std::string Identify() const { return "Empty"; };
     void SetValue(int value);

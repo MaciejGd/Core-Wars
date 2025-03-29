@@ -13,6 +13,11 @@
 /// - two CParameter: parameters to instruction
 class CInstruction {
 public:
+    CInstruction() = default;
+    /// @brief Copy constructor for CInstruction
+    /// @param other instruction to be copied
+    CInstruction(const CInstruction& other);
+
     /// @brief Function that creates parameter during parsing of RedCode program
     /// @param param pointer to parameter of proper type
     bool CreateParameter(std::unique_ptr<CParameter> param);

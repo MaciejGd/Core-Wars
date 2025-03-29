@@ -1,6 +1,6 @@
 #include "ASTAddressMode.h"
 #include "ParameterDirect.h"
-#include "ParameterImmidiate.h"
+#include "ParameterImmediate.h"
 #include "ParameterIndirect.h"
 #include "ParameterPostInc.h"
 #include "ParameterPreDecr.h"
@@ -26,8 +26,8 @@ void CASTAddressMode::m_SetAddressMode(Token &token, std::unique_ptr<CInstructio
     std::string log_param_type; 
     if (modifier == "#")
     {
-        log_param_type = "immidiate";
-        instruction->CreateParameter(std::make_unique<CParameterImmidiate>());
+        log_param_type = "immediate";
+        instruction->CreateParameter(std::make_unique<CParameterImmediate>());
     }
     else if (modifier == "@")
     {

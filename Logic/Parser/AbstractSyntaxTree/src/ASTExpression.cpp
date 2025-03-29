@@ -54,7 +54,7 @@ void CASTExpression::m_TranslateToPostfix(std::deque<Token>& input, std::deque<T
 {
     std::stack<Token> op;
     Token prev_token = input.front();
-    // if first token indicates sign, add it to the value of next token immidiately
+    // if first token indicates sign, add it to the value of next token immediately
     if (prev_token.value() == "+" || prev_token.value() == "-")
     {
         input.pop_front();

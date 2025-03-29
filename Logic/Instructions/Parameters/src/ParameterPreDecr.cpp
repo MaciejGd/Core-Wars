@@ -2,6 +2,11 @@
 #include "Arena.h"
 #include "Instruction.h"
 
+std::unique_ptr<CParameter> CParameterPreDecr::clone() const
+{
+    return std::unique_ptr<CParameter>(new CParameterPreDecr{*this});
+}
+
 void CParameterPreDecr::EvaluateParameter(int pc)
 {
     m_FoldPointers();

@@ -1,6 +1,11 @@
 #include "Instruction.h"
 #include "logger.h"
 
+CInstruction::CInstruction(const CInstruction& other)
+{
+    ; // TODO - implement copying of the instruction
+}
+
 bool CInstruction::CreateParameter(std::unique_ptr<CParameter> param)
 {
     // if A param has not been yet created, create it

@@ -78,7 +78,7 @@ void CLexer::m_TokenizeLine(const std::string& line, TokenContainer& tokens, int
         }
         else if (line[idx] == ';') 
         {
-            // if comment spotted break immidiately
+            // if comment spotted break immediately
             break;
         }
         else if (line[idx] == '.') 
