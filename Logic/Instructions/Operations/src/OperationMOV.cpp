@@ -9,6 +9,11 @@ COperationMOV::COperationMOV()
     m_name = "MOV";
 }
 
+std::unique_ptr<COperation> COperationMOV::clone() const
+{
+    return std::unique_ptr<COperation>(new COperationMOV{*this});
+}
+
 bool COperationMOV::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
 {
     LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);

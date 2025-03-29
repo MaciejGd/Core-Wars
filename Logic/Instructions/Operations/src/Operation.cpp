@@ -24,6 +24,3 @@ std::string ModifierToString(ModifierType modifier)
             return "UnknownModifier";
     }
 }
-
-COperation::COperation(): m_modifier(ModifierType::DEFAULT)
-{}

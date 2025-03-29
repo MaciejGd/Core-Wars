@@ -7,6 +7,7 @@
 // testing
 #include "parsing_tests.h"
 #include "param_copying.h"
+#include "operator_copying.h"
 
 const int WIDTH = 1400;
 const int HEIGHT = 900;
@@ -33,7 +34,7 @@ int main(int argc, char *argv[])
     /* END TESTING PARSER*/
     /* TESTING PARAM COPYING */
     ParamCopyingTest::TestCopying();
-    
+    OperatorCopyingTests::RunTests();
 
     // CArena ar;
     // ar.TestPrint();

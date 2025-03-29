@@ -52,7 +52,7 @@ void ParamCopyingTest::m_test_eval()
     copied1->EvaluateParameter(1);
     if (test->GetReadPointer() == copied1->GetReadPointer())
     {
-        LOG_PASS("Properly evalated read pointers");
+        LOG_PASS("Properly evaluated read pointers");
     }
     else 
     {
@@ -61,7 +61,7 @@ void ParamCopyingTest::m_test_eval()
     
     if (test->GetWritePointer() == copied1->GetWritePointer())
     {
-        LOG_PASS("Properly evalated write pointers");
+        LOG_PASS("Properly evaluated write pointers");
     }
     else 
     {

@@ -29,7 +29,10 @@ std::string ModifierToString(ModifierType modifier);
 ///
 class COperation {
 public:
-    COperation();
+    COperation(): m_modifier(ModifierType::DEFAULT) {};
+    COperation(const COperation& other) = default;
+
+    virtual std::unique_ptr<COperation> clone() const = 0;
 
     /// @brief Function returning name of the operation, used for debug purposes
     /// @return returns string with operation's name
