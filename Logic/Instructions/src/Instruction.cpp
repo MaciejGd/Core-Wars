@@ -3,7 +3,20 @@
 
 CInstruction::CInstruction(const CInstruction& other)
 {
-    ; // TODO - implement copying of the instruction
+    // clone all ptrs values if they are valid
+    LOG_WRN("Copying instruction: {}", other.PrintInstruction());
+    if (other.m_A_param != nullptr)
+    {
+        m_A_param = other.m_A_param->clone();
+    }
+    if (other.m_B_param != nullptr)
+    {
+        m_B_param = other.m_B_param->clone();
+    }
+    if (other.m_operation != nullptr)
+    {
+        m_operation = other.m_operation->clone();
+    }
 }
 
 bool CInstruction::CreateParameter(std::unique_ptr<CParameter> param)
