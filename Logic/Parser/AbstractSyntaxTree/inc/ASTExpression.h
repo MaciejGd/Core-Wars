@@ -15,8 +15,7 @@ private:
     /// @brief Function to translate arithmetic expression from infix to postfix
     /// @param input input queue of tokens to be translated
     /// @param postfix tokens translated to postfix notation
-    /// @return 
-    bool m_TranslateToPostfix(std::deque<Token>& input, std::deque<Token>& postfix);
+    void m_TranslateToPostfix(std::deque<Token>& input, std::deque<Token>& postfix);
     int m_EvaluatePostifxExpression(std::deque<Token> &postfix);
 
     int m_PrecedenceHigher(Token& first_sign, Token& second_sign);

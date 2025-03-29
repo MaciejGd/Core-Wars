@@ -50,7 +50,7 @@ int CASTExpression::m_PrecedenceHigher(Token& first_sign, Token& second_sign)
     return 0;
 }
 
-bool CASTExpression::m_TranslateToPostfix(std::deque<Token>& input, std::deque<Token> &postfix)
+void CASTExpression::m_TranslateToPostfix(std::deque<Token>& input, std::deque<Token> &postfix)
 {
     std::stack<Token> op;
     Token prev_token = input.front();
@@ -109,8 +109,7 @@ bool CASTExpression::m_TranslateToPostfix(std::deque<Token>& input, std::deque<T
     {
         postfix.push_back(op.top());
         op.pop();
-    }    
-    return true;
+    }
 }
 
 int CASTExpression::m_EvaluatePostifxExpression(std::deque<Token> &postfix)
@@ -159,7 +158,7 @@ int CASTExpression::m_EvaluateArithmeticExpression(std::deque<Token>& tokens)
     int line_of_occurence = tokens.front().line(); // for debug purposes
     // translate arithmetic expression to postfix Polish notation and evaluate
     std::deque<Token> postfix;
-    static_cast<void>(m_TranslateToPostfix(tokens, postfix)); // discard boolean reasult for now
+    m_TranslateToPostfix(tokens, postfix);
     int parameter_value = m_EvaluatePostifxExpression(postfix);
     LOG_WRN("In parsed file: {} in line: {} value evaluated from arithm expression is: {}", 
         CLexer::s_file_name, line_of_occurence, parameter_value);

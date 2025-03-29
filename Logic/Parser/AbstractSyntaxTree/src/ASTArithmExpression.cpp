@@ -1,6 +1,9 @@
 #include "ASTArithmExpression.h"
 #include "ASTTerm.h"
 
+// GRAMMAR RULE for arithm expression
+// ARITHMEXPRESSION := TERM ARITHMNEWEXPRESSION
+
 ParseResult CASTArithmExpression::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
                         std::unique_ptr<CInstruction>& instruction)
 {
@@ -12,7 +15,7 @@ ParseResult CASTArithmExpression::Eval(std::deque<Token> &tokens, std::stack<std
 // grammar rule for CASTNewExpression
 // NEWEXPRESSION := ARITHM_OPERATOR TERM NEWEXPRESSION | nothing
 // I wont create separate node for arithm operator but rather check 
-// next token for being arithm op in NewExpressionw
+// next token for being arithm op in NewExpression itself
 ParseResult CASTArithmNewExpression::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
                         std::unique_ptr<CInstruction>& instruction)
 {

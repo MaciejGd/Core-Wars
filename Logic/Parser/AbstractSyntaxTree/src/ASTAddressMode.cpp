@@ -15,12 +15,12 @@ ParseResult CASTAddressMode::Eval(std::deque<Token> &tokens, std::stack<std::uni
         tokens.pop_front();
     }
     // add proper address mode and add it to instruction
-    m_AddAddressMode(next_token, instruction);
+    m_SetAddressMode(next_token, instruction);
     return ParseResult::PARSE_OK;
 }
 
 // function for choosing appropriate address mode and adding it to instruction
-void CASTAddressMode::m_AddAddressMode(Token &token, std::unique_ptr<CInstruction> &instruction)
+void CASTAddressMode::m_SetAddressMode(Token &token, std::unique_ptr<CInstruction> &instruction)
 {
     std::string modifier = token.value();
     std::string log_param_type; 

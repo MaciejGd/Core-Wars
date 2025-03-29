@@ -52,9 +52,20 @@ std::string ParserTestMachine::m_GetParsingResult(const std::string &file_name)
     std::vector<std::unique_ptr<CInstruction>> instructions;
     if (CParser::ParseFile(tokens, instructions))
     {
+        m_PrintParsedInstructions(instructions); // if succeed then print parsed instructions
         return ";PASS";
     }
     return ";FAIL";
+}
+
+void ParserTestMachine::m_PrintParsedInstructions(const std::vector<std::unique_ptr<CInstruction>> &instructions) const 
+{
+    LOG_PASS("PRINTING PARSED INSTRUCTIONS");
+    for (const auto& instruction : instructions)
+    {
+        LOG_PASS("{}", instruction->PrintInstruction());
+    }
+    LOG_PASS("END OF PRINTING PARSED INSTRUCTIONS");
 }
 
 bool ParserTestMachine::m_CompareResults(const std::string &file_path, const std::string& parsing_result)

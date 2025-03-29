@@ -11,6 +11,7 @@ public:
     virtual const std::string Identify() const { return "Empty"; };
     void SetValue(int value);
     const bool ValueIsSet() const;
+    
 protected:
     int m_val;
     // variable needed for creating instruction during parsing

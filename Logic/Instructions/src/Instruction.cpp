@@ -84,8 +84,49 @@ bool CInstruction::SetBParamValue(int value)
     return true;
 }
 
+void CInstruction::SetOperation(std::unique_ptr<COperation> operation)
+{
+    if (m_operation != nullptr)
+    {
+        LOG_WRN("Overriding current operation: {}", m_operation->GetOperationName());
+    }
+    m_operation = std::move(operation);
+    LOG_DBG("Operation {} has been set", m_operation->GetOperationName());
+}
 
-bool CInstruction::m_SetParamValue(std::unique_ptr<CParameter>& param, int value)
+bool CInstruction::SetModifier(ModifierType modifier)
+{
+    if (m_operation == nullptr)
+    {
+        LOG_ERR("Trying to set modifier value, but operation has not been set yet");
+        return false;
+    }
+    m_operation->SetModifier(modifier);
+    LOG_DBG("Value of modifier changed to: {}",  ModifierToString(modifier));
+    return true;
+}
+
+std::string CInstruction::PrintInstruction() const
+{
+    if (m_operation == nullptr)
+    {
+        return "Operation for instruction has not been yet set!";
+    }
+    if (m_A_param == nullptr)
+    {
+        return "Parameter A for instruction has not been yet set";
+    }
+    std::string instruction_str = m_operation->GetOperationName() + "." + 
+                                    ModifierToString(m_operation->GetModifier());
+    instruction_str += ( "  " + m_A_param->Identify() + " " + std::to_string(m_A_param->GetValue()));
+    if (m_B_param)
+    {
+        instruction_str += ( ", " + m_B_param->Identify() + " " + std::to_string(m_B_param->GetValue()));
+    }
+    return instruction_str;
+}
+
+bool CInstruction::m_SetParamValue(std::unique_ptr<CParameter> &param, int value)
 {
     if (param == nullptr) 
     {

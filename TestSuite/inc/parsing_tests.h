@@ -18,5 +18,6 @@ private:
 
     std::string m_GetParsingResult(const std::string& file_name);
     bool m_CompareResults(const std::string& file_path, const std::string& parsing_result);
+    void m_PrintParsedInstructions(const std::vector<std::unique_ptr<CInstruction>>& instructions) const;
 };
 

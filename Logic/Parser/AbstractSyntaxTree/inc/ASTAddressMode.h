@@ -9,5 +9,5 @@ public:
                         std::unique_ptr<CInstruction>& instruction) override;
 
 private:
-    void m_AddAddressMode(Token& token, std::unique_ptr<CInstruction>& instruction);
+    void m_SetAddressMode(Token& token, std::unique_ptr<CInstruction>& instruction);
 };

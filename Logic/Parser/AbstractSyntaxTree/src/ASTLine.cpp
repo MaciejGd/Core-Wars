@@ -12,8 +12,6 @@
 ParseResult CASTLine::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes, 
     std::unique_ptr<CInstruction>& instruction)
 {
-    // push to stack of nodes below grammar rule:
-    // Line := operation param coma param
     nodes.push(std::make_unique<CASTOptionalParam>());
     nodes.push(std::make_unique<CASTParameter>());
     nodes.push(std::make_unique<CASTOperation>());

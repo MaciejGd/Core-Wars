@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Parameter.h"
+#include "Operation.h"
 #include <memory>
 
 /// @brief Class representing single instruction to be placed on game arena
@@ -37,8 +38,21 @@ public:
     /// @param value integer representing value of the parameter
     /// @return boolean indicating if operation succeeded 
     bool SetBParamValue(int value);
+
+    /// @brief Set operation of the instruction
+    /// @param operation pointer to the operation to be set in instruction 
+    void SetOperation(std::unique_ptr<COperation> operation);
+
+    /// @brief Set modifier for instruction's operation
+    /// @param modifier type of modifier to be set
+    /// @return boolean indicating if operation succeeded
+    bool SetModifier(ModifierType modifier);
+
+    /// @brief Debug function for printing instruction
+    std::string PrintInstruction() const;
 private:
     bool m_SetParamValue(std::unique_ptr<CParameter>& arg, int value);
     std::unique_ptr<CParameter> m_A_param;
     std::unique_ptr<CParameter> m_B_param;
+    std::unique_ptr<COperation> m_operation;
 };
