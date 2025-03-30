@@ -10,7 +10,8 @@ CParameter::CParameter(int val): m_val(val)
 void CParameter::SetValue(int val)
 {
     m_first_param_set = true;
-    m_val = val;
+    // we should turn negative values to positive by wrapping around
+    m_val = (val + ARENA_SIZE) % ARENA_SIZE; 
 }
 
 const bool CParameter::ValueIsSet() const 
@@ -18,20 +19,17 @@ const bool CParameter::ValueIsSet() const
     return m_first_param_set;
 }
 
-void CParameter::m_FoldPointers()
+void CParameter::m_FoldPointer()
 {
-    m_RP = CArena::Fold(m_val);
-    m_WP = CArena::Fold(m_val);
+    m_pointer = CArena::Fold(m_val);
 }
 
-void CParameter::m_IndirectPointersAssign(int pc)
+void CParameter::m_IndirectPointerAssign(int pc)
 {
     // get reference to singleton arena instance
     CArena& arena = CArena::GetInstance();
-    // get B values from instructions pointed by RP and WP
-    int indirect_read_ptr = arena[pc + m_RP]->GetBParamValue();
-    int indirect_write_ptr = arena[pc + m_WP]->GetBParamValue();
+    // get B values from instructions pointed by pointer
+    int indirect_ptr = arena[pc + m_pointer]->GetBParamValue();
     // set new values of ptrs
-    m_RP = CArena::Fold(m_RP + indirect_read_ptr);
-    m_WP = CArena::Fold(m_WP + indirect_write_ptr);
+    m_pointer = CArena::Fold(m_pointer + indirect_ptr);
 }

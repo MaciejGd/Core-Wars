@@ -9,5 +9,5 @@ std::unique_ptr<CParameter> CParameterDirect::clone() const
 void CParameterDirect::EvaluateParameter(int pc)
 {
     // inherited from CParameter
-    m_FoldPointers();
+    m_FoldPointer();
 }

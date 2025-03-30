@@ -19,13 +19,13 @@ bool COperationJMZ::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
     LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);
     CArena& arena = CArena::GetInstance(); // TODO turn it into a macro
 
-    int WPB = B_param->GetWritePointer();
-    int RPA = A_param->GetReadPointer();
-    int RPB = B_param->GetReadPointer();
+    int b_pointer = B_param->GetPointer();
+    int a_pointer = A_param->GetPointer();
+
     // A number of instruction pointed by B param
-    int IRB_ANUM = arena[pc+RPB]->GetAParamValue();
+    int IRB_ANUM = arena[pc+b_pointer]->GetAParamValue();
     // B number of instruction pointed by B param
-    int IRB_BNUM = arena[pc+RPB]->GetBParamValue();
+    int IRB_BNUM = arena[pc+b_pointer]->GetBParamValue();
 
     switch (m_modifier)
     {
@@ -34,7 +34,7 @@ bool COperationJMZ::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
         case BA:
             if (IRB_ANUM == 0)
             {
-                pc = RPA;
+                pc = a_pointer;
             }
             else 
             {
@@ -46,7 +46,7 @@ bool COperationJMZ::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
         case AB:
             if (IRB_BNUM == 0)
             {
-                pc = RPA;
+                pc = a_pointer;
             }
             else 
             {
@@ -54,11 +54,13 @@ bool COperationJMZ::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
             }
             break;
         case F:
+        [[fallthrough]];
         case X:
+        [[fallthrough]];
         case I:
             if ((IRB_ANUM == 0) && (IRB_BNUM == 0))
             {
-                pc = RPA;
+                pc = a_pointer;
             }
             else 
             {

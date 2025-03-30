@@ -50,7 +50,7 @@ void ParamCopyingTest::m_test_eval()
     copied1 = test->clone();
     test->EvaluateParameter(1);
     copied1->EvaluateParameter(1);
-    if (test->GetReadPointer() == copied1->GetReadPointer())
+    if (test->GetPointer() == copied1->GetPointer())
     {
         LOG_PASS("Properly evaluated read pointers");
     }
@@ -59,7 +59,7 @@ void ParamCopyingTest::m_test_eval()
         LOG_FAIL("Incorrectly evaluated read pointers");
     }
     
-    if (test->GetWritePointer() == copied1->GetWritePointer())
+    if (test->GetPointer() == copied1->GetPointer())
     {
         LOG_PASS("Properly evaluated write pointers");
     }

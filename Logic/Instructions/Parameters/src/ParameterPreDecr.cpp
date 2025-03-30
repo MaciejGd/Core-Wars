@@ -9,11 +9,11 @@ std::unique_ptr<CParameter> CParameterPreDecr::clone() const
 
 void CParameterPreDecr::EvaluateParameter(int pc)
 {
-    m_FoldPointers();
+    m_FoldPointer();
     CArena& arena = CArena::GetInstance();
-    int current_b_value = arena[pc+m_WP]->GetBParamValue();
+    int current_b_value = arena[pc+m_pointer]->GetBParamValue();
     // when we go out of bounds, we need to "jump" to the end of array
-    arena[pc + m_WP]->SetBParamValue((current_b_value + ARENA_SIZE - 1) % ARENA_SIZE);
+    arena[pc + m_pointer]->SetBParamValue((current_b_value + ARENA_SIZE - 1) % ARENA_SIZE);
     // assign pointers in indirect manner
-    m_IndirectPointersAssign(pc);
+    m_IndirectPointerAssign(pc);
 }

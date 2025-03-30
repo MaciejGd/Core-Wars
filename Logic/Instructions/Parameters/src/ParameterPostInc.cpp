@@ -9,12 +9,12 @@ std::unique_ptr<CParameter> CParameterPostInc::clone() const
 
 void CParameterPostInc::EvaluateParameter(int pc)
 {
-    m_FoldPointers();
+    m_FoldPointer();
     // pip: post increment pointer
-    // address that should be incremented after assigning RP and WP proper values
-    int pip = pc + m_WP;
-    // assign RP and WP in indirect manner 
-    m_IndirectPointersAssign(pc);
+    // address that should be incremented after assigning pointer the proper values
+    int pip = pc + m_pointer;
+    // assign pointer in indirect manner 
+    m_IndirectPointerAssign(pc);
 
     // increment B param pointed by pip afterwards
     CArena& arena = CArena::GetInstance();

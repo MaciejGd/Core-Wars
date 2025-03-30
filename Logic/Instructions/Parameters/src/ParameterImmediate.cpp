@@ -7,5 +7,5 @@ std::unique_ptr<CParameter> CParameterImmediate::clone() const
 
 void CParameterImmediate::EvaluateParameter(int pc)
 {
-    m_RP = m_WP = 0;
+    m_pointer = 0;
 }

@@ -8,6 +8,6 @@ std::unique_ptr<CParameter> CParameterIndirect::clone() const
 
 void CParameterIndirect::EvaluateParameter(int pc)
 {
-    m_FoldPointers();
-    m_IndirectPointersAssign(pc);
+    m_FoldPointer();
+    m_IndirectPointerAssign(pc);
 }
