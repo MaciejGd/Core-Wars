@@ -3,7 +3,11 @@
 #include "Operation.h"
 
 
-
+///
+/// Class representing MOV operation.
+/// Depending on modifier type, operation copies specified
+/// value from one place to another.
+///
 class COperationMOV : public COperation {
 public:
     COperationMOV();

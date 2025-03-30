@@ -1,4 +1,5 @@
 #include "OperationJMP.h"
+#include "Parameter.h"
 
 COperationJMP::COperationJMP()
 {
@@ -12,5 +13,7 @@ std::unique_ptr<COperation> COperationJMP::clone() const
 
 bool COperationJMP::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
 {
-    return false;
+    int RPA = A_param->GetReadPointer();
+    pc = RPA; // jump to address requested by read pointer of A
+    return true;
 }

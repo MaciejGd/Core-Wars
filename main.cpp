@@ -10,6 +10,7 @@
 #include "operator_copying.h"
 #include "instruction_copying.h"
 #include "mov_operator.h"
+#include "dat_operator.h"
 
 const int WIDTH = 1400;
 const int HEIGHT = 900;
@@ -36,6 +37,7 @@ int main(int argc, char *argv[])
     /* END TESTING PARSER*/
     /* TESTING PARAM COPYING */
     MOVOperatorTest::RunTests();
+    DATOperatorTest::RunTests();
     // CArena ar;
     // ar.TestPrint();
     // QApplication app(argc, argv);
