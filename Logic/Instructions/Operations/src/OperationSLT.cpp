@@ -1,20 +1,20 @@
-#include "OperationCMP.h"
-#include "logger.h"
+#include "OperationSLT.h"
+#include "Instruction.h"
 #include "Arena.h"
 #include "Parameter.h"
-#include "Instruction.h"
+#include "logger.h"
 
-COperationCMP::COperationCMP()
+COperationSLT::COperationSLT()
 {
-    m_name = "CMP";
+    m_name = "SEQ";
 }
 
-std::unique_ptr<COperation> COperationCMP::clone() const
+std::unique_ptr<COperation> COperationSLT::clone() const
 {
-    return std::unique_ptr<COperation>(new COperationCMP{*this});
+    return std::unique_ptr<COperation>(new COperationSLT{*this});
 }
 
-bool COperationCMP::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
+bool COperationSLT::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
 {
     LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);
     CArena& arena = CArena::GetInstance();
@@ -28,7 +28,7 @@ bool COperationCMP::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
     switch (m_modifier)
     {
         case A:
-            if (a_instr->GetAParamValue() == b_instr->GetAParamValue())
+            if (a_instr->GetAParamValue() < b_instr->GetAParamValue())
             {
                 pc = (pc + 2) % ARENA_SIZE;
             }
@@ -38,7 +38,7 @@ bool COperationCMP::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
             }
             break;
         case B:
-            if (a_instr->GetBParamValue() == b_instr->GetBParamValue())
+            if (a_instr->GetBParamValue() < b_instr->GetBParamValue())
             {
                 pc = (pc + 2) % ARENA_SIZE;
             }
@@ -48,7 +48,7 @@ bool COperationCMP::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
             }
             break;
         case AB:
-            if (a_instr->GetAParamValue() == b_instr->GetBParamValue())
+            if (a_instr->GetAParamValue() < b_instr->GetBParamValue())
             {
                 pc = (pc + 2) % ARENA_SIZE;
             }
@@ -58,18 +58,7 @@ bool COperationCMP::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
             }
             break;
         case BA:
-            if (a_instr->GetBParamValue() == b_instr->GetAParamValue())
-            {
-                pc = (pc + 2) % ARENA_SIZE;
-            }
-            else 
-            {
-                pc = (pc + 1) % ARENA_SIZE;
-            }
-            break;
-        case F:
-            if (a_instr->GetAParamValue() == b_instr->GetAParamValue() &&
-                a_instr->GetBParamValue() == b_instr->GetBParamValue())
+            if (a_instr->GetBParamValue() < b_instr->GetAParamValue())
             {
                 pc = (pc + 2) % ARENA_SIZE;
             }
@@ -79,8 +68,8 @@ bool COperationCMP::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
             }
             break;
         case X:
-            if (a_instr->GetAParamValue() == b_instr->GetBParamValue() &&
-                a_instr->GetBParamValue() == b_instr->GetAParamValue())
+            if (a_instr->GetAParamValue() < b_instr->GetBParamValue() &&
+                a_instr->GetBParamValue() < b_instr->GetAParamValue())
             {
                 pc = (pc + 2) % ARENA_SIZE;
             }
@@ -89,9 +78,12 @@ bool COperationCMP::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
                 pc = (pc + 1) % ARENA_SIZE;
             }
             break;
+        case F:
+        [[fallthrough]];
         case I:
             // compare whole instructions
-            if (a_instr->PrintInstruction() == b_instr->PrintInstruction())
+            if (a_instr->GetAParamValue() < b_instr->GetAParamValue() &&
+                a_instr->GetBParamValue() < b_instr->GetBParamValue())
             {
                 pc = (pc + 2) % ARENA_SIZE;
             }

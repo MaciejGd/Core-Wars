@@ -16,7 +16,7 @@
 #include "OperationDJN.h"
 #include "OperationSPL.h"
 #include "OperationCMP.h"
-#include "OperationSEQ.h"
+#include "OperationSLT.h"
 #include "OperationORG.h"
 #include "OperationEQU.h"
 #include "OperationEND.h"
@@ -104,7 +104,7 @@ bool CASTOperation::m_SetOperation(Token &token, std::unique_ptr<CInstruction> &
     }
     else if (op_string == "seq") 
     {
-        instruction->SetOperation(std::make_unique<COperationSEQ>());
+        instruction->SetOperation(std::make_unique<COperationSLT>());
     }
     else if (op_string == "org") 
     {
