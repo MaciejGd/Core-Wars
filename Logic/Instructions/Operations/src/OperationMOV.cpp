@@ -48,14 +48,16 @@ bool COperationMOV::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
             arena[pc + WPB]->SetAParamValue(B_param->GetValue());
             break;
         case ModifierType::I:
+        {
             // replace whole instruction at B pointed by A
-            //arena[pc + WPB].reset(new CInstruction{});
+            int RPA = A_param->GetReadPointer();
+            arena[pc + WPB].reset(new CInstruction{*arena[pc + RPA]});
             break;
+        }
         default:
             LOG_ERR("Undefined parameter in {}", m_name);
+            return false;
             break;
-
-
     }
-    return false;
+    return true;
 }

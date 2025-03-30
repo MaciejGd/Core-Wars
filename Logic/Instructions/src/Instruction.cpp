@@ -1,5 +1,7 @@
 #include "Instruction.h"
 #include "logger.h"
+#include "ParameterImmediate.h"
+#include "OperationDAT.h"
 
 CInstruction::CInstruction(const CInstruction& other)
 {
@@ -109,7 +111,7 @@ void CInstruction::SetOperation(std::unique_ptr<COperation> operation)
         LOG_WRN("Overriding current operation: {}", m_operation->GetOperationName());
     }
     m_operation = std::move(operation);
-    LOG_DBG("Operation {} has been set", m_operation->GetOperationName());
+    //LOG_DBG("Operation {} has been set", m_operation->GetOperationName());
 }
 
 bool CInstruction::SetModifier(ModifierType modifier)
@@ -142,6 +144,34 @@ std::string CInstruction::PrintInstruction() const
         instruction_str += ( ", " + m_B_param->Identify() + " " + std::to_string(m_B_param->GetValue()));
     }
     return instruction_str;
+}
+
+std::unique_ptr<CInstruction> CInstruction::CreateDefaultInstruction()
+{
+    std::unique_ptr<CParameter> A_param(new CParameterImmediate());
+    std::unique_ptr<CParameter> B_param(new CParameterImmediate());
+    A_param->SetValue(0);
+    B_param->SetValue(0);
+    std::unique_ptr<COperation> op(new COperationDAT());
+    // create instruction
+    std::unique_ptr<CInstruction> ret(new CInstruction());
+    ret->SetOperation(std::move(op));
+    ret->SetAParameter(std::move(A_param));
+    ret->SetBParameter(std::move(B_param));
+    return std::move(ret);
+}
+
+bool CInstruction::Execute(int &pc)
+{
+    // at first evaluate both parameters
+    m_A_param->EvaluateParameter(pc);
+    m_B_param->EvaluateParameter(pc);
+    // then execute operation
+    if (m_operation->Execute(m_A_param, m_B_param, pc))
+    {
+        return true;
+    }
+    return false;
 }
 
 bool CInstruction::m_SetParamValue(std::unique_ptr<CParameter> &param, int value)

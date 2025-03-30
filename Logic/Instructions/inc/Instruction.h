@@ -59,6 +59,14 @@ public:
     const int GetAParamValue() const { return m_A_param->GetValue(); };
     const int GetBParamValue() const { return m_B_param->GetValue(); };
 
+    /// @brief Static function for creating default DAT #0, #0 instruction
+    /// @return unique ptr to DAT #0, #0 instruction created
+    static std::unique_ptr<CInstruction> CreateDefaultInstruction();
+
+    /// @brief Evaluates parameters and runs operation
+    /// @param pc current memory cell executed
+    /// @return boolean indicating status of execution operation
+    bool Execute(int& pc);
 private:
     bool m_SetParamValue(std::unique_ptr<CParameter>& arg, int value);
     std::unique_ptr<CParameter> m_A_param;

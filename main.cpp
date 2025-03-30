@@ -9,6 +9,7 @@
 #include "param_copying.h"
 #include "operator_copying.h"
 #include "instruction_copying.h"
+#include "mov_operator.h"
 
 const int WIDTH = 1400;
 const int HEIGHT = 900;
@@ -34,9 +35,7 @@ int main(int argc, char *argv[])
     // test_harness.RunTests();
     /* END TESTING PARSER*/
     /* TESTING PARAM COPYING */
-    ParamCopyingTest::TestCopying();
-    OperatorCopyingTests::RunTests();
-    InstructionCopyingTest::RunTests();
+    MOVOperatorTest::RunTests();
     // CArena ar;
     // ar.TestPrint();
     // QApplication app(argc, argv);

@@ -36,6 +36,15 @@ std::unique_ptr<CInstruction> &CArena::operator[](size_t idx)
     // TODO: insert return statement here
 }
 
+void CArena::ClearArena()
+{
+    // over write all arena cells with pointer to default instruction
+    for (int i = 0; i < m_arena.size(); i++)
+    {
+        m_arena[i] = CInstruction::CreateDefaultInstruction();
+    }
+}
+
 CArena::CArena()
 {
 }

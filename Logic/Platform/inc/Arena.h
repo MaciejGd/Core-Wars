@@ -3,7 +3,7 @@
 #include "Operation.h"
 
 #include <memory>
-#include <vector>
+#include <array>
 
 #define ARENA_SIZE 8000
 #define RW_LIMIT 500
@@ -37,10 +37,14 @@ public:
     static size_t Fold(size_t pointer);
     std::unique_ptr<CInstruction>& operator[](size_t idx);
 
+    /// Function that will clear arena, that is fill all 
+    /// cells with DAT #0, #0 instructions
+    void ClearArena();
 private:
     CArena();
     // instance of Arena created on startup, reference to it will be returned from GetInstance
     static CArena s_instance;
 
-    std::vector<std::unique_ptr<CInstruction>> m_arena;
+    std::array<std::unique_ptr<CInstruction>, ARENA_SIZE> m_arena;
+
 };
