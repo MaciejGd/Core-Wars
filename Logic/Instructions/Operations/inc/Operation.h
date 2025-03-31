@@ -5,6 +5,11 @@
 
 class CParameter;
 
+///
+/// Enumeration type representing all
+/// possible modifiers accessible in 
+/// RedCode language
+///
 enum ModifierType {
     A,
     B,

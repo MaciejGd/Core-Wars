@@ -67,6 +67,9 @@ public:
     /// @param pc current memory cell executed
     /// @return boolean indicating status of execution operation
     bool Execute(int& pc);
+    // DEBUG PURPOSES!!! shouldnt be needed in code
+    const std::unique_ptr<CParameter>& GetAParam() const { return m_A_param; };
+    const std::unique_ptr<CParameter>& GetBParam() const { return m_B_param; };
 private:
     bool m_SetParamValue(std::unique_ptr<CParameter>& arg, int value);
     std::unique_ptr<CParameter> m_A_param;

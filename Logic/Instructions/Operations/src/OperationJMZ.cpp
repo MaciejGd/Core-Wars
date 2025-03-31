@@ -60,6 +60,7 @@ bool COperationJMZ::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
         case I:
             if ((IRB_ANUM == 0) && (IRB_BNUM == 0))
             {
+                // jump to pointer only if both are set to 0
                 pc = a_pointer;
             }
             else 
