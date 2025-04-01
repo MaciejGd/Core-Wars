@@ -12,6 +12,9 @@
 #include "mov_operator.h"
 #include "dat_operator.h"
 #include "jmz_operator.h"
+#include "jmn_operator.h"
+#include "jmp_operator.h"
+#include "djn_operator.h"
 
 const int WIDTH = 1400;
 const int HEIGHT = 900;
@@ -39,7 +42,9 @@ int main(int argc, char *argv[])
     /* TESTING PARAM COPYING */
     // MOVOperatorTest::RunTests();
     // DATOperatorTest::RunTests();
-    JMZOperatorTest::RunTests();
+    // JMZOperatorTest::RunTests();
+    // JMNOperatorTest::RunTests();
+    DJNOperatorTest::RunTests();
     // CArena ar;
     // ar.TestPrint();
     // QApplication app(argc, argv);

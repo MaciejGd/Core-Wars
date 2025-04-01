@@ -33,7 +33,7 @@ bool COperationJMN::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
         case BA:
             if (IRB_ANUM != 0)
             {
-                pc = a_pointer;
+                pc = (pc + a_pointer) % ARENA_SIZE;
             }
             else 
             {
@@ -45,7 +45,7 @@ bool COperationJMN::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
         case AB:
             if (IRB_BNUM != 0)
             {
-                pc = a_pointer;
+                pc = (pc + a_pointer) % ARENA_SIZE;
             }
             else 
             {
@@ -57,7 +57,7 @@ bool COperationJMN::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
         case I:
             if ((IRB_ANUM != 0) || (IRB_BNUM != 0))
             {
-                pc = a_pointer;
+                pc = (pc + a_pointer) % ARENA_SIZE;
             }
             else 
             {

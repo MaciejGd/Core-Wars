@@ -10,8 +10,9 @@ CParameter::CParameter(int val): m_val(val)
 void CParameter::SetValue(int val)
 {
     m_first_param_set = true;
+    m_val = val; // actually we will handle negative values later
     // we should turn negative values to positive by wrapping around
-    m_val = (val + ARENA_SIZE) % ARENA_SIZE; 
+    //m_val = (val + ARENA_SIZE) % ARENA_SIZE; 
 }
 
 const bool CParameter::ValueIsSet() const 

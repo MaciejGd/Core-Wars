@@ -25,10 +25,12 @@ bool COperationDJN::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
         case A:
         [[fallthrough]];
         case BA:
-            target->SetAParamValue((target->GetAParamValue() + ARENA_SIZE - 1) % ARENA_SIZE);
+            // param probably shouldnt be mod in here
+            target->SetAParamValue(target->GetAParamValue() -1);
+            //target->SetAParamValue((target->GetAParamValue() + ARENA_SIZE - 1) % ARENA_SIZE);
             if (target->GetAParamValue() !=  0)
             {
-                pc = a_pointer;
+                pc = (pc + a_pointer) % ARENA_SIZE;
             }
             else 
             {
@@ -38,10 +40,11 @@ bool COperationDJN::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
         case B:
         [[fallthrough]];
         case AB:
-            target->SetBParamValue((target->GetBParamValue() + ARENA_SIZE - 1) % ARENA_SIZE);
+            target->SetBParamValue(target->GetBParamValue() -1);
+            //target->SetBParamValue((target->GetBParamValue() + ARENA_SIZE - 1) % ARENA_SIZE);
             if (target->GetBParamValue() !=  0)
             {
-                pc = a_pointer;
+                pc = (pc + a_pointer) % ARENA_SIZE;
             }
             else 
             {
@@ -53,12 +56,14 @@ bool COperationDJN::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
         case X:
         [[fallthrough]];
         case I:
-            // decrement value of both A and B an check if any got zero
-            target->SetAParamValue((target->GetAParamValue() + ARENA_SIZE -1) % ARENA_SIZE);
-            target->SetBParamValue((target->GetBParamValue() + ARENA_SIZE -1) % ARENA_SIZE);
+            // decrement value of both A and B and check if any got zero
+            target->SetAParamValue(target->GetAParamValue() -1);
+            target->SetBParamValue(target->GetBParamValue() -1);
+            // target->SetAParamValue((target->GetAParamValue() + ARENA_SIZE -1) % ARENA_SIZE);
+            // target->SetBParamValue((target->GetBParamValue() + ARENA_SIZE -1) % ARENA_SIZE);
             if (target->GetAParamValue() != 0 || target->GetAParamValue() != 0)
             {
-                pc = a_pointer;
+                pc = (pc + a_pointer) % ARENA_SIZE;
             }
             else 
             {
