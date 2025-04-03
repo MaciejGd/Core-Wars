@@ -23,30 +23,35 @@ bool COperationSUB::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
 
     auto& IRB = arena[pc + b_pointer];
     auto& IRA = arena[pc + a_pointer];
+    // we need to make copies of parameters, as modifying in place leads to bug in X modifier
+    auto IRB_BNUM = IRB->GetBParamValue();
+    auto IRB_ANUM = IRB->GetAParamValue();
+    auto IRA_BNUM = IRA->GetBParamValue();
+    auto IRA_ANUM = IRA->GetAParamValue();
 
     switch (m_modifier)
     {
         case A:
             // set value A IRB to value A of IRB + value A of IRA
-            IRB->SetAParamValue((IRB->GetAParamValue() + ARENA_SIZE - IRA->GetAParamValue()) % ARENA_SIZE);
+            IRB->SetAParamValue(IRB_ANUM - IRA_ANUM);
             break;
         case B:
-            IRB->SetBParamValue((IRB->GetBParamValue() + ARENA_SIZE - IRA->GetBParamValue()) % ARENA_SIZE);
+            IRB->SetBParamValue(IRB_BNUM - IRA_BNUM);
             break;
         case AB:
-            IRB->SetBParamValue((IRB->GetAParamValue() + ARENA_SIZE - IRA->GetBParamValue()) % ARENA_SIZE);
+            IRB->SetBParamValue(IRB_ANUM - IRA_BNUM);
             break;
         case BA:
-            IRB->SetAParamValue((IRB->GetBParamValue() + ARENA_SIZE - IRA->GetAParamValue()) % ARENA_SIZE);
+            IRB->SetAParamValue(IRB_BNUM - IRA_ANUM);
             break;
         case X:
-            IRB->SetAParamValue((IRB->GetBParamValue() + ARENA_SIZE - IRA->GetAParamValue()) % ARENA_SIZE);
-            IRB->SetBParamValue((IRB->GetAParamValue() + ARENA_SIZE - IRA->GetBParamValue()) % ARENA_SIZE);
+            IRB->SetAParamValue(IRB_BNUM - IRA_ANUM);
+            IRB->SetBParamValue(IRB_ANUM - IRA_BNUM);
             break;  
         case F:
         case I:
-            IRB->SetAParamValue((IRB->GetAParamValue() + ARENA_SIZE - IRA->GetAParamValue()) % ARENA_SIZE);
-            IRB->SetBParamValue((IRB->GetBParamValue() + ARENA_SIZE - IRA->GetBParamValue()) % ARENA_SIZE);
+            IRB->SetAParamValue(IRB_ANUM - IRA_ANUM);
+            IRB->SetBParamValue(IRB_BNUM - IRA_BNUM);
             break;
         default: 
             LOG_ERR("Undefined parameter in {}", m_name);

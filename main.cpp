@@ -15,6 +15,13 @@
 #include "jmn_operator.h"
 #include "jmp_operator.h"
 #include "djn_operator.h"
+#include "cmp_operator.h"
+#include "slt_operator.h"
+#include "sub_operator.h"
+#include "add_operator.h"
+#include "mul_operator.h"
+#include "div_operator.h"
+#include "mod_operator.h"
 
 const int WIDTH = 1400;
 const int HEIGHT = 900;
@@ -44,7 +51,14 @@ int main(int argc, char *argv[])
     // DATOperatorTest::RunTests();
     // JMZOperatorTest::RunTests();
     // JMNOperatorTest::RunTests();
-    DJNOperatorTest::RunTests();
+    // DJNOperatorTest::RunTests();
+    // CMPOperatorTest::RunTests();
+    // SLTOperatorTest::RunTests();
+    // SUBOperatorTest::RunTests();
+    // ADDOperatorTest::RunTests();
+    // MULOperatorTest::RunTests();
+    DIVOperatorTest::RunTests();
+    MODOperatorTest::RunTests();
     // CArena ar;
     // ar.TestPrint();
     // QApplication app(argc, argv);
