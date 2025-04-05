@@ -1,6 +1,5 @@
 #include "OperationMOV.h"
 #include "Arena.h"
-#include "Parameter.h"
 #include "Instruction.h"
 #include "logger.h"
 
@@ -14,13 +13,12 @@ std::unique_ptr<COperation> COperationMOV::clone() const
     return std::unique_ptr<COperation>(new COperationMOV{*this});
 }
 
-InstructionResult COperationMOV::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
+InstructionResult COperationMOV::Execute(int a_pointer, int b_pointer, int &pc)
 {
     LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);
     CArena& arena = CArena::GetInstance();
 
-    int b_pointer = B_param->GetPointer();
-    int a_pointer = A_param->GetPointer();
+    
 
     // A number of instruction pointed by A
     int IRA_ANUM = arena[pc+a_pointer]->GetAParamValue();

@@ -67,7 +67,7 @@ public:
     /// @param B_param B parameter of the instruction
     /// @param pc process counter, memory cell player is currently in
     /// @return boolean indicating result of operation, on false player's process will be killed
-    virtual InstructionResult Execute(std::unique_ptr<CParameter>& A_param, std::unique_ptr<CParameter>& B_param, int& pc) = 0;
+    virtual InstructionResult Execute(int a_pointer, int b_pointer, int& pc) = 0;
 private:
     
 protected:

@@ -12,11 +12,10 @@ std::unique_ptr<COperation> COperationDJN::clone() const
     return std::unique_ptr<COperation>(new COperationDJN{*this});
 }
 
-InstructionResult COperationDJN::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
+InstructionResult COperationDJN::Execute(int a_pointer, int b_pointer, int &pc)
 {
     CArena& arena = CArena::GetInstance();
-    int b_pointer = B_param->GetPointer();
-    int a_pointer = A_param->GetPointer();
+    
     // retrieve numbers from instruction pointed to by B param
     auto &target = arena[pc + b_pointer];
 

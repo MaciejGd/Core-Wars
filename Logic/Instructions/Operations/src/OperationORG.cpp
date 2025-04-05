@@ -10,7 +10,7 @@ std::unique_ptr<COperation> COperationORG::clone() const
     return std::unique_ptr<COperation>(new COperationORG{*this});
 }
 
-InstructionResult COperationORG::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
+InstructionResult COperationORG::Execute(int a_pointer, int b_pointer, int &pc)
 {
     return InstructionResult::FAIL;
 }

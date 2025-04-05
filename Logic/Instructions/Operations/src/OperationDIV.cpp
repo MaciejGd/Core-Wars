@@ -1,7 +1,6 @@
 #include "OperationDIV.h"
 #include "Arena.h"
 #include "Instruction.h"
-#include "Parameter.h"
 #include "logger.h"
 
 COperationDIV::COperationDIV()
@@ -14,12 +13,11 @@ std::unique_ptr<COperation> COperationDIV::clone() const
     return std::unique_ptr<COperation>(new COperationDIV{*this});
 }
 
-InstructionResult COperationDIV::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
+InstructionResult COperationDIV::Execute(int a_pointer, int b_pointer, int &pc)
 {
     LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);
     CArena& arena = CArena::GetInstance();
-    int a_pointer = A_param->GetPointer();
-    int b_pointer = B_param->GetPointer();
+    
 
     auto& IRB = arena[pc + b_pointer];
     auto& IRA = arena[pc + a_pointer];

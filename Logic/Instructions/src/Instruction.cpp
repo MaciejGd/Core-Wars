@@ -167,7 +167,9 @@ InstructionResult CInstruction::Execute(int &pc)
     m_A_param->EvaluateParameter(pc);
     m_B_param->EvaluateParameter(pc);
     // then execute operation
-    return m_operation->Execute(m_A_param, m_B_param, pc);
+    int a_pointer = m_A_param->GetPointer();
+    int b_pointer = m_B_param->GetPointer();
+    return m_operation->Execute(a_pointer, b_pointer, pc);
 }
 
 bool CInstruction::m_SetParamValue(std::unique_ptr<CParameter> &param, int value)
