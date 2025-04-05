@@ -4,6 +4,8 @@
 #include "Operation.h"
 #include <memory>
 
+
+
 /// @brief Class representing single instruction to be placed on game arena
 ///
 /// Consists of:
@@ -66,7 +68,7 @@ public:
     /// @brief Evaluates parameters and runs operation
     /// @param pc current memory cell executed
     /// @return boolean indicating status of execution operation
-    bool Execute(int& pc);
+    InstructionResult Execute(int& pc);
     // DEBUG PURPOSES!!! shouldnt be needed in code
     const std::unique_ptr<CParameter>& GetAParam() const { return m_A_param; };
     const std::unique_ptr<CParameter>& GetBParam() const { return m_B_param; };

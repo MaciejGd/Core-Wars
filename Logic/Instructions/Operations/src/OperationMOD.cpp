@@ -14,7 +14,7 @@ std::unique_ptr<COperation> COperationMOD::clone() const
     return std::unique_ptr<COperation>(new COperationMOD{*this});
 }
 
-bool COperationMOD::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
+InstructionResult COperationMOD::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
 {
     LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);
     CArena& arena = CArena::GetInstance();
@@ -36,7 +36,7 @@ bool COperationMOD::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
             if (IRA_ANUM == 0) 
             {
                 LOG_ERR("Trying to divide by 0");
-                return false;
+                return InstructionResult::FAIL;
             }
             IRB->SetAParamValue(IRB_ANUM % IRA_ANUM);
             break;
@@ -44,7 +44,7 @@ bool COperationMOD::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
             if (IRA_BNUM == 0) 
             {
                 LOG_ERR("Trying to divide by 0");
-                return false;
+                return InstructionResult::FAIL;
             }
             IRB->SetBParamValue(IRB_BNUM % IRA_BNUM);
             break;
@@ -52,7 +52,7 @@ bool COperationMOD::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
             if (IRA_BNUM == 0) 
             {
                 LOG_ERR("Trying to divide by 0");
-                return false;
+                return InstructionResult::FAIL;
             }
             IRB->SetBParamValue(IRB_ANUM % IRA_BNUM);
             break;
@@ -60,7 +60,7 @@ bool COperationMOD::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
             if (IRA_ANUM == 0) 
             {
                 LOG_ERR("Trying to divide by 0");
-                return false;
+                return InstructionResult::FAIL;
             }
             IRB->SetAParamValue(IRB_BNUM % IRA_ANUM);
             break;
@@ -68,7 +68,7 @@ bool COperationMOD::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
             if (IRA_ANUM == 0 || IRA_BNUM == 0) 
             {
                 LOG_ERR("Trying to divide by 0");
-                return false;
+                return InstructionResult::FAIL;
             }
             IRB->SetAParamValue(IRB_BNUM % IRA_ANUM);
             IRB->SetBParamValue(IRB_ANUM % IRA_BNUM);
@@ -78,15 +78,15 @@ bool COperationMOD::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
             if (IRA_ANUM == 0 || IRA_BNUM == 0) 
             {
                 LOG_ERR("Trying to divide by 0");
-                return false;
+                return InstructionResult::FAIL;
             }
             IRB->SetAParamValue(IRB_ANUM % IRA_ANUM);
             IRB->SetBParamValue(IRB_BNUM % IRA_BNUM);
             break;
         default: 
             LOG_ERR("Undefined parameter in {}", m_name);
-            return false;
+            return InstructionResult::FAIL;
     }
     pc = (pc + 1) % ARENA_SIZE;
-    return true;
+    return InstructionResult::PASS;
 }

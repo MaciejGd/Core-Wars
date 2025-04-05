@@ -21,6 +21,17 @@ enum ModifierType {
     DEFAULT
 };
 
+/// Enumaration type representing result status
+/// of execuing instruction. Possible return codes:
+/// - FAIL:  indicates that process executing should be killed
+/// - PASS:  indicates correct instruction execution
+/// - SPLIT: indicates that new process for executing player should be created
+enum InstructionResult {
+    FAIL,
+    PASS,
+    SPLIT
+};
+
 /// @brief Function translating modifier type to a proper string 
 /// @param modifier type of the modifier to be turned into a string
 /// @return string representing modifier type, ex. ".A", ".I", etc
@@ -56,7 +67,7 @@ public:
     /// @param B_param B parameter of the instruction
     /// @param pc process counter, memory cell player is currently in
     /// @return boolean indicating result of operation, on false player's process will be killed
-    virtual bool Execute(std::unique_ptr<CParameter>& A_param, std::unique_ptr<CParameter>& B_param, int& pc) = 0;
+    virtual InstructionResult Execute(std::unique_ptr<CParameter>& A_param, std::unique_ptr<CParameter>& B_param, int& pc) = 0;
 private:
     
 protected:

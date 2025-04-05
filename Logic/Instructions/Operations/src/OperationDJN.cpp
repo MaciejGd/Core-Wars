@@ -12,7 +12,7 @@ std::unique_ptr<COperation> COperationDJN::clone() const
     return std::unique_ptr<COperation>(new COperationDJN{*this});
 }
 
-bool COperationDJN::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
+InstructionResult COperationDJN::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
 {
     CArena& arena = CArena::GetInstance();
     int b_pointer = B_param->GetPointer();
@@ -70,7 +70,7 @@ bool COperationDJN::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
                 pc = (pc + 1) % ARENA_SIZE;
             }
         default:
-            return false;
+            return InstructionResult::FAIL;
     }
-    return true;
+    return InstructionResult::PASS;
 }

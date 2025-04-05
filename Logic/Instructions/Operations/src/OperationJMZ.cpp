@@ -14,7 +14,7 @@ std::unique_ptr<COperation> COperationJMZ::clone() const
     return std::unique_ptr<COperation>(new COperationJMZ{*this});
 }
 
-bool COperationJMZ::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
+InstructionResult COperationJMZ::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
 {
     LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);
     CArena& arena = CArena::GetInstance(); // TODO turn it into a macro
@@ -70,7 +70,7 @@ bool COperationJMZ::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
             break;
         default:
             LOG_ERR("Undefined modifier has been set {}", ModifierToString(m_modifier));
-            return false;
+            return InstructionResult::FAIL;
     }
-    return true;
+    return InstructionResult::PASS;
 }

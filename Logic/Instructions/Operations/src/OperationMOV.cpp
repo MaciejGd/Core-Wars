@@ -14,7 +14,7 @@ std::unique_ptr<COperation> COperationMOV::clone() const
     return std::unique_ptr<COperation>(new COperationMOV{*this});
 }
 
-bool COperationMOV::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
+InstructionResult COperationMOV::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
 {
     LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);
     CArena& arena = CArena::GetInstance();
@@ -65,10 +65,10 @@ bool COperationMOV::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
         }
         default:
             LOG_ERR("Undefined parameter in {}", m_name);
-            return false;
+            return InstructionResult::FAIL;
             break;
     }
     // PC should be increased by one after the operation succeed
     pc = (pc+1) % ARENA_SIZE;
-    return true;
+    return InstructionResult::PASS;
 }

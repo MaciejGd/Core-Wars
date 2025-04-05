@@ -47,16 +47,17 @@ int main(int argc, char *argv[])
     // test_harness.RunTests();
     /* END TESTING PARSER*/
     /* TESTING PARAM COPYING */
-    // MOVOperatorTest::RunTests();
-    // DATOperatorTest::RunTests();
-    // JMZOperatorTest::RunTests();
-    // JMNOperatorTest::RunTests();
-    // DJNOperatorTest::RunTests();
-    // CMPOperatorTest::RunTests();
-    // SLTOperatorTest::RunTests();
-    // SUBOperatorTest::RunTests();
-    // ADDOperatorTest::RunTests();
-    // MULOperatorTest::RunTests();
+
+    MOVOperatorTest::RunTests();
+    DATOperatorTest::RunTests();
+    JMZOperatorTest::RunTests();
+    JMNOperatorTest::RunTests();
+    DJNOperatorTest::RunTests();
+    CMPOperatorTest::RunTests();
+    SLTOperatorTest::RunTests();
+    SUBOperatorTest::RunTests();
+    ADDOperatorTest::RunTests();
+    MULOperatorTest::RunTests();
     DIVOperatorTest::RunTests();
     MODOperatorTest::RunTests();
     // CArena ar;

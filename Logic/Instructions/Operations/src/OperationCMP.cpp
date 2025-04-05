@@ -14,7 +14,7 @@ std::unique_ptr<COperation> COperationCMP::clone() const
     return std::unique_ptr<COperation>(new COperationCMP{*this});
 }
 
-bool COperationCMP::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
+InstructionResult COperationCMP::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
 {
     LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);
     CArena& arena = CArena::GetInstance();
@@ -102,7 +102,7 @@ bool COperationCMP::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
             break;
         default:
             LOG_ERR("Undefined parameter in {}", m_name);
-            return false;
+            return InstructionResult::FAIL;
     }
-    return true;
+    return InstructionResult::PASS;
 }

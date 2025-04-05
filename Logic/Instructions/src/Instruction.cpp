@@ -161,17 +161,13 @@ std::unique_ptr<CInstruction> CInstruction::CreateDefaultInstruction()
     return std::move(ret);
 }
 
-bool CInstruction::Execute(int &pc)
+InstructionResult CInstruction::Execute(int &pc)
 {
     // at first evaluate both parameters
     m_A_param->EvaluateParameter(pc);
     m_B_param->EvaluateParameter(pc);
     // then execute operation
-    if (m_operation->Execute(m_A_param, m_B_param, pc))
-    {
-        return true;
-    }
-    return false;
+    return m_operation->Execute(m_A_param, m_B_param, pc);
 }
 
 bool CInstruction::m_SetParamValue(std::unique_ptr<CParameter> &param, int value)

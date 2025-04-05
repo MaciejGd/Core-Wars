@@ -14,7 +14,7 @@ std::unique_ptr<COperation> COperationMUL::clone() const
     return std::unique_ptr<COperation>(new COperationMUL{*this});
 }
 
-bool COperationMUL::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
+InstructionResult COperationMUL::Execute(std::unique_ptr<CParameter> &A_param, std::unique_ptr<CParameter> &B_param, int &pc)
 {
     LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);
     CArena& arena = CArena::GetInstance();
@@ -55,8 +55,8 @@ bool COperationMUL::Execute(std::unique_ptr<CParameter> &A_param, std::unique_pt
             break;
         default: 
             LOG_ERR("Undefined parameter in {}", m_name);
-            return false;
+            return InstructionResult::FAIL;
     }
     pc = (pc + 1) % ARENA_SIZE;
-    return true;
+    return InstructionResult::PASS;
 }
