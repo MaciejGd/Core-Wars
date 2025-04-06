@@ -3,7 +3,7 @@
 #include "Instruction.h"
 #include "operator_test.h"
 
-class SLTOperatorTest : public OperatorTest {
+class SLTOperatorTest : public IOperatorTest {
 public:
     void RunTests();
 

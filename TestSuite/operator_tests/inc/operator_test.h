@@ -1,7 +1,7 @@
 #pragma once
 
 
-class OperatorTest {
+class IOperatorTest {
 public:
     virtual void RunTests() = 0;
 };

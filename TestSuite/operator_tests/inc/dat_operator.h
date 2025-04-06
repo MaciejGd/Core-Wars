@@ -2,7 +2,7 @@
 
 #include "operator_test.h"
 
-class DATOperatorTest : public OperatorTest {
+class DATOperatorTest : public IOperatorTest {
 public: 
     void RunTests() override;
 

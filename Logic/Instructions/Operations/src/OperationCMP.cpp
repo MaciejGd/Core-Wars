@@ -2,10 +2,12 @@
 #include "logger.h"
 #include "Arena.h"
 #include "Instruction.h"
+#include "DefaultModSetterMOV.h"
 
 COperationCMP::COperationCMP()
 {
     m_name = "CMP";
+    m_def_modifier = std::make_unique<CDefaultModSetterMOV>();
 }
 
 std::unique_ptr<COperation> COperationCMP::clone() const

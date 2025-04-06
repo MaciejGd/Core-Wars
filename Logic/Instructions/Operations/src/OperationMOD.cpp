@@ -2,10 +2,12 @@
 #include "Arena.h"
 #include "Instruction.h"
 #include "logger.h"
+#include "DefaultModSetterArithm.h"
 
 COperationMOD::COperationMOD()
 {
     m_name = "MOD";
+    m_def_modifier = std::make_unique<CDefaultModSetterArithm>();
 }
 
 std::unique_ptr<COperation> COperationMOD::clone() const

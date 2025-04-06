@@ -1,8 +1,10 @@
 #include "OperationORG.h"
+#include "DefaultModSetterJump.h"
 
 COperationORG::COperationORG()
 {
     m_name = "ORG";
+    m_def_modifier = std::make_unique<CDefaultModSetterJump>();
 }
 
 std::unique_ptr<COperation> COperationORG::clone() const

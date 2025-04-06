@@ -21,6 +21,8 @@ set(INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/Parser/inc
     ${CMAKE_CURRENT_SOURCE_DIR}/Parser/AbstractSyntaxTree/inc
     ${CMAKE_CURRENT_SOURCE_DIR}/../logger/
+    ${CMAKE_CURRENT_SOURCE_DIR}/Instructions/Operations/DefaultModfierSetters/inc
+
 )
 
 file(GLOB SRC_FILES 
@@ -30,6 +32,7 @@ file(GLOB SRC_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/Parser/src/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Parser/AbstractSyntaxTree/src/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Platform/src/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Instructions/Operations/DefaultModfierSetters/src/*.cpp
 )
 file(GLOB HDR_FILES 
     ${CMAKE_CURRENT_SOURCE_DIR}/Instructions/Operations/inc/*.h
@@ -38,6 +41,7 @@ file(GLOB HDR_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/Parser/inc/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Parser/AbstractSyntaxTree/inc/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Platform/inc/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Instructions/Operations/DefaultModfierSetters/inc/*.h
 )
 
 add_library(Logic STATIC

@@ -3,7 +3,7 @@
 #include "Instruction.h"
 #include "operator_test.h"
 
-class JMPOperatorTest : public OperatorTest {
+class JMPOperatorTest : public IOperatorTest {
 public:
     void RunTests();
 private:

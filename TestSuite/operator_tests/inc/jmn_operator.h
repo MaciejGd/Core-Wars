@@ -3,7 +3,7 @@
 #include "Instruction.h"
 #include "operator_test.h"
 
-class JMNOperatorTest : public OperatorTest {
+class JMNOperatorTest : public IOperatorTest {
 public:
     void RunTests() override;
 private:

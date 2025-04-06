@@ -5,7 +5,7 @@
 
 class CArena;
 
-class DIVOperatorTest : public OperatorTest{
+class DIVOperatorTest : public IOperatorTest{
 public:
     void RunTests() override;
 private:

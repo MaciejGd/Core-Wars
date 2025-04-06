@@ -1,10 +1,12 @@
 #include "OperationDJN.h"
 #include "Arena.h"
 #include "Instruction.h"
+#include "DefaultModSetterJump.h"
 
 COperationDJN::COperationDJN()
 {
     m_name = "DJN";
+    m_def_modifier = std::make_unique<CDefaultModSetterJump>();
 }
 
 std::unique_ptr<COperation> COperationDJN::clone() const

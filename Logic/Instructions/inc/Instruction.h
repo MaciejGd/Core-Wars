@@ -55,6 +55,10 @@ public:
     /// @return boolean indicating if operation succeeded
     bool SetModifier(ModifierType modifier);
 
+
+    /// @brief Switch default modifier with respective value for set operation
+    void DeduceDefaultModifier();
+
     /// @brief Debug function for printing instruction
     std::string PrintInstruction() const;
 
@@ -72,6 +76,7 @@ public:
     // DEBUG PURPOSES!!! shouldnt be needed in code
     const std::unique_ptr<CParameter>& GetAParam() const { return m_A_param; };
     const std::unique_ptr<CParameter>& GetBParam() const { return m_B_param; };
+    const ModifierType GetModifier() const { return m_operation->GetModifier(); }
 private:
     bool m_SetParamValue(std::unique_ptr<CParameter>& arg, int value);
     std::unique_ptr<CParameter> m_A_param;

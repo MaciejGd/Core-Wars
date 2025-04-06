@@ -5,7 +5,7 @@
 
 class CArena;
 
-class SUBOperatorTest : public OperatorTest {
+class SUBOperatorTest : public IOperatorTest {
 public:
     void RunTests();
 

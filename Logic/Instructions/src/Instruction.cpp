@@ -126,6 +126,29 @@ bool CInstruction::SetModifier(ModifierType modifier)
     return true;
 }
 
+void CInstruction::DeduceDefaultModifier()
+{
+    std::string a_param_type = "";
+    std::string b_param_type = "";
+    // check A param
+    if (m_A_param == nullptr)   
+    {
+        a_param_type = "Direct";
+    }
+    else {
+        a_param_type = m_A_param->Identify();
+    }
+    // check B param
+    if (m_B_param == nullptr)   
+    {
+        b_param_type = "Direct";
+    }
+    else {
+        b_param_type = m_B_param->Identify();
+    }
+    m_operation->DeduceDefaultModifier(a_param_type, b_param_type);
+}
+
 std::string CInstruction::PrintInstruction() const
 {
     if (m_operation == nullptr)
@@ -153,6 +176,7 @@ std::unique_ptr<CInstruction> CInstruction::CreateDefaultInstruction()
     A_param->SetValue(0);
     B_param->SetValue(0);
     std::unique_ptr<COperation> op(new COperationDAT());
+    op->SetModifier(ModifierType::F);
     // create instruction
     std::unique_ptr<CInstruction> ret(new CInstruction());
     ret->SetOperation(std::move(op));

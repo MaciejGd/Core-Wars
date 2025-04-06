@@ -3,7 +3,7 @@
 #include "Instruction.h"
 #include "operator_test.h"
 
-class DJNOperatorTest : public OperatorTest {
+class DJNOperatorTest : public IOperatorTest {
 public:
     void RunTests() override;
 private:

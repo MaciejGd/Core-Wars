@@ -2,10 +2,12 @@
 #include "Instruction.h"
 #include "Arena.h"
 #include "logger.h"
+#include "DefaultModSetterSLT.h"
 
 COperationSLT::COperationSLT()
 {
     m_name = "SEQ";
+    m_def_modifier = std::make_unique<CDefaultModSetterSLT>();
 }
 
 std::unique_ptr<COperation> COperationSLT::clone() const

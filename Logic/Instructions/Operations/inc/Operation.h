@@ -2,24 +2,11 @@
 
 #include <string>
 #include <memory>
+#include <string_view>
+
+#include "DefaultModSetter.h"
 
 class CParameter;
-
-///
-/// Enumeration type representing all
-/// possible modifiers accessible in 
-/// RedCode language
-///
-enum ModifierType {
-    A,
-    B,
-    AB,
-    BA,
-    I,
-    F,
-    X,
-    DEFAULT
-};
 
 /// Enumaration type representing result status
 /// of execuing instruction. Possible return codes:
@@ -46,7 +33,7 @@ std::string ModifierToString(ModifierType modifier);
 class COperation {
 public:
     COperation(): m_modifier(ModifierType::DEFAULT) {};
-    COperation(const COperation& other) = default;
+    COperation(const COperation& other);
 
     virtual std::unique_ptr<COperation> clone() const = 0;
 
@@ -62,15 +49,21 @@ public:
     /// @param modifier type of modifier to be set
     void SetModifier(ModifierType modifier) { m_modifier = modifier; };
 
-    /// @brief Virtual function, derived classes implements correct behavior of each operation 
+    /// @brief Virtual function, derived classes implement correct behavior of each operation 
     /// @param A_param A parameter of the instruction
     /// @param B_param B parameter of the instruction
     /// @param pc process counter, memory cell player is currently in
     /// @return boolean indicating result of operation, on false player's process will be killed
     virtual InstructionResult Execute(int a_pointer, int b_pointer, int& pc) = 0;
+
+    /// @brief Function to be used after parsing, switches default modifier with the proper for operation
+    /// @param a_param_type string representing address mode of the first modifier
+    /// @param b_param_type string representing address mode of the second modifier
+    void DeduceDefaultModifier(std::string_view a_param_type, std::string_view b_param_type);
 private:
     
 protected:
     ModifierType m_modifier;
     std::string m_name="";
+    std::unique_ptr<IDefaultModSetter> m_def_modifier;
 };

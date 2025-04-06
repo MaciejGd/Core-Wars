@@ -1,0 +1,17 @@
+; Hybrid bomber-imp strategy
+
+bomber      MOV bomb, @target       ; Bomb a memory location indirectly
+            ADD #7, target          ; Increment target pointer
+            DJN bomber, delay       ; Loop unless delay counter hits 0
+
+            SPL imp_start
+            JMP bomber              ; If imp dies, continue bombing
+
+bomb        DAT #0, #0              ; Harmless bomb
+
+
+target      DAT #10, #0             ; Indirect pointer for bombing
+delay       DAT #5, #0              ; Counter for bombing loop
+
+
+imp_start   MOV 0, 1                ; Imp spiraling through core

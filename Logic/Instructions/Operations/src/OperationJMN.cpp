@@ -2,10 +2,12 @@
 #include "Arena.h"
 #include "Instruction.h" 
 #include "logger.h"
+#include "DefaultModSetterJump.h"
 
 COperationJMN::COperationJMN()
 {
     m_name = "JMN";
+    m_def_modifier = std::make_unique<CDefaultModSetterJump>();
 }
 
 std::unique_ptr<COperation> COperationJMN::clone() const

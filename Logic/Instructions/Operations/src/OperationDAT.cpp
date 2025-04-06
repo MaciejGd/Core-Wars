@@ -1,8 +1,10 @@
 #include "OperationDAT.h"
+#include "DefaultModSetterDAT.h"
 
 COperationDAT::COperationDAT()
 {
     m_name = "DAT";
+    m_def_modifier = std::make_unique<CDefaultModSetterDAT>();
 }
 
 std::unique_ptr<COperation> COperationDAT::clone() const

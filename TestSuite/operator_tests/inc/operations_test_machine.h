@@ -11,5 +11,5 @@ public:
     void RunTests();
 
 private:
-    std::array<std::unique_ptr<OperatorTest>, 13> m_tests;
+    std::array<std::unique_ptr<IOperatorTest>, 13> m_tests;
 };

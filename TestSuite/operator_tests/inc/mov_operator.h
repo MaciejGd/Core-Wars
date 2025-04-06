@@ -7,7 +7,7 @@
 
 class CInstruction;
 
-class MOVOperatorTest : public OperatorTest {
+class MOVOperatorTest : public IOperatorTest {
 public:
     void RunTests() override;
 private:

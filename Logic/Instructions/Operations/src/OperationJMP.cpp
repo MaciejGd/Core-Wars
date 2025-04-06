@@ -1,9 +1,11 @@
 #include "OperationJMP.h"
 #include "Arena.h"
+#include "DefaultModSetterJump.h"
 
 COperationJMP::COperationJMP()
 {
     m_name = "JMP";
+    m_def_modifier = std::make_unique<CDefaultModSetterJump>();
 }
 
 std::unique_ptr<COperation> COperationJMP::clone() const

@@ -2,10 +2,12 @@
 #include "Arena.h"
 #include "Instruction.h"
 #include "logger.h"
+#include "DefaultModSetterArithm.h"
 
 COperationMUL::COperationMUL()
 {
     m_name = "MUL";
+    m_def_modifier = std::make_unique<CDefaultModSetterArithm>();
 }
 
 std::unique_ptr<COperation> COperationMUL::clone() const

@@ -10,6 +10,8 @@
 #include "operator_copying.h"
 #include "instruction_copying.h"
 #include "operations_test_machine.h"
+#include "code_loader.h"
+#include "default_mod_setter.h"
 
 const int WIDTH = 1400;
 const int HEIGHT = 900;
@@ -35,20 +37,15 @@ int main(int argc, char *argv[])
     // test_harness.RunTests();
     /* END TESTING PARSER*/
     /* TESTING PARAM COPYING */
-    OperationTestingMachine operators_tests{};
-    operators_tests.RunTests();
-    // MOVOperatorTest::RunTests();
-    // DATOperatorTest::RunTests();
-    // JMZOperatorTest::RunTests();
-    // JMNOperatorTest::RunTests();
-    // DJNOperatorTest::RunTests();
-    // CMPOperatorTest::RunTests();
-    // SLTOperatorTest::RunTests();
-    // SUBOperatorTest::RunTests();
-    // ADDOperatorTest::RunTests();
-    // MULOperatorTest::RunTests();
-    // DIVOperatorTest::RunTests();
-    // MODOperatorTest::RunTests();
+    // OperationTestingMachine operators_tests{};
+    // operators_tests.RunTests();
+
+
+
+    DefaultModSetterTests tests;
+    tests.RunTests();
+
+    /* RUNNING GUI*/
     // CArena ar;
     // ar.TestPrint();
     // QApplication app(argc, argv);

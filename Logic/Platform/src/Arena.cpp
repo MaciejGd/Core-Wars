@@ -3,6 +3,8 @@
 
 #include "logger.h"
 
+#include <random>
+
 CArena CArena::s_instance;
 
 
@@ -38,15 +40,45 @@ std::unique_ptr<CInstruction> &CArena::operator[](size_t idx)
 
 void CArena::ClearArena()
 {
-    // over write all arena cells with pointer to default instruction
+    // overwrite all arena cells with pointer to default instruction
     for (int i = 0; i < m_arena.size(); i++)
     {
         m_arena[i] = CInstruction::CreateDefaultInstruction();
     }
 }
 
+int CArena::LoadPlayer(std::vector<std::unique_ptr<CInstruction>> &init_code, int player_id)
+{
+    // calculate starting point for a player basing on his player id
+    int starting_point = m_GenInitialCodePlace(player_id);
+    // move instructions from initial vector to core
+    for (int i = 0; i < init_code.size(); i++)
+    {
+        m_arena[starting_point + i] = std::move(init_code[i]);
+    }
+    // we should clear original vector after moving as it does not own any pointers anymore
+    init_code.clear();
+
+    // return starting point so Player can track his program counter
+    return starting_point;
+}
+
 CArena::CArena()
 {
+}
+
+int CArena::m_GenInitialCodePlace(int player_id)
+{
+    // calculate size of chunk for a player
+    unsigned int chunk_size = ARENA_SIZE / (PLAYERS_AMOUNT + 1);
+    // calculate center around which player's code will be loaded
+    unsigned int chunk_center = (chunk_size) * (player_id + 1);
+    // use random to generate random number around found center
+    std::random_device r;
+    std::mt19937 el(r());
+    std::uniform_int_distribution<int> dist(chunk_center-m_start_range, chunk_center+m_start_range);
+    // return pseudo-random number
+    return dist(el);
 }
 
 void CArena::TestPrint()

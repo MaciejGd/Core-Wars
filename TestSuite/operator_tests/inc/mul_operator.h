@@ -5,7 +5,7 @@
 
 class CArena;
 
-class MULOperatorTest : public OperatorTest {
+class MULOperatorTest : public IOperatorTest {
 public:
     void RunTests() override;
 

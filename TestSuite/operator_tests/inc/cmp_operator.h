@@ -3,7 +3,7 @@
 #include "Instruction.h"
 #include "operator_test.h"
 
-class CMPOperatorTest : public OperatorTest{
+class CMPOperatorTest : public IOperatorTest{
 public:
     void RunTests();
 
