@@ -26,6 +26,7 @@ bool CPlayer::ExecuteTask()
     // if m_tasks is empty it means that player lost
     if (m_tasks.empty())
     {
+        LOG_ERR("No more tasks left for ");
         return false;
     }
     // get first task and pop it from the queue
@@ -34,16 +35,21 @@ bool CPlayer::ExecuteTask()
     // need to keep copy of task as it will be modified in Execute function
     int task_cp = task; 
     // execute task on arena
-    if (m_arena[task]->Execute(task) == InstructionResult::SPLIT)
+    InstructionResult exe_result = m_arena[task]->Execute(task);
+    if (exe_result == InstructionResult::SPLIT)
     {
         // we need to handle SPL instruction separately (creating new process for player)
         m_tasks.push_back((task_cp+1) % ARENA_SIZE);
         m_tasks.push_back(task);
     }
-    else if (m_arena[task]->Execute(task) == InstructionResult::PASS)
+    else if (exe_result == InstructionResult::PASS)
     {
         // if success push task to queue again as it was updated in COperation
         m_tasks.push_back(task);
+    }
+    else if (exe_result == InstructionResult::FAIL)
+    {
+        LOG_ERR("Executed wrong instruction process has been killed");
     }
     return true;
 }

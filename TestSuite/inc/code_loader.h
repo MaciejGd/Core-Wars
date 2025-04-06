@@ -8,7 +8,12 @@
 class CodeLoaderTests {
 public:
     CodeLoaderTests(): m_arena(CArena::GetInstance()), m_first_player(CPlayer(0)), m_second_player(CPlayer(1)) {}; 
-    void RunTests();
+
+    /// @brief Test of loading program to core
+    void RunTestsLoad();
+
+    /// @brief Run a few commands to check if interpreter works correctly
+    void RunTestsRunner();
 
 
 private:
@@ -17,4 +22,5 @@ private:
     CPlayer m_second_player;
 
     void m_ShowArenaLoad(const std::string& file_name, CPlayer& player);
+    void m_PrintArena(int pc);
 };

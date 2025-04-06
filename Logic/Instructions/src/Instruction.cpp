@@ -1,6 +1,7 @@
 #include "Instruction.h"
 #include "logger.h"
 #include "ParameterImmediate.h"
+#include "ParameterDirect.h"
 #include "OperationDAT.h"
 
 CInstruction::CInstruction(const CInstruction& other)
@@ -18,6 +19,10 @@ CInstruction::CInstruction(const CInstruction& other)
     if (other.m_operation != nullptr)
     {
         m_operation = other.m_operation->clone();
+        if (m_operation == nullptr)
+        {
+            LOG_ERR("m_operation equal to nullptr after copying");
+        }
     }
 }
 
@@ -111,7 +116,6 @@ void CInstruction::SetOperation(std::unique_ptr<COperation> operation)
         LOG_WRN("Overriding current operation: {}", m_operation->GetOperationName());
     }
     m_operation = std::move(operation);
-    //LOG_DBG("Operation {} has been set", m_operation->GetOperationName());
 }
 
 bool CInstruction::SetModifier(ModifierType modifier)
@@ -128,25 +132,25 @@ bool CInstruction::SetModifier(ModifierType modifier)
 
 void CInstruction::DeduceDefaultModifier()
 {
+    if (m_A_param == nullptr || m_B_param == nullptr)
+    {
+        LOG_ERR("Params not set yet, emergency exit");
+        return;
+    } 
     std::string a_param_type = "";
     std::string b_param_type = "";
-    // check A param
-    if (m_A_param == nullptr)   
-    {
-        a_param_type = "Direct";
-    }
-    else {
-        a_param_type = m_A_param->Identify();
-    }
-    // check B param
-    if (m_B_param == nullptr)   
-    {
-        b_param_type = "Direct";
-    }
-    else {
-        b_param_type = m_B_param->Identify();
-    }
+    a_param_type = m_A_param->Identify();
+    b_param_type = m_B_param->Identify();
     m_operation->DeduceDefaultModifier(a_param_type, b_param_type);
+}
+
+void CInstruction::FinishInstructionSetup()
+{
+    // need to add this function as according to spec, B parameter is optional
+    if (m_B_param == nullptr)
+    {
+        m_B_param = std::make_unique<CParameterDirect>(0);
+    }
 }
 
 std::string CInstruction::PrintInstruction() const
@@ -187,6 +191,11 @@ std::unique_ptr<CInstruction> CInstruction::CreateDefaultInstruction()
 
 InstructionResult CInstruction::Execute(int &pc)
 {
+    if (m_A_param == nullptr || m_B_param == nullptr || m_operation == nullptr)
+    {
+        LOG_ERR("Parameters are invalid for instruction at index {}", pc);
+        return InstructionResult::FAIL;
+    } 
     // at first evaluate both parameters
     m_A_param->EvaluateParameter(pc);
     m_B_param->EvaluateParameter(pc);

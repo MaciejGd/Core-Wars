@@ -37,7 +37,7 @@ public:
     /// @param pointer pointer to fold to desired range
     /// @param limit limit of the range
     /// @return size_t indicating position after folding
-    static size_t Fold(size_t pointer);
+    static int Fold(int pointer);
     std::unique_ptr<CInstruction>& operator[](size_t idx);
 
     /// Function that will clear arena, that is fill all 

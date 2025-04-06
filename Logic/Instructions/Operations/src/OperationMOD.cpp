@@ -54,7 +54,7 @@ InstructionResult COperationMOD::Execute(int a_pointer, int b_pointer, int &pc)
                 LOG_ERR("Trying to divide by 0");
                 return InstructionResult::FAIL;
             }
-            IRB->SetBParamValue(IRB_ANUM % IRA_BNUM);
+            IRB->SetBParamValue(IRB_BNUM % IRA_ANUM);
             break;
         case BA:
             if (IRA_ANUM == 0) 
@@ -62,7 +62,7 @@ InstructionResult COperationMOD::Execute(int a_pointer, int b_pointer, int &pc)
                 LOG_ERR("Trying to divide by 0");
                 return InstructionResult::FAIL;
             }
-            IRB->SetAParamValue(IRB_BNUM % IRA_ANUM);
+            IRB->SetAParamValue(IRB_ANUM % IRA_BNUM);
             break;
         case X:
             if (IRA_ANUM == 0 || IRA_BNUM == 0) 

@@ -1,6 +1,7 @@
 #include "OperationJMP.h"
 #include "Arena.h"
 #include "DefaultModSetterJump.h"
+#include "logger.h"
 
 COperationJMP::COperationJMP()
 {
@@ -15,6 +16,7 @@ std::unique_ptr<COperation> COperationJMP::clone() const
 
 InstructionResult COperationJMP::Execute(int a_pointer, int b_pointer, int &pc)
 {
-    pc += (a_pointer % ARENA_SIZE); // jump to address requested by read pointer of A
+    pc = (pc + a_pointer) % ARENA_SIZE; // jump to address requested by read pointer of A
+    LOG_ERR("Jumping to pointer {}", a_pointer);
     return InstructionResult::PASS;
 }

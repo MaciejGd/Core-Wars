@@ -13,8 +13,8 @@ bool CCodeBuilder::ProduceInstructions(std::string_view file_name)
         return false;
     }
     LOG_DBG("Properly created instructions from file {}", m_file_name);
-    // after creating instructions default modifiers have to be switched to respective values
-    m_DeduceDefaultModifiers();
+    // finish instructions setup
+    m_FinishInstructionsSetup();
     return true;
 }
 
@@ -30,10 +30,12 @@ bool CCodeBuilder::m_ProcessProgramFile()
     return false;
 }
 
-void CCodeBuilder::m_DeduceDefaultModifiers()
+void CCodeBuilder::m_FinishInstructionsSetup()
 {
+    // add default B param if not provided and replace default modifier
     for (auto& instruction : m_instructions)
     {
+        instruction->FinishInstructionSetup();
         instruction->DeduceDefaultModifier();
     }
 }

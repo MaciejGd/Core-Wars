@@ -5,7 +5,7 @@
 
 namespace fs = std::filesystem;
 
-void CodeLoaderTests::RunTests()
+void CodeLoaderTests::RunTestsLoad()
 {
     std::string test_path = CODE_LOADER_TEST_PATH;
     // analyze files in alphabetical order so use set
@@ -25,6 +25,39 @@ void CodeLoaderTests::RunTests()
     }
 }
 
+void CodeLoaderTests::RunTestsRunner()
+{
+    std::string test_path = CODE_LOADER_TEST_PATH;
+    // analyze files in alphabetical order so use set
+    std::set<std::string> test_files;
+    for (const auto& entry : fs::directory_iterator(test_path))
+    {
+        fs::path test_name = entry.path();
+        std::string file_name = test_name.string();
+        test_files.insert(file_name);
+    }
+    int i = 0;
+    for (const auto& file_name : test_files)
+    {
+        LOG_ERR("[RUNNING TESTCASE {}]", file_name);
+        CPlayer& player = ((i % 2) == 0) ? m_first_player : m_second_player;
+        m_ShowArenaLoad(file_name, player);
+        // run first 10 instructions
+        for (int j = 0; j < 10; j++)
+        {
+            LOG_ERR("RUNNING {} TASK", j);
+            int pc = player.GetNextTask(); // starting index
+            LOG_ERR("ACTUAL Program Counter: {}", pc);
+            if (!player.ExecuteTask())
+            {
+                break;
+            }
+            m_PrintArena(pc);
+        }
+        i++;
+    }
+}
+
 void CodeLoaderTests::m_ShowArenaLoad(const std::string &file_name, CPlayer& player)
 {
     m_arena.ClearArena();
@@ -37,3 +70,11 @@ void CodeLoaderTests::m_ShowArenaLoad(const std::string &file_name, CPlayer& pla
         LOG_WRN("Instr at index {} : {}", i, m_arena[i]->PrintInstruction());
     }
 }
+
+void CodeLoaderTests::m_PrintArena(int pc) {
+    LOG_ERR("[PRINTING ARENA]");
+    for (int i = pc - 30; i < pc + 30; i++)
+    {
+        LOG_WRN("Instr at index {} : {}", i, m_arena[i]->PrintInstruction());
+    }
+}   

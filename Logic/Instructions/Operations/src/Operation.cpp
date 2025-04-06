@@ -29,6 +29,8 @@ std::string ModifierToString(ModifierType modifier)
 COperation::COperation(const COperation &other)
 {
     // need to perform copy of DefaultModifierSetter
+    m_modifier = other.m_modifier;
+    m_name = other.m_name;
     m_def_modifier = other.m_def_modifier->clone();
 }
 

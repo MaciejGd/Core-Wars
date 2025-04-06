@@ -3,14 +3,11 @@
 start   SPL attack          ; split off to start attacking
         JMP wait           ; main process goes to clean up or wait
 
-attack  MOV trap, @target   ; throw trap using indirect mode
+attack  MOV pit, @target   ; throw trap using indirect mode
         ADD #5, target      ; move to next target
         JMP attack          ; loop forever
 
-trap    JMP pit             ; this is the trap — redirects enemy into the pit
-target  DAT #20, #0         ; pointer to place to throw trap
-
-; the pit — useless loop to trap enemies
-pit     JMP pit             ; enemy gets stuck here forever
+pit    JMP pit             ; this is the trap — redirects enemy into the pit
+target  DAT #20, #8         ; pointer to place to throw trap
 
 wait    DAT #0, #0

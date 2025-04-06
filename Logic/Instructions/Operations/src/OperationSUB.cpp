@@ -39,10 +39,10 @@ InstructionResult COperationSUB::Execute(int a_pointer, int b_pointer, int &pc)
             IRB->SetBParamValue(IRB_BNUM - IRA_BNUM);
             break;
         case AB:
-            IRB->SetBParamValue(IRB_ANUM - IRA_BNUM);
+            IRB->SetBParamValue(IRB_BNUM - IRA_ANUM);
             break;
         case BA:
-            IRB->SetAParamValue(IRB_BNUM - IRA_ANUM);
+            IRB->SetAParamValue(IRB_ANUM - IRA_BNUM);
             break;
         case X:
             IRB->SetAParamValue(IRB_BNUM - IRA_ANUM);

@@ -6,12 +6,9 @@
 
 
 
-/// @brief Class representing single instruction to be placed on game arena
-///
+/// Class representing single instruction to be placed on game arena
 /// Consists of:
-///
 /// - COperation: operation that instruction executes
-///
 /// - two CParameter: parameters to instruction
 class CInstruction {
 public:
@@ -59,6 +56,9 @@ public:
     /// @brief Switch default modifier with respective value for set operation
     void DeduceDefaultModifier();
 
+    /// @brief Add default B parameter if it has not been provided during creation
+    void FinishInstructionSetup();
+
     /// @brief Debug function for printing instruction
     std::string PrintInstruction() const;
 
@@ -67,18 +67,20 @@ public:
 
     /// @brief Static function for creating default DAT #0, #0 instruction
     /// @return unique ptr to DAT #0, #0 instruction created
-    static std::unique_ptr<CInstruction> CreateDefaultInstruction();
+    static std::unique_ptr<CInstruction> CreateDefaultInstruction();    
 
     /// @brief Evaluates parameters and runs operation
     /// @param pc current memory cell executed
     /// @return boolean indicating status of execution operation
     InstructionResult Execute(int& pc);
+
     // DEBUG PURPOSES!!! shouldnt be needed in code
     const std::unique_ptr<CParameter>& GetAParam() const { return m_A_param; };
     const std::unique_ptr<CParameter>& GetBParam() const { return m_B_param; };
     const ModifierType GetModifier() const { return m_operation->GetModifier(); }
 private:
     bool m_SetParamValue(std::unique_ptr<CParameter>& arg, int value);
+
     std::unique_ptr<CParameter> m_A_param;
     std::unique_ptr<CParameter> m_B_param;
     std::unique_ptr<COperation> m_operation;

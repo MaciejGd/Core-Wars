@@ -12,6 +12,7 @@ ModifierType CDefaultModSetterArithm::DeduceDefaultModSetter(std::string_view a_
     }
     return ModifierType::F;
 }
+
 std::unique_ptr<IDefaultModSetter> CDefaultModSetterArithm::clone() const
 {
     return std::unique_ptr<CDefaultModSetterArithm>();

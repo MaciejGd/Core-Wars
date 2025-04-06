@@ -13,10 +13,10 @@ CArena& CArena::GetInstance()
     return s_instance;
 }
 
-size_t CArena::Fold(size_t pointer)
+int CArena::Fold(int pointer)
 {
-    size_t result = pointer % ARENA_SIZE;
-    if (result > (RW_LIMIT / 2))
+    int result = pointer % ARENA_SIZE;
+    if (std::abs((int)result) > (RW_LIMIT / 2))
     {
         result += ARENA_SIZE - RW_LIMIT;
     }

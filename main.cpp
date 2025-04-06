@@ -39,13 +39,13 @@ int main(int argc, char *argv[])
     /* TESTING PARAM COPYING */
     // OperationTestingMachine operators_tests{};
     // operators_tests.RunTests();
+    // DefaultModSetterTests tests;
+    // tests.RunTests();
 
-
-
-    DefaultModSetterTests tests;
-    tests.RunTests();
-
-    /* RUNNING GUI*/
+    /* TESTING FINISHING INSTRUCTION SETUP */
+    CodeLoaderTests tests;
+    tests.RunTestsRunner();
+    /* RUNNING GUI*/    
     // CArena ar;
     // ar.TestPrint();
     // QApplication app(argc, argv);

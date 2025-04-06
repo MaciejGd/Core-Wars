@@ -21,5 +21,5 @@ private:
     std::string m_file_name;
 
     bool m_ProcessProgramFile();
-    void m_DeduceDefaultModifiers();
+    void m_FinishInstructionsSetup();
 };
