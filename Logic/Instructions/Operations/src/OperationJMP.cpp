@@ -14,7 +14,7 @@ std::unique_ptr<COperation> COperationJMP::clone() const
     return std::unique_ptr<COperation>(new COperationJMP{*this});
 }
 
-InstructionResult COperationJMP::Execute(int a_pointer, int b_pointer, int &pc)
+InstructionResult COperationJMP::Execute(int a_pointer, int b_pointer, int &pc, int &modified_cell)
 {
     pc = (pc + a_pointer) % ARENA_SIZE; // jump to address requested by read pointer of A
     LOG_ERR("Jumping to pointer {}", a_pointer);

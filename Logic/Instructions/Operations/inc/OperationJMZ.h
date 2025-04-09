@@ -15,5 +15,5 @@ public:
     COperationJMZ(const COperationJMZ& other):COperation(other) {}
     std::unique_ptr<COperation> clone() const override;
 
-    InstructionResult Execute(int a_pointer, int b_pointer, int& pc) override;
+    InstructionResult Execute(int a_pointer, int b_pointer, int& pc, int &modified_cell) override;
 };

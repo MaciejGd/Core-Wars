@@ -7,7 +7,7 @@
 #include <vector>
 
 #define ARENA_SIZE 8000
-#define RW_LIMIT 500
+#define RW_LIMIT 1000
 
 #define PLAYERS_AMOUNT 2 // TODO need reconsideration
 

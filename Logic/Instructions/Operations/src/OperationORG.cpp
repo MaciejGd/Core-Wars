@@ -12,7 +12,7 @@ std::unique_ptr<COperation> COperationORG::clone() const
     return std::unique_ptr<COperation>(new COperationORG{*this});
 }
 
-InstructionResult COperationORG::Execute(int a_pointer, int b_pointer, int &pc)
+InstructionResult COperationORG::Execute(int a_pointer, int b_pointer, int &pc, int &modified_cell)
 {
     return InstructionResult::FAIL;
 }

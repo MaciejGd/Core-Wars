@@ -5,6 +5,7 @@
 #include <array>
 #include <memory>
 
+
 class OperationTestingMachine {
 public:
     OperationTestingMachine();
@@ -12,4 +13,5 @@ public:
 
 private:
     std::array<std::unique_ptr<IOperatorTest>, 13> m_tests;
+
 };

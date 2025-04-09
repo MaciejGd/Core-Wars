@@ -15,7 +15,7 @@ std::unique_ptr<COperation> COperationSUB::clone() const
     return std::unique_ptr<COperation>(new COperationSUB{*this});
 }
 
-InstructionResult COperationSUB::Execute(int a_pointer, int b_pointer, int &pc)
+InstructionResult COperationSUB::Execute(int a_pointer, int b_pointer, int &pc, int &modified_cell)
 {
     LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);
     CArena& arena = CArena::GetInstance();
@@ -57,6 +57,8 @@ InstructionResult COperationSUB::Execute(int a_pointer, int b_pointer, int &pc)
             LOG_ERR("Undefined parameter in {}", m_name);
             return InstructionResult::FAIL;
     }
+    // update modified cell as it was modified
+    modified_cell = (pc + b_pointer) % ARENA_SIZE;
     pc = (pc + 1) % ARENA_SIZE;
     return InstructionResult::PASS;
 }

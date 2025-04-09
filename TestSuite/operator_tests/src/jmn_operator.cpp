@@ -73,7 +73,7 @@ void JMNOperatorTest::m_Atests(ModifierType mod)
     // fill arena field and execute instruction
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS] = JMNOperatorTest::CreateJMNPtr(A_VAL, B_VAL, mod);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     LOG_WRN("A pointer value: {}", arena[STARTING_ADDRESS]->GetAParam()->GetPointer());
     if (nSTARTING_ADDRESS == STARTING_ADDRESS+1)
     {
@@ -86,7 +86,7 @@ void JMNOperatorTest::m_Atests(ModifierType mod)
     // setting param value to 10
     nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS + B_VAL]->SetAParamValue(10);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + A_VAL)
     {
         LOG_PASS("Properly jumped to {}", nSTARTING_ADDRESS);
@@ -104,7 +104,7 @@ void JMNOperatorTest::m_Btests(ModifierType mod)
     // fill arena field and execute instruction
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS] = JMNOperatorTest::CreateJMNPtr(A_VAL, B_VAL, mod);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
 
     if (nSTARTING_ADDRESS == STARTING_ADDRESS+1)
     {
@@ -117,7 +117,7 @@ void JMNOperatorTest::m_Btests(ModifierType mod)
     // setting param value to 10
     nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS + B_VAL]->SetBParamValue(10);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + A_VAL)
     {
         LOG_PASS("Address after jump: {}", nSTARTING_ADDRESS);
@@ -136,7 +136,7 @@ void JMNOperatorTest::m_DoubleParamCheck(ModifierType mod)
     // fill arena field and execute instruction
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS] = JMNOperatorTest::CreateJMNPtr(A_VAL, B_VAL, mod);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
 
     if (nSTARTING_ADDRESS == STARTING_ADDRESS+1)
     {
@@ -149,7 +149,7 @@ void JMNOperatorTest::m_DoubleParamCheck(ModifierType mod)
     // setting param value to 10
     nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS + B_VAL]->SetBParamValue(10);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + A_VAL)
     {
         LOG_PASS("Properly jumped to {}", nSTARTING_ADDRESS);
@@ -161,7 +161,7 @@ void JMNOperatorTest::m_DoubleParamCheck(ModifierType mod)
     nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS + B_VAL]->SetBParamValue(0);
     arena[STARTING_ADDRESS + B_VAL]->SetAParamValue(10);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + A_VAL)
     {
         LOG_PASS("Properly jumped to {}", nSTARTING_ADDRESS);
@@ -172,7 +172,7 @@ void JMNOperatorTest::m_DoubleParamCheck(ModifierType mod)
     }
     nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS + B_VAL]->SetBParamValue(10);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + A_VAL)
     {
         LOG_PASS("Properly jumped to {}", nSTARTING_ADDRESS);

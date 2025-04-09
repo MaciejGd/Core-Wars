@@ -12,6 +12,7 @@
 #define A_VAL 10
 #define B_VAL 20
 
+
 void JMPOperatorTest::RunTests()
 {
     m_testA();
@@ -25,7 +26,7 @@ void JMPOperatorTest::m_testA()
     arena[STARTING_POINT] = JMPOperatorTest::CreateJMPPtr(A_VAL, B_VAL, ModifierType::A);
     
     int nSTARTING_POINT = STARTING_POINT;
-    arena[STARTING_POINT]->Execute(nSTARTING_POINT);
+    arena[STARTING_POINT]->Execute(nSTARTING_POINT, modified_cell);
 
     if (nSTARTING_POINT == STARTING_POINT + A_VAL)
     {

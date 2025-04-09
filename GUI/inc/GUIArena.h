@@ -30,7 +30,14 @@ public:
     /// @param cell number of cell to be colored
     /// @param player_id id number of player that is making a move
     /// @return boolean indicating result of operations
-    bool MakePlayerMove(int cell, int player_id);
+    void MakePlayerMove(int cell, int player_id, int modified_cell);
+
+    /// @brief Show initial loaded by player code, by coloring respective cells
+    /// @param starting_idx starting index of loaded players code
+    /// @param instructions_amount amount of instructions to be loaded to Core
+    /// @param player_id id number of player that is making a move
+    /// @return boolean indicating result of operations
+    void LoadPlayerCode(int starting_idx, int instructions_amount, int player_id);
 
 private:
     // number of rows of the arena
@@ -59,8 +66,4 @@ private:
 
     // vector of colors, one of color will be chosen at random for each player
     static const std::vector<QString> s_possible_colors;
-
-public slots:
-    // listen for signal from Logic proxy and insert initial player code to arena
-    void SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id);
 };

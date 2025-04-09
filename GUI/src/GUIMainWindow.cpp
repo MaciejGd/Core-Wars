@@ -27,11 +27,6 @@ GUIMainWindow::GUIMainWindow(int width, int height, GUILogicProxy& logic_proxy, 
     m_ConnectProxy();
 }
 
-bool GUIMainWindow::MakePlayerMove(int cell, int player_id)
-{
-    return m_arena->MakePlayerMove(cell, player_id);
-}
-
 void GUIMainWindow::m_ConnectProxy()
 {
     m_ConnectArena();
@@ -45,7 +40,11 @@ void GUIMainWindow::m_ConnectArena()
         LOG_ERR("Tool bar pointer is invalid, failed to set callbacks for game engine");
         return;
     }
-    connect(&m_logic_proxy, &GUILogicProxy::SignalPlayerLoad, m_arena, &GUIArena::SlotPlayerLoaded);
+    LOG_WRN("Event from game logic received");
+    // connect(&m_logic_proxy, &GUILogicProxy::SignalPlayerLoad, m_arena, &GUIArena::SlotPlayerLoaded);
+    connect(&m_logic_proxy, &GUILogicProxy::SignalPlayerLoad, this, &GUIMainWindow::SlotPlayerLoaded);
+    // connect signals responsible for player's movement
+    connect(&m_logic_proxy, &GUILogicProxy::SignalPlayerMove, this, &GUIMainWindow::SlotPlayerMove);
 }
 
 void GUIMainWindow::m_ConnectButtons()
@@ -55,7 +54,7 @@ void GUIMainWindow::m_ConnectButtons()
         LOG_ERR("Tool bar pointer is invalid, failed to set callbacks for game engine");
         return;
     }
-    // for debug connect one button first
+    // connect load button
     QPushButton* temp = m_toolBar->GetLoadButton();
     if (temp == nullptr)
     {
@@ -63,6 +62,42 @@ void GUIMainWindow::m_ConnectButtons()
         return;
     }
     connect(temp, &QPushButton::pressed, &m_logic_proxy, &GUILogicProxy::SlotLoadPlayers);
+    // connect pause button
+    temp = m_toolBar->GetPauseButton();
+    if (temp == nullptr)
+    {
+        LOG_ERR("Pause button pointer is invalid, failed to set callback");
+        return;
+    }
+    connect(temp, &QPushButton::pressed, &m_logic_proxy, &GUILogicProxy::SlotPauseGame);
+    // connect play button
+    temp = m_toolBar->GetPlayButton();
+    if (temp == nullptr)
+    {
+        LOG_ERR("Play button pointer is invalid, failed to set callback");
+        return;
+    }
+    connect(temp, &QPushButton::pressed, &m_logic_proxy, &GUILogicProxy::SlotStartGame);
+    // connect restart button
+    temp = m_toolBar->GetRestartButton();
+    if (temp == nullptr)
+    {
+        LOG_ERR("Play button pointer is invalid, failed to set callback");
+        return;
+    }
+    connect(temp, &QPushButton::pressed, &m_logic_proxy, &GUILogicProxy::SlotRestartGame);
+
     LOG_DBG("Properly set callback for load button");
 }
 
+void GUIMainWindow::SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id) 
+{
+    if (m_arena == nullptr) return;
+    m_arena->LoadPlayerCode(starting_idx, instructions_amount, player_id);
+}
+
+void GUIMainWindow::SlotPlayerMove(int cell, int player_id, int modified_cell) 
+{
+    if (m_arena == nullptr) return;
+    m_arena->MakePlayerMove(cell, player_id, modified_cell);
+}

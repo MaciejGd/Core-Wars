@@ -48,7 +48,8 @@ void CodeLoaderTests::RunTestsRunner()
             LOG_ERR("RUNNING {} TASK", j);
             int pc = player.GetPC(); // starting index
             LOG_ERR("ACTUAL Program Counter: {}", pc);
-            if (!player.ExecuteTask())
+            int modified_cell = -1;
+            if (!player.ExecuteTask(modified_cell))
             {
                 break;
             }

@@ -50,12 +50,22 @@ int main(int argc, char *argv[])
     /* RUNNING GUI*/    
     // CArena ar;
     // ar.TestPrint();
+    
+
+    
+
+    // Application    
     QApplication app(argc, argv);
 
     GameLogic game_logic;
-    
-    // init with widht, height and gui logic proxy created in main game logic object
+    QThread* logic_thread = new QThread{};
+
     GUIMainWindow window(WIDTH, HEIGHT, game_logic.GetGUILogicProxy());
+
+    game_logic.GetGUILogicProxy().moveToThread(logic_thread);
+
+    logic_thread->start();
+
     window.show();
     return app.exec();
     return 0;

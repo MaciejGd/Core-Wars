@@ -8,6 +8,8 @@
 #include "ParameterDirect.h"
 #include "ParameterIndirect.h"
 
+
+
 #define STARTING_ADDRESS 100
 #define A_VAL 10
 #define B_VAL 20
@@ -73,7 +75,7 @@ void JMZOperatorTest::m_Atests(ModifierType mod)
     // fill arena field and execute instruction
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS] = JMZOperatorTest::CreateJMZPtr(A_VAL, B_VAL, mod);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     LOG_WRN("A pointer value: {}", arena[STARTING_ADDRESS]->GetAParam()->GetPointer());
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + A_VAL)
     {
@@ -86,7 +88,7 @@ void JMZOperatorTest::m_Atests(ModifierType mod)
     // setting param value to 10
     nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS + B_VAL]->SetAParamValue(10);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS+1)
     {
         LOG_PASS("Properly jumped to STARTING_ADDRESS + 1, as A param of pointed instruction is not equal to 0");
@@ -104,7 +106,7 @@ void JMZOperatorTest::m_Btests(ModifierType mod)
     // fill arena field and execute instruction
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS] = JMZOperatorTest::CreateJMZPtr(A_VAL, B_VAL, mod);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
 
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + A_VAL)
     {
@@ -117,7 +119,7 @@ void JMZOperatorTest::m_Btests(ModifierType mod)
     // setting param value to 10
     nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS + B_VAL]->SetBParamValue(10);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS+1)
     {
         LOG_PASS("Properly jumped to STARTING_ADDRESS + 1, as B param of pointed instruction is not equal to 0");
@@ -136,7 +138,7 @@ void JMZOperatorTest::m_DoubleParamCheck(ModifierType mod)
     // fill arena field and execute instruction
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS] = JMZOperatorTest::CreateJMZPtr(A_VAL, B_VAL, mod);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
 
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + A_VAL)
     {
@@ -149,7 +151,7 @@ void JMZOperatorTest::m_DoubleParamCheck(ModifierType mod)
     // setting param value to 10
     nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS + B_VAL]->SetBParamValue(10);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS+1)
     {
         LOG_PASS("Properly jumped to STARTING_ADDRESS + 1, as B param of pointed instruction is not equal to 0");
@@ -161,7 +163,7 @@ void JMZOperatorTest::m_DoubleParamCheck(ModifierType mod)
     nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS + B_VAL]->SetBParamValue(0);
     arena[STARTING_ADDRESS + B_VAL]->SetAParamValue(10);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS+1)
     {
         LOG_PASS("Properly jumped to STARTING_ADDRESS + 1, as A param of pointed instruction is not equal to 0");
@@ -172,7 +174,7 @@ void JMZOperatorTest::m_DoubleParamCheck(ModifierType mod)
     }
     nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS + B_VAL]->SetBParamValue(10);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS+1)
     {
         LOG_PASS("Properly jumped to STARTING_ADDRESS + 1, as A and B param of pointed instruction is not equal to 0");

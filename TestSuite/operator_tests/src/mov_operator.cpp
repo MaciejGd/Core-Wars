@@ -10,6 +10,7 @@
 #define A_VAL 10
 #define B_VAL 20
 
+
 void MOVOperatorTest::RunTests()
 {
     m_test_A();
@@ -28,7 +29,7 @@ void MOVOperatorTest::m_test_A()
     int D_STARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS] = std::move(CreateMovPtr(A_VAL, B_VAL, ModifierType::A));
     LOG_DBG("Instruction in Address {} is: {}", STARTING_ADDRESS, arena[STARTING_ADDRESS]->PrintInstruction());
-    if (!arena[STARTING_ADDRESS]->Execute(D_STARTING_ADDRESS))
+    if (!arena[STARTING_ADDRESS]->Execute(D_STARTING_ADDRESS, modified_cell))
     {
         LOG_FAIL("Failed to executed instruction");
         return;
@@ -67,7 +68,7 @@ void MOVOperatorTest::m_test_B()
     arena[STARTING_ADDRESS] = std::move(CreateMovPtr(A_VAL, B_VAL, ModifierType::B));
     LOG_DBG("Instruction in Address {} is: {}", STARTING_ADDRESS, arena[STARTING_ADDRESS]->PrintInstruction());
 
-    if (!arena[STARTING_ADDRESS]->Execute(D_STARTING_ADDRESS))
+    if (!arena[STARTING_ADDRESS]->Execute(D_STARTING_ADDRESS, modified_cell))
     {
         LOG_FAIL("Failed to executed instruction");
         return;
@@ -108,7 +109,7 @@ void MOVOperatorTest::m_test_AB()
     arena[STARTING_ADDRESS] = std::move(CreateMovPtr(A_VAL, B_VAL, ModifierType::AB));
     LOG_DBG("Instruction in Address {} is: {}", STARTING_ADDRESS, arena[STARTING_ADDRESS]->PrintInstruction());
 
-    if (!arena[STARTING_ADDRESS]->Execute(D_STARTING_ADDRESS))
+    if (!arena[STARTING_ADDRESS]->Execute(D_STARTING_ADDRESS, modified_cell))
     {
         LOG_FAIL("Failed to executed instruction");
         return;
@@ -149,7 +150,7 @@ void MOVOperatorTest::m_test_BA()
     arena[STARTING_ADDRESS] = std::move(CreateMovPtr(A_VAL, B_VAL, ModifierType::BA));
     LOG_DBG("Instruction in Address {} is: {}", STARTING_ADDRESS, arena[STARTING_ADDRESS]->PrintInstruction());
 
-    if (!arena[STARTING_ADDRESS]->Execute(D_STARTING_ADDRESS))
+    if (!arena[STARTING_ADDRESS]->Execute(D_STARTING_ADDRESS, modified_cell))
     {
         LOG_FAIL("Failed to executed instruction");
         return;
@@ -190,7 +191,7 @@ void MOVOperatorTest::m_test_F()
     arena[STARTING_ADDRESS] = std::move(CreateMovPtr(A_VAL, B_VAL, ModifierType::F));
     LOG_DBG("Instruction in Address {} is: {}", STARTING_ADDRESS, arena[STARTING_ADDRESS]->PrintInstruction());
 
-    if (!arena[STARTING_ADDRESS]->Execute(D_STARTING_ADDRESS))
+    if (!arena[STARTING_ADDRESS]->Execute(D_STARTING_ADDRESS, modified_cell))
     {
         LOG_FAIL("Failed to executed instruction");
         return;
@@ -231,7 +232,7 @@ void MOVOperatorTest::m_test_X()
     arena[STARTING_ADDRESS] = std::move(CreateMovPtr(A_VAL, B_VAL, ModifierType::X));
     LOG_DBG("Instruction in Address {} is: {}", STARTING_ADDRESS, arena[STARTING_ADDRESS]->PrintInstruction());
 
-    if (!arena[STARTING_ADDRESS]->Execute(D_STARTING_ADDRESS))
+    if (!arena[STARTING_ADDRESS]->Execute(D_STARTING_ADDRESS, modified_cell))
     {
         LOG_FAIL("Failed to executed instruction");
         return;
@@ -272,7 +273,7 @@ void MOVOperatorTest::m_test_I()
     arena[STARTING_ADDRESS] = std::move(CreateMovPtr(A_VAL, B_VAL, ModifierType::I));
     LOG_DBG("Instruction in Address {} is: {}", STARTING_ADDRESS, arena[STARTING_ADDRESS]->PrintInstruction());
 
-    if (!arena[STARTING_ADDRESS]->Execute(D_STARTING_ADDRESS))
+    if (!arena[STARTING_ADDRESS]->Execute(D_STARTING_ADDRESS, modified_cell))
     {
         LOG_FAIL("Failed to executed instruction");
         return;

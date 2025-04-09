@@ -22,8 +22,9 @@ public:
     /// @param cell memory cell to be modified
     /// @param player_id player moving
     /// @return boolean indicating status of operation
-    bool MakePlayerMove(int cell, int player_id);    
+    bool MakePlayerMove(int cell, int player_id, int modified_cell);    
     
+    void m_ConnectWorkerThread(QThread* thread);
 private:
     GUILogicProxy& m_logic_proxy;
     // widget for arena
@@ -41,8 +42,11 @@ private:
 
     void m_ConnectArena();
 
+    
+
 private slots:
-    void SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id) { std::cout << "PLAYER LOADED SLOT RECEIVED!!!\n"; };
+    void SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id);
+    void SlotPlayerMove(int cell, int player_id, int modified_cell);
 signals:
     void SignalLoadPlayers();
 

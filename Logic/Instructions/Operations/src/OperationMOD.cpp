@@ -15,7 +15,7 @@ std::unique_ptr<COperation> COperationMOD::clone() const
     return std::unique_ptr<COperation>(new COperationMOD{*this});
 }
 
-InstructionResult COperationMOD::Execute(int a_pointer, int b_pointer, int &pc)
+InstructionResult COperationMOD::Execute(int a_pointer, int b_pointer, int &pc, int &modified_cell)
 {
     LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);
     CArena& arena = CArena::GetInstance();
@@ -49,7 +49,7 @@ InstructionResult COperationMOD::Execute(int a_pointer, int b_pointer, int &pc)
             IRB->SetBParamValue(IRB_BNUM % IRA_BNUM);
             break;
         case AB:
-            if (IRA_BNUM == 0) 
+            if (IRA_ANUM == 0) 
             {
                 LOG_ERR("Trying to divide by 0");
                 return InstructionResult::FAIL;
@@ -57,7 +57,7 @@ InstructionResult COperationMOD::Execute(int a_pointer, int b_pointer, int &pc)
             IRB->SetBParamValue(IRB_BNUM % IRA_ANUM);
             break;
         case BA:
-            if (IRA_ANUM == 0) 
+            if (IRA_BNUM == 0) 
             {
                 LOG_ERR("Trying to divide by 0");
                 return InstructionResult::FAIL;
@@ -87,6 +87,8 @@ InstructionResult COperationMOD::Execute(int a_pointer, int b_pointer, int &pc)
             LOG_ERR("Undefined parameter in {}", m_name);
             return InstructionResult::FAIL;
     }
+    // update modified cell as it was modified
+    modified_cell = (pc + b_pointer) % ARENA_SIZE;
     pc = (pc + 1) % ARENA_SIZE;
     return InstructionResult::PASS;
 }

@@ -53,8 +53,9 @@ public:
     /// @param A_param A parameter of the instruction
     /// @param B_param B parameter of the instruction
     /// @param pc process counter, memory cell player is currently in
+    /// @param modified_cell memory cell modified by operation (if any was)
     /// @return boolean indicating result of operation, on false player's process will be killed
-    virtual InstructionResult Execute(int a_pointer, int b_pointer, int& pc) = 0;
+    virtual InstructionResult Execute(int a_pointer, int b_pointer, int& pc, int &modified_cell) = 0;
 
     /// @brief Function to be used after parsing, switches default modifier with the proper for operation
     /// @param a_param_type string representing address mode of the first modifier

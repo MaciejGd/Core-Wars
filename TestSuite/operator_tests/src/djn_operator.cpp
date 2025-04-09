@@ -76,7 +76,7 @@ void DJNOperatorTest::m_Atests(ModifierType mod)
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS] = DJNOperatorTest::CreateDJNPtr(A_VAL, B_VAL, mod);
     arena[STARTING_ADDRESS+B_VAL]->SetAParamValue(1);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     LOG_WRN("A pointer value: {}", arena[STARTING_ADDRESS]->GetAParam()->GetPointer());
     if (nSTARTING_ADDRESS == STARTING_ADDRESS+1 &&
             arena[STARTING_ADDRESS+B_VAL]->GetAParamValue() == 0)
@@ -90,7 +90,7 @@ void DJNOperatorTest::m_Atests(ModifierType mod)
     }
     // setting param value to 10
     nSTARTING_ADDRESS = STARTING_ADDRESS;
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + A_VAL)
     {
         LOG_PASS("Properly jumped to {}", nSTARTING_ADDRESS);
@@ -109,7 +109,7 @@ void DJNOperatorTest::m_Btests(ModifierType mod)
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS] = DJNOperatorTest::CreateDJNPtr(A_VAL, B_VAL, mod);
     arena[STARTING_ADDRESS + B_VAL]->SetBParamValue(1); // we need to make sure it will be equal to zero after operation execution
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     
     if (nSTARTING_ADDRESS == STARTING_ADDRESS+1 &&
         arena[STARTING_ADDRESS+B_VAL]->GetBParamValue() == 0)
@@ -124,7 +124,7 @@ void DJNOperatorTest::m_Btests(ModifierType mod)
     // setting param value to 10
     nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS + B_VAL]->SetBParamValue(10);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + A_VAL)
     {
         LOG_PASS("Address after jump: {}", nSTARTING_ADDRESS);
@@ -145,7 +145,7 @@ void DJNOperatorTest::m_DoubleParamCheck(ModifierType mod)
     arena[STARTING_ADDRESS] = DJNOperatorTest::CreateDJNPtr(A_VAL, B_VAL, mod);
     arena[STARTING_ADDRESS + B_VAL]->SetAParamValue(1);
     arena[STARTING_ADDRESS + B_VAL]->SetBParamValue(1);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
 
     if (nSTARTING_ADDRESS == STARTING_ADDRESS+1 &&
         arena[STARTING_ADDRESS+B_VAL]->GetAParamValue() == 0 &&
@@ -161,7 +161,7 @@ void DJNOperatorTest::m_DoubleParamCheck(ModifierType mod)
     // setting param value to 10
     nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS + B_VAL]->SetBParamValue(10);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + A_VAL)
     {
         LOG_PASS("Properly jumped to {}", nSTARTING_ADDRESS);
@@ -173,7 +173,7 @@ void DJNOperatorTest::m_DoubleParamCheck(ModifierType mod)
     nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS + B_VAL]->SetBParamValue(0);
     arena[STARTING_ADDRESS + B_VAL]->SetAParamValue(10);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + A_VAL)
     {
         LOG_PASS("Properly jumped to {}", nSTARTING_ADDRESS);
@@ -184,7 +184,7 @@ void DJNOperatorTest::m_DoubleParamCheck(ModifierType mod)
     }
     nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS + B_VAL]->SetBParamValue(10);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + A_VAL)
     {
         LOG_PASS("Properly jumped to {}", nSTARTING_ADDRESS);

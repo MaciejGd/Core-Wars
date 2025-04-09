@@ -23,7 +23,7 @@ bool CPlayer::LoadInitialCode(int &starting_index, int &instructions_amount)
     return true;
 }
 
-bool CPlayer::ExecuteTask()
+bool CPlayer::ExecuteTask(int &modified_cell)
 {
     // if m_tasks is empty it means that player lost
     if (m_tasks.empty())
@@ -37,7 +37,7 @@ bool CPlayer::ExecuteTask()
     // need to keep copy of task as it will be modified in Execute function
     int task_cp = task; 
     // execute task on arena
-    InstructionResult exe_result = m_arena[task]->Execute(task);
+    InstructionResult exe_result = m_arena[task]->Execute(task, modified_cell);
     if (exe_result == InstructionResult::SPLIT)
     {
         // we need to handle SPL instruction separately (creating new process for player)

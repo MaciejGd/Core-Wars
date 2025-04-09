@@ -12,6 +12,7 @@
 #define A_VAL 10
 #define B_VAL 20
 
+
 void SLTOperatorTest::RunTests()
 {
     m_testA();
@@ -32,7 +33,7 @@ void SLTOperatorTest::m_testA()
     // initially instruction at 110 and instr in 120 should have same A so jump+2
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS+B_VAL]->SetAParamValue(1);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 2)
     {
         LOG_PASS("Properly jumped 2 cells, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -46,7 +47,7 @@ void SLTOperatorTest::m_testA()
     // now change A param value of cell 110
     arena[STARTING_ADDRESS+B_VAL]->SetAParamValue(0);
     nSTARTING_ADDRESS = STARTING_ADDRESS;
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly jumped 1 cell, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -68,7 +69,7 @@ void SLTOperatorTest::m_testB()
     // initially instruction at 110 and instr in 120 should have same B so jump+2
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS+B_VAL]->SetBParamValue(1);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 2)
     {
         LOG_PASS("Properly jumped 2 cells, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -82,7 +83,7 @@ void SLTOperatorTest::m_testB()
     // now change B param value of cell 110
     arena[STARTING_ADDRESS+B_VAL]->SetBParamValue(0);
     nSTARTING_ADDRESS = STARTING_ADDRESS;
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly jumped 1 cell, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -104,7 +105,7 @@ void SLTOperatorTest::m_testBA()
     // initially both A of first and B of second should be equal to zero
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS+B_VAL]->SetAParamValue(1);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 2)
     {
         LOG_PASS("Properly jumped 2 cells, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -118,7 +119,7 @@ void SLTOperatorTest::m_testBA()
     // now change B param value of cell 110
     arena[STARTING_ADDRESS+A_VAL]->SetBParamValue(2);
     nSTARTING_ADDRESS = STARTING_ADDRESS;
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly jumped 1 cell, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -139,7 +140,7 @@ void SLTOperatorTest::m_testAB()
     arena[STARTING_ADDRESS] = SLTOperatorTest::CreateSLTPtr(A_VAL, B_VAL, ModifierType::AB);
     arena[STARTING_ADDRESS+B_VAL]->SetBParamValue(1);
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 2)
     {
         LOG_PASS("Properly jumped 2 cells, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -152,7 +153,7 @@ void SLTOperatorTest::m_testAB()
     }
     arena[STARTING_ADDRESS+A_VAL]->SetAParamValue(1);
     nSTARTING_ADDRESS = STARTING_ADDRESS;
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly jumped 1 cell, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -175,7 +176,7 @@ void SLTOperatorTest::m_testX()
     arena[STARTING_ADDRESS+B_VAL]->SetAParamValue(1);
     arena[STARTING_ADDRESS+B_VAL]->SetBParamValue(1);
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 2)
     {
         LOG_PASS("Properly jumped 2 cells, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -189,7 +190,7 @@ void SLTOperatorTest::m_testX()
     // now change B param value of cell 110
     arena[STARTING_ADDRESS+A_VAL]->SetBParamValue(1);
     nSTARTING_ADDRESS = STARTING_ADDRESS;
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly jumped 1 cell, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -204,7 +205,7 @@ void SLTOperatorTest::m_testX()
     arena[STARTING_ADDRESS+A_VAL]->SetAParamValue(1);
     arena[STARTING_ADDRESS+A_VAL]->SetBParamValue(1);
     nSTARTING_ADDRESS = STARTING_ADDRESS;
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly jumped 1 cell, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -227,7 +228,7 @@ void SLTOperatorTest::m_testF()
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS+B_VAL]->SetAParamValue(1);
     arena[STARTING_ADDRESS+B_VAL]->SetBParamValue(1);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 2)
     {
         LOG_PASS("Properly jumped 2 cells, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -242,7 +243,7 @@ void SLTOperatorTest::m_testF()
     arena[STARTING_ADDRESS+A_VAL]->SetAParamValue(1);
     arena[STARTING_ADDRESS+A_VAL]->SetBParamValue(1);
     nSTARTING_ADDRESS = STARTING_ADDRESS;
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly jumped 1 cell, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -256,7 +257,7 @@ void SLTOperatorTest::m_testF()
     arena[STARTING_ADDRESS+A_VAL]->SetAParamValue(1);
     arena[STARTING_ADDRESS+A_VAL]->SetBParamValue(0);
     nSTARTING_ADDRESS = STARTING_ADDRESS;
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly jumped 1 cell, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -279,7 +280,7 @@ void SLTOperatorTest::m_testI()
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS+B_VAL]->SetAParamValue(1);
     arena[STARTING_ADDRESS+B_VAL]->SetBParamValue(1);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 2)
     {
         LOG_PASS("Properly jumped 2 cells, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -294,7 +295,7 @@ void SLTOperatorTest::m_testI()
     arena[STARTING_ADDRESS+A_VAL]->SetAParamValue(1);
     arena[STARTING_ADDRESS+A_VAL]->SetBParamValue(1);
     nSTARTING_ADDRESS = STARTING_ADDRESS;
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly jumped 1 cell, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 
@@ -308,7 +309,7 @@ void SLTOperatorTest::m_testI()
     arena[STARTING_ADDRESS+A_VAL]->SetAParamValue(1);
     arena[STARTING_ADDRESS+A_VAL]->SetBParamValue(0);
     nSTARTING_ADDRESS = STARTING_ADDRESS;
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly jumped 1 cell, instruction at PC+A_VAL=110: {}, instruction at PC+B_VAL: {}", 

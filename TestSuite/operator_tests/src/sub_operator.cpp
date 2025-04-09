@@ -12,6 +12,7 @@
 #define A_VAL 10
 #define B_VAL 20
 
+
 void SUBOperatorTest::RunTests()
 {
     m_testA();
@@ -28,7 +29,7 @@ void SUBOperatorTest::m_testA()
     CArena& arena = m_testInit(ModifierType::A);
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS+A_VAL]->SetAParamValue(1);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly moved on cell further");
@@ -52,7 +53,7 @@ void SUBOperatorTest::m_testB()
     CArena& arena = m_testInit(ModifierType::B);
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS+A_VAL]->SetBParamValue(1);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly moved on cell further");
@@ -75,8 +76,8 @@ void SUBOperatorTest::m_testAB()
 {
     CArena& arena = m_testInit(ModifierType::AB);
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
-    arena[STARTING_ADDRESS+A_VAL]->SetBParamValue(1);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS+A_VAL]->SetAParamValue(1);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly moved on cell further");
@@ -99,8 +100,8 @@ void SUBOperatorTest::m_testBA()
 {
     CArena& arena = m_testInit(ModifierType::BA);
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
-    arena[STARTING_ADDRESS+A_VAL]->SetAParamValue(1);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS+A_VAL]->SetBParamValue(1);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly moved on cell further");
@@ -124,7 +125,7 @@ void SUBOperatorTest::m_testX()
     CArena& arena = m_testInit(ModifierType::X);
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS+A_VAL]->SetBParamValue(1);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly moved on cell further");
@@ -159,7 +160,7 @@ void SUBOperatorTest::m_testIF(ModifierType mod)
     int nSTARTING_ADDRESS = STARTING_ADDRESS;
     arena[STARTING_ADDRESS+A_VAL]->SetAParamValue(1);
     arena[STARTING_ADDRESS+A_VAL]->SetBParamValue(2);
-    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS);
+    arena[STARTING_ADDRESS]->Execute(nSTARTING_ADDRESS, modified_cell);
     if (nSTARTING_ADDRESS == STARTING_ADDRESS + 1)
     {
         LOG_PASS("Properly moved on cell further");

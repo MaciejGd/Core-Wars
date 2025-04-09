@@ -15,7 +15,7 @@ public:
     GUIToolBar(const QString& name = "", QWidget* parent = nullptr);
 
     QPushButton* GetLoadButton() { return m_load_btn; };
-    QPushButton* GetResetButton() { return m_reset_btn; };
+    QPushButton* GetRestartButton() { return m_restart_btn; };
     QPushButton* GetPauseButton() { return m_pause_btn; };
     QPushButton* GetPlayButton() { return m_play_btn; };
 
@@ -24,7 +24,7 @@ private:
     QPushButton* m_play_btn;
     QPushButton* m_pause_btn;
     QPushButton* m_load_btn;
-    QPushButton* m_reset_btn;
+    QPushButton* m_restart_btn;
     QPushButton* m_speedup_btn;
     
 };

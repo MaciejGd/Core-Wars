@@ -14,7 +14,7 @@ std::unique_ptr<COperation> COperationDJN::clone() const
     return std::unique_ptr<COperation>(new COperationDJN{*this});
 }
 
-InstructionResult COperationDJN::Execute(int a_pointer, int b_pointer, int &pc)
+InstructionResult COperationDJN::Execute(int a_pointer, int b_pointer, int &pc, int &modified_cell)
 {
     CArena& arena = CArena::GetInstance();
     
@@ -73,5 +73,7 @@ InstructionResult COperationDJN::Execute(int a_pointer, int b_pointer, int &pc)
         default:
             return InstructionResult::FAIL;
     }
+    // update modified cell as it was modified
+    modified_cell = (pc + b_pointer) % ARENA_SIZE; 
     return InstructionResult::PASS;
 }

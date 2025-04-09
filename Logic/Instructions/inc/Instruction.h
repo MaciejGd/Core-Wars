@@ -75,8 +75,9 @@ public:
 
     /// @brief Evaluates parameters and runs operation
     /// @param pc current memory cell executed
+    /// @param modified_cell index of modified cell, if there is
     /// @return boolean indicating status of execution operation
-    InstructionResult Execute(int& pc);
+    InstructionResult Execute(int& pc, int& modified_cell);
 
     // DEBUG PURPOSES!!! shouldnt be needed in code
     const std::unique_ptr<CParameter>& GetAParam() const { return m_A_param; };

@@ -205,7 +205,7 @@ std::unique_ptr<CInstruction> CInstruction::CreateDefaultInstruction()
     return std::move(ret);
 }
 
-InstructionResult CInstruction::Execute(int &pc)
+InstructionResult CInstruction::Execute(int &pc, int &modified_cell)
 {
     if (m_A_param == nullptr || m_B_param == nullptr || m_operation == nullptr)
     {
@@ -218,7 +218,7 @@ InstructionResult CInstruction::Execute(int &pc)
     // then execute operation
     int a_pointer = m_A_param->GetPointer();
     int b_pointer = m_B_param->GetPointer();
-    return m_operation->Execute(a_pointer, b_pointer, pc);
+    return m_operation->Execute(a_pointer, b_pointer, pc, modified_cell);
 }
 
 bool CInstruction::m_SetParamValue(std::unique_ptr<CParameter> &param, int value)
