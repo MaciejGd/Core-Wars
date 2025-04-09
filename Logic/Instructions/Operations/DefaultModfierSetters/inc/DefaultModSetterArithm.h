@@ -8,7 +8,6 @@
 class CDefaultModSetterArithm : public IDefaultModSetter {
 public:
     CDefaultModSetterArithm(): IDefaultModSetter() {}
-    CDefaultModSetterArithm(const CDefaultModSetterArithm& other): IDefaultModSetter(other) {};
 
     ModifierType DeduceDefaultModSetter(std::string_view a_param_type, std::string_view b_param_type) override;
 

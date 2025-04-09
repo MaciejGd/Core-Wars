@@ -1,5 +1,6 @@
 #include "OperationDAT.h"
 #include "DefaultModSetterDAT.h"
+#include "logger.h"
 
 COperationDAT::COperationDAT()
 {

@@ -12,15 +12,18 @@ set(CMAKE_BUILD_TYPE Debug)
 set(INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/TestSuite/inc/
     ${CMAKE_CURRENT_SOURCE_DIR}/TestSuite/operator_tests/inc/
+    ${CMAKE_CURRENT_SOURCE_DIR}/
 )
 
 file(GLOB SRC_FILES 
     ${CMAKE_CURRENT_SOURCE_DIR}/TestSuite/src/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TestSuite/operator_tests/src/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
 )
 file(GLOB HDR_FILES 
     ${CMAKE_CURRENT_SOURCE_DIR}/TestSuite/inc/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/TestSuite/operator_tests/inc/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.h
 )
 
 add_executable(main

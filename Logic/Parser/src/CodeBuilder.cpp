@@ -1,6 +1,20 @@
 #include "CodeBuilder.h"
 #include "Token.h"
 
+CCodeBuilder::CCodeBuilder(CCodeBuilder &&other)
+{
+    this->m_instructions = std::move(other.m_instructions);
+    this->m_lexer = std::move(other.m_lexer);
+    this->m_file_name = std::move(other.m_file_name);
+}
+
+CCodeBuilder &CCodeBuilder::operator=(CCodeBuilder &&other)
+{
+    // TODO: insert return statement here
+    *this = std::move(other);
+    return *this;
+}
+
 bool CCodeBuilder::ProduceInstructions(std::string_view file_name)
 {
     // make sure to clean any previous instructions from m_instructions vector

@@ -31,7 +31,13 @@ COperation::COperation(const COperation &other)
     // need to perform copy of DefaultModifierSetter
     m_modifier = other.m_modifier;
     m_name = other.m_name;
-    m_def_modifier = other.m_def_modifier->clone();
+    if (other.m_def_modifier == nullptr)
+    {   
+        LOG_ERR("m_def_modifier is equal to nullptr");
+    }
+    else {
+        m_def_modifier = other.m_def_modifier->clone();
+    }   
 }
 
 void COperation::DeduceDefaultModifier(std::string_view a_param_type, std::string_view b_param_type)

@@ -15,14 +15,14 @@ class CPlayer {
 public:
     CPlayer(int id);
 
-    bool LoadInitialCode();
+    bool LoadInitialCode(int &starting_index, int &instructions_amount);
 
     bool ExecuteTask();
 
     inline void SetFileName(std::string_view file_name) { m_file_name = file_name; }
 
     // debug
-    const int GetNextTask() const { return m_tasks.front(); };  
+    const int GetPC() const { return m_tasks.front(); };  
 private:
     // player's id
     int m_id;

@@ -1,5 +1,21 @@
 #include "GUIArena.h"
 #include "GUICustomEvents.cpp"
+#include "qpalette.h"
+#include "logger.h"
+
+#include <algorithm>
+#include <random>
+
+// possible colors of players
+const std::vector<QString> GUIArena::s_possible_colors = {
+    "red",
+    "green",
+    "blue",
+    "cyan",
+    "magenta",
+    "orange"
+};
+
 
 GUIArena::GUIArena(int rows, int cols, QWidget *parent) : m_rows(rows), m_cols(cols), QWidget(parent) 
 {
@@ -12,7 +28,8 @@ GUIArena::GUIArena(int rows, int cols, QWidget *parent) : m_rows(rows), m_cols(c
         {
             QLabel *cell = new QLabel;
             cell->setFixedSize(CELL_WIDTH, CELL_WIDTH);  // Set size of each grid cell
-            cell->setStyleSheet("background-color: white; border: 1px solid lightGrey;");
+            // set white cell with lightgrey border as default
+            m_SetCellColor(cell, s_def_color);
 
             // Enable mouse clicks
             cell->setAutoFillBackground(true);
@@ -27,6 +44,10 @@ GUIArena::GUIArena(int rows, int cols, QWidget *parent) : m_rows(rows), m_cols(c
             layout->addWidget(cell, i, j);
         }
     }
+    // debug purposes [DEBUG]
+    // m_GeneratePlayerColor(0);
+    // m_GeneratePlayerColor(1);
+    
     setFixedSize(ARENA_WIDTH, ARENA_HEIGHT);
     setLayout(layout);
 }
@@ -54,11 +75,107 @@ bool GUIArena::eventFilter(QObject* obj, QEvent* event)
     if (event->type() == QEvent::MouseButtonPress) 
     {
         QLabel* cell = qobject_cast<QLabel*>(obj);
-        if (cell != nullptr) 
+        QMouseEvent* mouse_ev = static_cast<QMouseEvent*>(event);
+        if (cell == nullptr) return false;
+        if (mouse_ev->button() == Qt::LeftButton) 
         {
-            cell->setStyleSheet("background-color: red; border: 1px solid lightGrey;");
+            // cell->setStyleSheet("background-color: red; border: 1px solid lightGrey;");
+            m_SetCellColor(cell, m_players_colors[1]);
+            return true;
+        }
+        if (mouse_ev->button() == Qt::RightButton) 
+        {
+            // cell->setStyleSheet("background-color: red; border: 1px solid lightGrey;");
+            m_SetCellColor(cell, m_players_colors[0]);
             return true;
         }
     }
     return QWidget::eventFilter(obj, event);
+}
+
+
+void GUIArena::ClearArena()
+{
+    for (int i = 0; i < m_cells.size(); i++)
+    {
+        m_SetCellColor(m_cells[i], s_def_color);
+    }
+}
+
+
+bool GUIArena::MakePlayerMove(int cell, int player_id)
+{
+    // cell out of bounds
+    if (cell > (CELLS_AMOUNT - 1) || cell < 0)
+    {
+        LOG_ERR("Cell {}, outside of Arena!", cell);
+        return false;
+    }
+    // player id not existing
+    if (m_players_colors.find(player_id) == m_players_colors.end())
+    {   
+        LOG_ERR("No player with id {}, has been created from the GUI perspective!");
+        return false;
+    }
+    // set color of the player
+    m_SetCellColor(m_cells[cell], m_players_colors[player_id]);
+    return true;
+}
+
+
+void GUIArena::m_SetCellColor(QLabel* cell, const QString& color)
+{
+    if (cell == nullptr) {
+        LOG_ERR("Cannot change color of cell as it is nullptr");
+        return;
+    }
+    cell->setStyleSheet(s_def_cell_style.arg(color));
+}
+
+void GUIArena::m_GeneratePlayerColor(int player_id)
+{
+    // if color already chosen for a player, reuse it
+    if (m_players_colors.find(player_id) != m_players_colors.end())
+    {
+        LOG_DBG("Color {} already drawn for a player", m_players_colors[player_id].toStdString());    
+        return;
+    }
+
+    std::random_device r;
+    std::mt19937 el(r());
+    std::uniform_int_distribution<int> dist(0, s_possible_colors.size()-1);
+    
+    bool can_use = true;
+    int color_idx = dist(el);
+    // continue with drawing players colors if color has already been chosen for some player
+    while (std::find_if(m_players_colors.begin(), m_players_colors.end(), [&](const auto& x) { 
+        return x.second == s_possible_colors[color_idx];}) != m_players_colors.end())
+    {
+        // not ideal however should be enough for this purpose
+        color_idx = dist(el);
+    }
+    m_players_colors[player_id] = s_possible_colors[color_idx];
+    LOG_DBG("Color drawn for a player: {}", m_players_colors[player_id].toStdString());
+}
+
+
+void GUIArena::SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id)
+{
+    // generate color for a player
+    m_GeneratePlayerColor(player_id);
+    // we need to check initially if starting_idx and instruction_amount does not exceed arena size
+    if (starting_idx >= CELLS_AMOUNT || starting_idx < 0 ||
+         starting_idx + instructions_amount >= CELLS_AMOUNT || instructions_amount <= 0)
+    {
+        LOG_ERR("Index of setting players's initial code, is out of bounds, failed to load initial player's code to GUI");
+        return;
+    }
+    // fill instr_amount cells starting from starting index, with player's color
+    LOG_DBG("Cells to be colored: {} -> {}", starting_idx, starting_idx + instructions_amount);
+    LOG_DBG("Color for a player: {}", m_players_colors[player_id].toStdString());
+    for (int i = starting_idx; i < starting_idx + instructions_amount; i++)
+    {
+        m_SetCellColor(m_cells[i], m_players_colors[player_id]);
+    }
+    LOG_DBG("Cells colored for a player {}", player_id);
 }

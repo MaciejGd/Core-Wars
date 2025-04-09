@@ -3,8 +3,6 @@
 
 #include <iostream>
 
-#include "dbg.h" // debug purposes
-
 
 GUIPlayerTextField::GUIPlayerTextField(const QString& player_name, QWidget* parent): QWidget(parent), m_player_path("") 
 {

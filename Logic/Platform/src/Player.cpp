@@ -3,7 +3,7 @@
 CPlayer::CPlayer(int id): m_id(id), m_arena(CArena::GetInstance())
 {}
 
-bool CPlayer::LoadInitialCode()
+bool CPlayer::LoadInitialCode(int &starting_index, int &instructions_amount)
 {
     // produce instructions from file choosen for a player
     if (!m_codebuilder.ProduceInstructions(m_file_name))
@@ -13,11 +13,13 @@ bool CPlayer::LoadInitialCode()
                 , m_file_name);
         return false;
     }
+    // obtain amount of instructions loaded
+    instructions_amount = m_codebuilder.GetInstructionsAmount();
     // clear tasks queue just to be sure
     m_tasks.clear();
     // load instructions into the core
-    int starting_task = m_arena.LoadPlayer(m_codebuilder.GetInstructions(), m_id);
-    m_tasks.push_back(starting_task);
+    starting_index = m_arena.LoadPlayer(m_codebuilder.GetInstructions(), m_id);
+    m_tasks.push_back(starting_index);
     return true;
 }
 

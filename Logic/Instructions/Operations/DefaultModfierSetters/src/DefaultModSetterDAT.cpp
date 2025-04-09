@@ -7,5 +7,5 @@ ModifierType CDefaultModSetterDAT::DeduceDefaultModSetter(std::string_view a_par
 
 std::unique_ptr<IDefaultModSetter> CDefaultModSetterDAT::clone() const
 {
-    return std::unique_ptr<CDefaultModSetterDAT>();
+    return std::make_unique<CDefaultModSetterDAT>();
 }

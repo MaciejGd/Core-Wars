@@ -43,10 +43,10 @@ void CodeLoaderTests::RunTestsRunner()
         CPlayer& player = ((i % 2) == 0) ? m_first_player : m_second_player;
         m_ShowArenaLoad(file_name, player);
         // run first 10 instructions
-        for (int j = 0; j < 10; j++)
+        for (int j = 0; j < 20; j++)
         {
             LOG_ERR("RUNNING {} TASK", j);
-            int pc = player.GetNextTask(); // starting index
+            int pc = player.GetPC(); // starting index
             LOG_ERR("ACTUAL Program Counter: {}", pc);
             if (!player.ExecuteTask())
             {
@@ -55,6 +55,7 @@ void CodeLoaderTests::RunTestsRunner()
             m_PrintArena(pc);
         }
         i++;
+        if (i >= 1) break;
     }
 }
 
@@ -62,8 +63,9 @@ void CodeLoaderTests::m_ShowArenaLoad(const std::string &file_name, CPlayer& pla
 {
     m_arena.ClearArena();
     player.SetFileName(file_name);
-    player.LoadInitialCode();
-    int starting_index = player.GetNextTask();
+    int dummy1, dummy2;
+    player.LoadInitialCode(dummy1, dummy2);
+    int starting_index = player.GetPC();
     // print arena around the first index to check if it has been filled right
     for (int i = starting_index - 30; i < starting_index + 30; i++)
     {

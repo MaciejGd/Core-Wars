@@ -1,8 +1,10 @@
 #include "GUIMainWindow.h"
 #include "GUIFileExplorer.h"
+#include "GUILogicProxy.h"
 #include "Arena.h"
 #include "Lexer.h"
 #include "Parser.h"
+#include "GameLogic.h"
 
 // testing
 #include "parsing_tests.h"
@@ -43,14 +45,18 @@ int main(int argc, char *argv[])
     // tests.RunTests();
 
     /* TESTING FINISHING INSTRUCTION SETUP */
-    CodeLoaderTests tests;
-    tests.RunTestsRunner();
+    // CodeLoaderTests tests;
+    // tests.RunTestsRunner();
     /* RUNNING GUI*/    
     // CArena ar;
     // ar.TestPrint();
-    // QApplication app(argc, argv);
-    // GUIMainWindow window(WIDTH, HEIGHT);
-    // window.show();
-    // return app.exec();
+    QApplication app(argc, argv);
+
+    GameLogic game_logic;
+    
+    // init with widht, height and gui logic proxy created in main game logic object
+    GUIMainWindow window(WIDTH, HEIGHT, game_logic.GetGUILogicProxy());
+    window.show();
+    return app.exec();
     return 0;
 }

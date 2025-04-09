@@ -8,5 +8,5 @@ ModifierType CDefaultModSetterJump::DeduceDefaultModSetter(std::string_view a_pa
 
 std::unique_ptr<IDefaultModSetter> CDefaultModSetterJump::clone() const
 {
-    return std::unique_ptr<CDefaultModSetterJump>();
+    return std::make_unique<CDefaultModSetterJump>();
 }

@@ -19,11 +19,27 @@ CInstruction::CInstruction(const CInstruction& other)
     if (other.m_operation != nullptr)
     {
         m_operation = other.m_operation->clone();
-        if (m_operation == nullptr)
-        {
-            LOG_ERR("m_operation equal to nullptr after copying");
-        }
     }
+}
+
+CInstruction::CInstruction(CInstruction&& other)
+{
+    m_A_param = std::move(other.m_A_param);
+    m_B_param = std::move(other.m_B_param);
+    m_operation = std::move(other.m_operation);
+}
+
+CInstruction& CInstruction::operator=(const CInstruction& other) 
+{
+    CInstruction copy(other);
+    *this = std::move(copy);
+    return *this;
+}
+
+CInstruction& CInstruction::operator=(CInstruction&& other)
+{
+    *this = std::move(other);
+    return *this;   
 }
 
 bool CInstruction::CreateParameter(std::unique_ptr<CParameter> param)
@@ -215,3 +231,4 @@ bool CInstruction::m_SetParamValue(std::unique_ptr<CParameter> &param, int value
     param->SetValue(value);
     return true;
 }
+

@@ -25,7 +25,6 @@ enum ModifierType {
 class IDefaultModSetter {
 public:
     IDefaultModSetter() = default;
-    IDefaultModSetter(const IDefaultModSetter& other) = default;
 
     /// @brief Virtual function to be implemented in derived classes. 
     /// Responsible for deducing default modifier based on parameters type

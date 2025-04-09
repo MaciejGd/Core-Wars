@@ -11,5 +11,5 @@ ModifierType CDefaultModSetterSLT::DeduceDefaultModSetter(std::string_view a_par
 
 std::unique_ptr<IDefaultModSetter> CDefaultModSetterSLT::clone() const
 {
-    return std::unique_ptr<CDefaultModSetterSLT>();
+    return std::make_unique<CDefaultModSetterSLT>();
 }
