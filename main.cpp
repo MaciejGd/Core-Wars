@@ -48,8 +48,6 @@ int main(int argc, char *argv[])
     // CodeLoaderTests tests;
     // tests.RunTestsRunner();
     /* RUNNING GUI*/    
-    // CArena ar;
-    // ar.TestPrint();
     
 
     

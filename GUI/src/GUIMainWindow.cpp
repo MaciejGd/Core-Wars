@@ -27,11 +27,13 @@ GUIMainWindow::GUIMainWindow(int width, int height, GUILogicProxy& logic_proxy, 
     m_ConnectProxy();
 }
 
+
 void GUIMainWindow::m_ConnectProxy()
 {
     m_ConnectArena();
     m_ConnectButtons();
 }
+
 
 void GUIMainWindow::m_ConnectArena()
 {
@@ -97,17 +99,26 @@ void GUIMainWindow::m_ConnectButtons()
     LOG_DBG("Properly set callback for load button");
 }
 
+
 void GUIMainWindow::SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id) 
 {
     if (m_arena == nullptr) return;
     m_arena->LoadPlayerCode(starting_idx, instructions_amount, player_id);
+    // pass color generated for player to stack
+    if (m_op_panel == nullptr) return;
+    m_op_panel->SetPlayerColor(player_id, m_arena->GetPlayerColorString(player_id));
+    LOG_DBG("Player color has been set");
 }
 
-void GUIMainWindow::SlotPlayerMove(int cell, int player_id, int modified_cell) 
+
+void GUIMainWindow::SlotPlayerMove(int cell, int player_id, int modified_cell, QString instruction) 
 {
     if (m_arena == nullptr) return;
     m_arena->MakePlayerMove(cell, player_id, modified_cell);
+    if (m_op_panel == nullptr) return;
+    m_op_panel->UpdatePlayersStack(player_id, instruction, cell);
 }
+
 
 void GUIMainWindow::SlotLaunchInstructionDialog(QString instruction, int cell_idx)
 {

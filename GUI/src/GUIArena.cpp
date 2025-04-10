@@ -1,21 +1,10 @@
 #include "GUIArena.h"
-#include "GUICustomEvents.cpp"
+#include "GUIConstants.h"
 #include "qpalette.h"
 #include "logger.h"
 
 #include <algorithm>
 #include <random>
-
-// possible colors of players
-const std::vector<QString> GUIArena::s_possible_colors = {
-    "red",
-    "green",
-    "blue",
-    "cyan",
-    "magenta",
-    "orange"
-};
-
 
 GUIArena::GUIArena(int rows, int cols, QWidget *parent) : m_rows(rows), m_cols(cols), QWidget(parent) 
 {
@@ -27,7 +16,7 @@ GUIArena::GUIArena(int rows, int cols, QWidget *parent) : m_rows(rows), m_cols(c
         for (int j = 0; j < cols; ++j) 
         {
             QLabel *cell = new QLabel;
-            cell->setFixedSize(CELL_WIDTH, CELL_WIDTH);  // Set size of each grid cell
+            cell->setFixedSize(GUI::CELL_WIDTH, GUI::CELL_WIDTH);  // Set size of each grid cell
             // set white cell with lightgrey border as default
             m_SetCellColor(cell, s_def_color);
 
@@ -49,25 +38,8 @@ GUIArena::GUIArena(int rows, int cols, QWidget *parent) : m_rows(rows), m_cols(c
     // m_GeneratePlayerColor(0);
     // m_GeneratePlayerColor(1);
     
-    setFixedSize(ARENA_WIDTH, ARENA_HEIGHT);
+    setFixedSize(GUI::ARENA_WIDTH, GUI::ARENA_HEIGHT);
     setLayout(layout);
-}
-
-bool GUIArena::event(QEvent *event) 
-{
-    if (event->type() == PlayerMoveEvent::EventType) 
-    {
-        PlayerMoveEvent* e = reinterpret_cast<PlayerMoveEvent*>(event);
-        int row = e->GetRow();
-        int col = e->GetCol();
-        QLabel* cell = m_cells[row * m_cols + col];
-        if (cell != nullptr) 
-        {
-            cell->setStyleSheet("background-color: red; border: 1px solid lightGrey;");
-            return true;
-        }
-    }
-    return false;
 }
 
 bool GUIArena::eventFilter(QObject* obj, QEvent* event) 
@@ -104,7 +76,7 @@ void GUIArena::ClearArena()
 void GUIArena::MakePlayerMove(int cell, int player_id, int modified_cell)
 {
     // cell out of bounds
-    if (cell > (CELLS_AMOUNT - 1) || cell < 0)
+    if (cell > (GUI::CELLS_AMOUNT - 1) || cell < 0)
     {
         LOG_ERR("Cell {}, outside of Arena!", cell);
         return;
@@ -118,7 +90,7 @@ void GUIArena::MakePlayerMove(int cell, int player_id, int modified_cell)
     // set color of the player
     m_SetCellColor(m_cells[cell], m_players_colors[player_id]);
 
-    if (modified_cell >= 0 && modified_cell < CELLS_AMOUNT)
+    if (modified_cell >= 0 && modified_cell < GUI::CELLS_AMOUNT)
     {
         // set color for cell modified by the player
         m_SetCellColor(m_cells[modified_cell], m_players_colors[player_id]);
@@ -131,8 +103,8 @@ void GUIArena::LoadPlayerCode(int starting_idx, int instructions_amount, int pla
     // generate color for a player
     m_GeneratePlayerColor(player_id);
     // we need to check initially if starting_idx and instruction_amount does not exceed arena size
-    if (starting_idx >= CELLS_AMOUNT || starting_idx < 0 ||
-         starting_idx + instructions_amount >= CELLS_AMOUNT || instructions_amount <= 0)
+    if (starting_idx >= GUI::CELLS_AMOUNT || starting_idx < 0 ||
+         starting_idx + instructions_amount >= GUI::CELLS_AMOUNT || instructions_amount <= 0)
     {
         LOG_ERR("Index of setting players's initial code, is out of bounds, failed to load initial player's code to GUI");
         return;
@@ -147,6 +119,14 @@ void GUIArena::LoadPlayerCode(int starting_idx, int instructions_amount, int pla
     LOG_DBG("Cells colored for a player {}", player_id);
 }
 
+const QString& GUIArena::GetPlayerColorString(int player_id) const
+{
+    if (m_players_colors.find(player_id) == m_players_colors.end())
+    {
+        LOG_ERR("Error, requested color of player {} which is out of bounds. Returning white", player_id);
+    }
+    return m_players_colors.at(player_id);
+}
 
 void GUIArena::m_SetCellColor(QLabel* cell, const QString& color)
 {
@@ -168,18 +148,18 @@ void GUIArena::m_GeneratePlayerColor(int player_id)
 
     std::random_device r;
     std::mt19937 el(r());
-    std::uniform_int_distribution<int> dist(0, s_possible_colors.size()-1);
+    std::uniform_int_distribution<int> dist(0, GUI::PLAYERS_COLORS.size()-1);
     
     bool can_use = true;
     int color_idx = dist(el);
     // continue with drawing players colors if color has already been chosen for some player
     while (std::find_if(m_players_colors.begin(), m_players_colors.end(), [&](const auto& x) { 
-        return x.second == s_possible_colors[color_idx];}) != m_players_colors.end())
+        return x.second == GUI::PLAYERS_COLORS[color_idx];}) != m_players_colors.end())
     {
         // not ideal however should be enough for this purpose
         color_idx = dist(el);
     }
-    m_players_colors[player_id] = s_possible_colors[color_idx];
+    m_players_colors[player_id] = GUI::PLAYERS_COLORS[color_idx];
     LOG_DBG("Color drawn for a player: {}", m_players_colors[player_id].toStdString());
 }
 

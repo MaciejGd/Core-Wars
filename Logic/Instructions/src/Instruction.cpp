@@ -180,10 +180,13 @@ std::string CInstruction::PrintInstruction() const
     }
     std::string instruction_str = m_operation->GetOperationName() + "." + 
                                     ModifierToString(m_operation->GetModifier());
-    instruction_str += ( "  " + m_A_param->Identify() + " " + std::to_string(m_A_param->GetValue()));
+    std::string spacing = (instruction_str.size() == 6) ? std::string(2, ' ') : std::string(3, ' ');
+    instruction_str += spacing;
+    
+    instruction_str += (m_A_param->Identify() + std::to_string(m_A_param->GetValue()));
     if (m_B_param)
     {
-        instruction_str += ( ", " + m_B_param->Identify() + " " + std::to_string(m_B_param->GetValue()));
+        instruction_str += ( ", " + m_B_param->Identify() + std::to_string(m_B_param->GetValue()));
     }
     return instruction_str;
 }

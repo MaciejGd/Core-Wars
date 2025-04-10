@@ -13,18 +13,11 @@
 
 class CInstruction;
 
-/// @brief Singleton class holding logic behind arena
-/// 
-/// Many other classes will reference Arena, so retrieving pointer to instance
-/// without caring about passing reference or pointer in function calls will 
-/// be big plus of using Singleton pattern.
-///
-/// Another plus of using Singleton in this case is that constructor of Arena shouldn't
-/// be called explicitly, only one instance of arena should be created during program execution
+/// Singleton class holding logic behind arena
+/// Arena stores Core instructions in container and
+/// provids access to them via [] operator.
 class CArena {
 public:
-    void TestPrint();
-
     // we should delete copy constructor, move constructor, copy and move assignements operators
     CArena(const CArena& arena) = delete; 
     CArena(CArena && arena) = delete;
@@ -38,7 +31,12 @@ public:
     /// @param limit limit of the range
     /// @return size_t indicating position after folding
     static int Fold(int pointer);
-    std::unique_ptr<CInstruction>& operator[](size_t idx);
+
+
+    /// @brief random access modifier giving access to memory cells 
+    /// @param idx index of memmory to be accessed
+    /// @return returns reference to unique ptr with instruction stored at idx
+    std::unique_ptr<CInstruction>& operator[](int idx);
 
     /// Function that will clear arena, that is fill all 
     /// cells with DAT #0, #0 instructions

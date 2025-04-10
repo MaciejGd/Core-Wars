@@ -9,10 +9,6 @@
 #include "GUIInstructionDialog.h"
 
 
-#define CELLS_AMOUNT 8000
-#define CELL_WIDTH 10
-#define ARENA_WIDTH  1000
-#define ARENA_HEIGHT 800
 
 /// Widget representing arena that the players will fight on.
 /// By default consist of 8000 cells that change color basing on 
@@ -21,8 +17,7 @@ class GUIArena : public QWidget {
     Q_OBJECT
 public:
     GUIArena(int rows, int cols, QWidget *parent = nullptr);
-    // TODO implement proper logic of handling events
-    bool event(QEvent* event) override;
+    
     bool eventFilter(QObject* obj, QEvent* event) override;
 
     /// @brief Clear colors of all cells in arena to default value
@@ -41,6 +36,11 @@ public:
     /// @param player_id id number of player that is making a move
     /// @return boolean indicating result of operations
     void LoadPlayerCode(int starting_idx, int instructions_amount, int player_id);
+
+    /// @brief Return reference to player's color
+    /// @param player_id id of player to get color from
+    /// @return color of the player at player_id
+    const QString& GetPlayerColorString(int player_id) const;
 
 private:
     // number of rows of the arena
@@ -66,9 +66,6 @@ private:
     // by default we want to leave lightgrey border of width 1px on the cell
     // std::format will be used later to fill with desired color
     inline static QString s_def_cell_style = "background-color: %1; border: 1px solid lightGrey";
-
-    // vector of colors, one of color will be chosen at random for each player
-    static const std::vector<QString> s_possible_colors;
 
 public slots:
     // clear arena when restart press button has been pressed

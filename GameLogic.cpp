@@ -3,7 +3,7 @@
 #include <chrono>
 
 #define DEF_PLAYERS_AMOUNT 2
-#define TIME_DELAY 10
+#define TIME_DELAY 20
 
 /// @brief obtain ref to Singleton arena and init two default players
 GameLogic::GameLogic(): m_arena(CArena::GetInstance())
@@ -90,7 +90,7 @@ void GameLogic::LoadPlayers()
         m_gui_proxy.SendPlayerLoadEvent(starting_idx, instructions_amount, i);
     }
     // first load players codes, then start the game
-    RunGameLoop(); // TODO
+    //RunGameLoop(); // TODO
 }
 
 bool GameLogic::PlayerMove(int player_id)
@@ -99,10 +99,11 @@ bool GameLogic::PlayerMove(int player_id)
     int cell = player.GetPC();
     // should be set to -1!!! then it will be checked in GUIArena as not modified
     int modified_cell = -1;
+    std::string executed_instruction = m_arena[cell]->PrintInstruction();
     // execute operation for player
     bool operation_result = player.ExecuteTask(modified_cell);
     // send event to GUI
-    m_gui_proxy.SendPlayerMoveEvent(cell, player_id, modified_cell);
+    m_gui_proxy.SendPlayerMoveEvent(cell, player_id, modified_cell, executed_instruction);
     if (!operation_result)
     {
         LOG_DBG("Wrong operation executed, last process of a player {} got killed!", player_id);

@@ -2,9 +2,7 @@
 
 #include <QtWidgets>
 
-extern const QString INSTRUCTION_DIALOG_TITLE;
-extern const int INSTRUCTION_DIALOG_WIDTH;
-extern const int INSTRUCTION_DIALOG_HEIGHT;
+
 
 class GUIInstructionDialog : public QDialog {
     Q_OBJECT
