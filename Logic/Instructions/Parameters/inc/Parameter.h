@@ -17,7 +17,7 @@ public:
     virtual std::unique_ptr<CParameter> clone() const = 0;
 
     const int GetValue() const { return m_val; }
-    virtual const std::string Identify() const { return "Empty"; };
+    virtual const std::string Identify() const { return ""; };
     void SetValue(int value);
     const bool ValueIsSet() const;
 

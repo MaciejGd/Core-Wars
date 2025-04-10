@@ -17,10 +17,7 @@ std::unique_ptr<COperation> COperationMOV::clone() const
 
 InstructionResult COperationMOV::Execute(int a_pointer, int b_pointer, int &pc, int &modified_cell)
 {
-    LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);
-    CArena& arena = CArena::GetInstance();
-
-    
+    CArena& arena = CArena::GetInstance(); 
 
     // A number of instruction pointed by A
     int IRA_ANUM = arena[pc+a_pointer]->GetAParamValue();

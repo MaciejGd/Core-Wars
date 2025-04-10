@@ -1,5 +1,5 @@
 #include "GUIMainWindow.h"
-#include "GUIFileExplorer.h"
+#include "GUIFileExplorerDialog.h"
 #include "GUILogicProxy.h"
 #include "Arena.h"
 #include "Lexer.h"

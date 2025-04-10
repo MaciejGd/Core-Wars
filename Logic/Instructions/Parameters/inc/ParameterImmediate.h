@@ -11,7 +11,7 @@ public:
 
     std::unique_ptr<CParameter> clone() const override;
 
-    const std::string Identify() const override { return "Immediate"; };
+    const std::string Identify() const override { return "#"; };
 
     void EvaluateParameter(int pc) override;
 protected:

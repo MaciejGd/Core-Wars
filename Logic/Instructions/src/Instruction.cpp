@@ -7,7 +7,6 @@
 CInstruction::CInstruction(const CInstruction& other)
 {
     // clone all ptrs values if they are valid
-    LOG_WRN("Copying instruction: {}", other.PrintInstruction());
     if (other.m_A_param != nullptr)
     {
         m_A_param = other.m_A_param->clone();

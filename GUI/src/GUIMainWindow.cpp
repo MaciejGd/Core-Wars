@@ -41,10 +41,15 @@ void GUIMainWindow::m_ConnectArena()
         return;
     }
     LOG_WRN("Event from game logic received");
+    connect(m_arena, &GUIArena::SignalRequestInstructionData, &m_logic_proxy, &GUILogicProxy::SlotInstructionData);
+    // we connect main window, but functions are then passed to GUIArena
     // connect(&m_logic_proxy, &GUILogicProxy::SignalPlayerLoad, m_arena, &GUIArena::SlotPlayerLoaded);
     connect(&m_logic_proxy, &GUILogicProxy::SignalPlayerLoad, this, &GUIMainWindow::SlotPlayerLoaded);
     // connect signals responsible for player's movement
     connect(&m_logic_proxy, &GUILogicProxy::SignalPlayerMove, this, &GUIMainWindow::SlotPlayerMove);
+    // connect singals responsible for launching instruction info dialog
+    connect(&m_logic_proxy, &GUILogicProxy::SignalInstructionData, this, &GUIMainWindow::SlotLaunchInstructionDialog);
+
 }
 
 void GUIMainWindow::m_ConnectButtons()
@@ -86,6 +91,8 @@ void GUIMainWindow::m_ConnectButtons()
         return;
     }
     connect(temp, &QPushButton::pressed, &m_logic_proxy, &GUILogicProxy::SlotRestartGame);
+    // restart button should be also connected to Arena
+    connect(temp, &QPushButton::pressed, m_arena, &GUIArena::SlotRestartGame);
 
     LOG_DBG("Properly set callback for load button");
 }
@@ -100,4 +107,10 @@ void GUIMainWindow::SlotPlayerMove(int cell, int player_id, int modified_cell)
 {
     if (m_arena == nullptr) return;
     m_arena->MakePlayerMove(cell, player_id, modified_cell);
+}
+
+void GUIMainWindow::SlotLaunchInstructionDialog(QString instruction, int cell_idx)
+{
+    m_instr_dialog.reset(new GUIInstructionDialog(instruction, cell_idx, this)); // not sure if "this" is needed, to be checked
+    m_instr_dialog->show();
 }

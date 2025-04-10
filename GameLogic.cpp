@@ -3,12 +3,13 @@
 #include <chrono>
 
 #define DEF_PLAYERS_AMOUNT 2
-#define TIME_DELAY 50
+#define TIME_DELAY 10
 
 /// @brief obtain ref to Singleton arena and init two default players
 GameLogic::GameLogic(): m_arena(CArena::GetInstance())
 {
     LOG_DBG("Game logic initialization");
+    m_arena.ClearArena(); // make sure arena is initialized just after launching app
     m_InitPlayers();
     SetGUIProxyCallbacks();
 }
@@ -19,6 +20,7 @@ void GameLogic::SetGUIProxyCallbacks()
     m_gui_proxy.SetLoadGameCb([this](){ this->LoadPlayers(); });
     m_gui_proxy.SetPauseGameCb([this](){ this->PauseMainLoop(); });
     m_gui_proxy.SetStartGameCb([this](){ this->ResumeMainLoop(); });
+    m_gui_proxy.SetInstrDataCb([this](int cell_idx){ this->SendInstructionDataCb(cell_idx); });
 }
 
 void GameLogic::RunGameLoop()
@@ -41,6 +43,7 @@ void GameLogic::RunGameLoop()
         start = end;
 
         int players_active = 0;
+        int last_player_active = 0;
         for(m_active_player; m_active_player < m_players.size() && m_running; m_active_player++)
         {
             // if player already dead, skip him
@@ -53,6 +56,10 @@ void GameLogic::RunGameLoop()
             if (!PlayerMove(m_active_player))
             {
                 finished[m_active_player] = true;   
+                players_active--;
+            }
+            else {
+                last_player_active = m_active_player;
             }
         }
         if (m_active_player == PLAYERS_AMOUNT) 
@@ -60,9 +67,9 @@ void GameLogic::RunGameLoop()
             // reset players if all had their turn
             m_active_player = 0;
         }
-        if (players_active == 1)
+        if (players_active <= 1)
         {
-            LOG_DBG("Only one player left, quit");
+            LOG_DBG("Only one player left, quit, player {} won!!!", last_player_active);
             break;
         }
     }
@@ -101,7 +108,7 @@ bool GameLogic::PlayerMove(int player_id)
         LOG_DBG("Wrong operation executed, last process of a player {} got killed!", player_id);
         return false;
     }
-    LOG_WRN("After player move execution");
+    LOG_WRN("After player move execution, player_id {}", player_id);
     return true;
 }
 
@@ -114,6 +121,18 @@ void GameLogic::ResumeMainLoop()
 {
     m_running = true;
     RunGameLoop();
+}
+
+void GameLogic::SendInstructionDataCb(int cell_idx)
+{
+    if (cell_idx < 0 || cell_idx >= ARENA_SIZE)
+    {
+        LOG_ERR("Requested cell_idx out of arena bounds!");
+        return;
+    }
+    std::string instr_info = m_arena[cell_idx]->PrintInstruction();
+
+    m_gui_proxy.SendInstructionData(instr_info, cell_idx);
 }
 
 void GameLogic::m_InitPlayers()

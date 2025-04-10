@@ -17,7 +17,6 @@ std::unique_ptr<COperation> COperationMUL::clone() const
 
 InstructionResult COperationMUL::Execute(int a_pointer, int b_pointer, int &pc, int &modified_cell)
 {
-    LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);
     CArena& arena = CArena::GetInstance();
     
 

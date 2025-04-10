@@ -37,6 +37,7 @@ GUIArena::GUIArena(int rows, int cols, QWidget *parent) : m_rows(rows), m_cols(c
             // store the position of cell
             cell->setProperty("row", i);
             cell->setProperty("col", j);
+            cell->setProperty("idx", i*cols + j);
             cell->installEventFilter(this);
             // add cells to the vector so we can later access it
             m_cells.push_back(cell);
@@ -77,15 +78,13 @@ bool GUIArena::eventFilter(QObject* obj, QEvent* event)
         QLabel* cell = qobject_cast<QLabel*>(obj);
         QMouseEvent* mouse_ev = static_cast<QMouseEvent*>(event);
         if (cell == nullptr) return false;
-        if (mouse_ev->button() == Qt::LeftButton) 
-        {
-            m_SetCellColor(cell, m_players_colors[1]);
-            return true;
-        }
         if (mouse_ev->button() == Qt::RightButton) 
         {
             // cell->setStyleSheet("background-color: red; border: 1px solid lightGrey;");
-            m_SetCellColor(cell, m_players_colors[0]);
+            //m_SetCellColor(cell, m_players_colors[0]);
+            int cell_idx = cell->property("idx").toInt();
+            LOG_WRN("Send signal requesting instruction at cell {}", cell_idx);
+            emit SignalRequestInstructionData(cell_idx);
             return true;
         }
     }
@@ -182,4 +181,10 @@ void GUIArena::m_GeneratePlayerColor(int player_id)
     }
     m_players_colors[player_id] = s_possible_colors[color_idx];
     LOG_DBG("Color drawn for a player: {}", m_players_colors[player_id].toStdString());
+}
+
+
+void GUIArena::SlotRestartGame()
+{
+    ClearArena();
 }

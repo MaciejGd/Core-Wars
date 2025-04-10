@@ -8,10 +8,10 @@
 ///
 /// Consists of window with a file system tree, text field showing
 /// currently chosen file, and button for accepting the choice.
-class GUIFileExplorer : public QDialog {
+class GUIFileExplorerDialog : public QDialog {
     Q_OBJECT
 public:
-    GUIFileExplorer(const QString& file_path = "", QWidget* parent = nullptr);
+    GUIFileExplorerDialog(const QString& file_path = "", QWidget* parent = nullptr);
 private:
     // widget for file system view
     QFileSystemModel* m_filesystem;

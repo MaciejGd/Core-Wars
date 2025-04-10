@@ -17,7 +17,6 @@ std::unique_ptr<COperation> COperationJMN::clone() const
 
 InstructionResult COperationJMN::Execute(int a_pointer, int b_pointer, int &pc, int &modified_cell)
 {
-    LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);
     CArena& arena = CArena::GetInstance(); // TODO turn it into a macro
 
     

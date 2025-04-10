@@ -2,11 +2,11 @@
 
 ModifierType CDefaultModSetterMOV::DeduceDefaultModSetter(std::string_view a_param_type, std::string_view b_param_type)
 {
-    if (a_param_type == "Immediate")
+    if (a_param_type == "#")
     {
         return ModifierType::AB;
     }
-    if (b_param_type == "Immediate")
+    if (b_param_type == "#")
     {
         return ModifierType::B;
     }

@@ -15,11 +15,25 @@ CArena& CArena::GetInstance()
 
 int CArena::Fold(int pointer)
 {
-    int result = pointer % ARENA_SIZE;
-    if (std::abs((int)result) > (RW_LIMIT / 2))
+    LOG_ERR("In Fold, pointer value: {}", pointer);
+    //int result = pointer % ARENA_SIZE;
+
+    int result = pointer;
+    if (pointer >= RW_LIMIT / 2)
     {
-        result += ARENA_SIZE - RW_LIMIT;
+        result = (pointer % RW_LIMIT) - RW_LIMIT/2; // return with -RW_LIMIT/2 offset
     }
+    else if (pointer <= -RW_LIMIT/2)
+    {
+        result = (pointer % RW_LIMIT) + RW_LIMIT/2; // if negative, add offset
+    }
+
+    // if (std::abs(result) > (RW_LIMIT / 2))
+    // {
+    //     LOG_ERR("In Fold, modifying result");
+    //     result += ARENA_SIZE - RW_LIMIT;
+    // }
+    LOG_ERR("Folded to value {}", result);
     return result;
 }
 

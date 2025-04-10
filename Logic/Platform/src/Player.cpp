@@ -36,6 +36,7 @@ bool CPlayer::ExecuteTask(int &modified_cell)
     m_tasks.pop_front();
     // need to keep copy of task as it will be modified in Execute function
     int task_cp = task; 
+    LOG_DBG("Executing operation at index {}: {}", task, m_arena[task]->PrintInstruction());
     // execute task on arena
     InstructionResult exe_result = m_arena[task]->Execute(task, modified_cell);
     if (exe_result == InstructionResult::SPLIT)
@@ -52,6 +53,12 @@ bool CPlayer::ExecuteTask(int &modified_cell)
     else if (exe_result == InstructionResult::FAIL)
     {
         LOG_ERR("Executed wrong instruction process has been killed");
+    }
+    // check if any processes left for player
+    if (m_tasks.empty())
+    {
+        LOG_ERR("No more tasks left for ");
+        return false;
     }
     return true;
 }

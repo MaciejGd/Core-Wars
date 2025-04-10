@@ -4,7 +4,10 @@
 #include <vector>
 #include <map>
 #include <string>
-#include <format>
+#include <memory>
+
+#include "GUIInstructionDialog.h"
+
 
 #define CELLS_AMOUNT 8000
 #define CELL_WIDTH 10
@@ -66,4 +69,11 @@ private:
 
     // vector of colors, one of color will be chosen at random for each player
     static const std::vector<QString> s_possible_colors;
+
+public slots:
+    // clear arena when restart press button has been pressed
+    void SlotRestartGame();
+
+signals:
+    void SignalRequestInstructionData(int cell_idx);
 };

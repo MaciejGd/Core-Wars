@@ -37,6 +37,10 @@ public:
 
     /// @brief Resume execution of main game loop
     void ResumeMainLoop();
+
+    /// @brief Callback triggered when instruction data is requested by GUI
+    /// @param cell_idx index of memory cell, to get instruction from  
+    void SendInstructionDataCb(int cell_idx);
 private:
     // inits
     void m_InitPlayers();

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "QPushButton"
-#include "GUIFileExplorer.h"
+#include "GUIFileExplorerDialog.h"
 
 #include <QToolBar>
 #include <QString>

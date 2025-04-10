@@ -34,19 +34,21 @@ private:
     // widget for stats panel
     GUIOperationalPanel* m_op_panel;
 
+    // dialog for showing info about memory cell
+    std::unique_ptr<GUIInstructionDialog> m_instr_dialog;
+
     /// @brief Connect proxy with main window widget using slots 
     void m_ConnectProxy();
 
     /// @brief Connect toolbar buttons two proper GUILogic proxy slots
     void m_ConnectButtons();
-
+    /// @brief connect slots and signals related to GUIArena
     void m_ConnectArena();
-
-    
 
 private slots:
     void SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id);
     void SlotPlayerMove(int cell, int player_id, int modified_cell);
+    void SlotLaunchInstructionDialog(QString instruction, int cell_idx);
 signals:
     void SignalLoadPlayers();
 

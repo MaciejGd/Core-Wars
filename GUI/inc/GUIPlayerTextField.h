@@ -1,6 +1,6 @@
 #pragma once 
 
-#include "GUIFileExplorer.h"
+#include "GUIFileExplorerDialog.h"
 #include "GUITextFieldButton.h"
 
 #include <memory>
@@ -21,7 +21,7 @@ private:
     // label representing player's name
     QLabel* m_player_id;
     // ptr to file explorer created after button press
-    std::unique_ptr<GUIFileExplorer> m_file_explorer;
+    std::unique_ptr<GUIFileExplorerDialog> m_file_explorer;
 
     // constants 
     const int TEXT_FIELD_HEIGHT = 30;

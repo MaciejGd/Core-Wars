@@ -17,10 +17,7 @@ std::unique_ptr<COperation> COperationJMZ::clone() const
 
 InstructionResult COperationJMZ::Execute(int a_pointer, int b_pointer, int &pc, int &modified_cell)
 {
-    LOG_DBG("Executing {}.{} in memory cell {}", m_name, ModifierToString(m_modifier), pc);
     CArena& arena = CArena::GetInstance(); // TODO turn it into a macro
-
-    
 
     // A number of instruction pointed by B param
     int IRB_ANUM = arena[pc+b_pointer]->GetAParamValue();
