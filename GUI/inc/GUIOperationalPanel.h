@@ -25,6 +25,8 @@ public:
 
     /// @brief Clear all stacks
     void ClearStacks();
+
+    bool GetPlayersPaths(std::vector<std::string>& paths); 
 private: 
     // widget containing path to players code (textfields) 
     GUIPlayersPanel* m_players_panel;

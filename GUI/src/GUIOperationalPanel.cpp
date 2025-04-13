@@ -7,8 +7,10 @@ GUIOperationalPanel::GUIOperationalPanel(QWidget* parent): QWidget(parent)
     m_players_panel = new GUIPlayersPanel{this};
     m_stacks = new GUIStackPanel{this};
     
+    layout->setSpacing(0);
     layout->addWidget(m_players_panel);
     layout->addWidget(m_stacks);
+    
 }
 
 void GUIOperationalPanel::UpdatePlayersStack(int player_id, const QString &stack_operation, int cell_idx)
@@ -40,4 +42,14 @@ void GUIOperationalPanel::ClearStacks()
         return;
     }
     m_stacks->ClearStacks();
+}
+
+bool GUIOperationalPanel::GetPlayersPaths(std::vector<std::string>& paths)
+{
+    // TODO: insert return statement here
+    if (m_players_panel != nullptr) {
+        return m_players_panel->GetPlayersPaths(paths);
+    }
+    return false;
+
 }

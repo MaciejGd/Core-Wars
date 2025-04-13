@@ -22,5 +22,7 @@ extern const int INSTRUCTION_DIALOG_HEIGHT;
 // related to stack
 extern const QColor STACK_BACKGROUND_COLOR;
 extern const QString OPERATION_PRINT;
+// cells styling 
+extern const QString CELL_STYLING;
 
 };

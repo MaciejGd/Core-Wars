@@ -3,7 +3,7 @@
 #include <chrono>
 
 #define DEF_PLAYERS_AMOUNT 2
-#define TIME_DELAY 20
+#define TIME_DELAY 10
 
 /// @brief obtain ref to Singleton arena and init two default players
 GameLogic::GameLogic(): m_arena(CArena::GetInstance())
@@ -17,10 +17,11 @@ GameLogic::GameLogic(): m_arena(CArena::GetInstance())
 void GameLogic::SetGUIProxyCallbacks()
 {
     m_gui_proxy.SetStartGameCb([this](){ this->RunGameLoop(); });
-    m_gui_proxy.SetLoadGameCb([this](){ this->LoadPlayers(); });
     m_gui_proxy.SetPauseGameCb([this](){ this->PauseMainLoop(); });
     m_gui_proxy.SetStartGameCb([this](){ this->ResumeMainLoop(); });
     m_gui_proxy.SetInstrDataCb([this](int cell_idx){ this->SendInstructionDataCb(cell_idx); });
+    m_gui_proxy.SetRestartGameCb([this](){ this->RestartGame(); });
+    m_gui_proxy.SetLoadGameCb([this](const std::vector<std::string>& paths){ this->LoadPlayers(paths); });
 }
 
 void GameLogic::RunGameLoop()
@@ -41,6 +42,9 @@ void GameLogic::RunGameLoop()
             continue;
         }
         start = end;
+        // increase rounds counter
+        m_rounds_last++; 
+        m_gui_proxy.SendCounter(m_rounds_last);
 
         int players_active = 0;
         int last_player_active = 0;
@@ -75,12 +79,27 @@ void GameLogic::RunGameLoop()
     }
 }
 
-void GameLogic::LoadPlayers()
+void GameLogic::LoadPlayers(const std::vector<std::string>& paths)
 {
+    for (auto& path : paths)
+    {
+        LOG_ERR("Path retrieved: {}", path);
+    }
     LOG_WRN("In load players callback, main game loop");
     // TODO, change a bit logic of setting string for a player? not necessarily
     m_players[0].SetFileName("../tests/code_loading/test1.txt");
     m_players[1].SetFileName("../tests/code_loading/test2.txt");
+    // check if paths amount is equal to players, if not return
+    // To be done in final version
+    // if (paths.size() != m_players.size())
+    // {
+    //     LOG_ERR("Paths passed not equal to ");
+    // }
+    // for (int i = 0; i < m_players.size(); i++)
+    // {
+    //     m_players[i].SetFileName(paths[i]);
+    // }
+
     int starting_idx, instructions_amount;
     for (int i = 0; i < PLAYERS_AMOUNT; i++)
     {
@@ -122,6 +141,12 @@ void GameLogic::ResumeMainLoop()
 {
     m_running = true;
     RunGameLoop();
+}
+
+void GameLogic::RestartGame()
+{
+    // clear arena to whole DAT #0, #0
+    m_arena.ClearArena();
 }
 
 void GameLogic::SendInstructionDataCb(int cell_idx)

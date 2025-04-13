@@ -15,18 +15,22 @@ GUIArena::GUIArena(int rows, int cols, QWidget *parent) : m_rows(rows), m_cols(c
     {
         for (int j = 0; j < cols; ++j) 
         {
-            QLabel *cell = new QLabel;
+            GUIMemoryCell *cell = new GUIMemoryCell{this};
             cell->setFixedSize(GUI::CELL_WIDTH, GUI::CELL_WIDTH);  // Set size of each grid cell
             // set white cell with lightgrey border as default
-            m_SetCellColor(cell, s_def_color);
+
+            //m_SetCellColor(cell, s_def_color);
 
             // Enable mouse clicks
-            cell->setAutoFillBackground(true);
-            cell->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+            // cell->setAutoFillBackground(true);
+            // cell->setFrameStyle(QFrame::Panel | QFrame::Sunken);
             // store the position of cell
-            cell->setProperty("row", i);
-            cell->setProperty("col", j);
+            // cell->setProperty("row", i);
+            // cell->setProperty("col", j);
+            cell->SetBackgroundColor(s_def_color);
+            cell->SetForegroundColor(s_def_color);
             cell->setProperty("idx", i*cols + j);
+            // cell->setAlignment(Qt::AlignCenter);
             cell->installEventFilter(this);
             // add cells to the vector so we can later access it
             m_cells.push_back(cell);
@@ -68,7 +72,9 @@ void GUIArena::ClearArena()
 {
     for (int i = 0; i < m_cells.size(); i++)
     {
-        m_SetCellColor(m_cells[i], s_def_color);
+        // m_SetCellColor(m_cells[i], s_def_color); CHANGE
+        m_cells[i]->SetBackgroundColor(s_def_color);
+        m_cells[i]->SetForegroundColor(s_def_color);
     }
 }
 
@@ -88,12 +94,17 @@ void GUIArena::MakePlayerMove(int cell, int player_id, int modified_cell)
         return;
     }
     // set color of the player
-    m_SetCellColor(m_cells[cell], m_players_colors[player_id]);
+    // m_SetCellColor(m_cells[cell], m_players_colors[player_id]); CHANGE
+    // m_cells[cell]->SetCellFocused(m_players_colors[player_id]);
+    m_cells[cell]->SetBackgroundColor(m_players_colors[player_id]);
 
     if (modified_cell >= 0 && modified_cell < GUI::CELLS_AMOUNT)
     {
         // set color for cell modified by the player
-        m_SetCellColor(m_cells[modified_cell], m_players_colors[player_id]);
+        // m_SetCellColor(m_cells[modified_cell], m_players_colors[player_id]);
+        //m_cells[cell]->SetCellModified(m_players_colors[player_id]);
+        // m_cells[cell]->SetCellFocused(m_players_colors[player_id]);
+        m_cells[modified_cell]->SetBackgroundColor(m_players_colors[player_id]);
     }
 }
 
@@ -114,9 +125,9 @@ void GUIArena::LoadPlayerCode(int starting_idx, int instructions_amount, int pla
     LOG_DBG("Color for a player: {}", m_players_colors[player_id].toStdString());
     for (int i = starting_idx; i < starting_idx + instructions_amount; i++)
     {
-        m_SetCellColor(m_cells[i], m_players_colors[player_id]);
+        // m_SetCellColor(m_cells[i], m_players_colors[player_id]); CHANGE
+        m_cells[i]->SetBackgroundColor(m_players_colors[player_id]);
     }
-    LOG_DBG("Cells colored for a player {}", player_id);
 }
 
 const QString& GUIArena::GetPlayerColorString(int player_id) const
@@ -134,7 +145,10 @@ void GUIArena::m_SetCellColor(QLabel* cell, const QString& color)
         LOG_ERR("Cannot change color of cell as it is nullptr");
         return;
     }
-    cell->setStyleSheet(s_def_cell_style.arg(color));
+    //cell->setStyleSheet(s_def_cell_style.arg(color));
+    // set cell x
+    // cell->setText("X");
+    // cell->setStyleSheet(QString("color:%1").arg(color));
 }
 
 void GUIArena::m_GeneratePlayerColor(int player_id)
@@ -161,10 +175,4 @@ void GUIArena::m_GeneratePlayerColor(int player_id)
     }
     m_players_colors[player_id] = GUI::PLAYERS_COLORS[color_idx];
     LOG_DBG("Color drawn for a player: {}", m_players_colors[player_id].toStdString());
-}
-
-
-void GUIArena::SlotRestartGame()
-{
-    ClearArena();
 }

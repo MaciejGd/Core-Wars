@@ -7,8 +7,7 @@
 #include <memory>
 
 #include "GUIInstructionDialog.h"
-
-
+#include "GUIMemoryCell.h"
 
 /// Widget representing arena that the players will fight on.
 /// By default consist of 8000 cells that change color basing on 
@@ -48,7 +47,7 @@ private:
     // number of cols of the arena
     int m_cols;
     // vector storing cells 
-    std::vector<QLabel*> m_cells;
+    std::vector<GUIMemoryCell*> m_cells;
 
     /// Function to set color of wanted cell
     void m_SetCellColor(QLabel* cell, const QString& color);
@@ -59,6 +58,8 @@ private:
     /// To be initialized when player's handle will be passed
     std::map<int, QString> m_players_colors;
 
+    /// current id of players
+    std::vector<int> m_players_ids; // need to keep track CHANGE
 
     /* static members */
     inline static const QString s_def_color = "white";
@@ -68,8 +69,6 @@ private:
     inline static QString s_def_cell_style = "background-color: %1; border: 1px solid lightGrey";
 
 public slots:
-    // clear arena when restart press button has been pressed
-    void SlotRestartGame();
 
 signals:
     void SignalRequestInstructionData(int cell_idx);

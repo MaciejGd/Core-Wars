@@ -43,10 +43,13 @@ private:
     void m_ConnectArena();
 
 private slots:
+    void SlotChangeCounter(int round_counter);
     void SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id);
     void SlotPlayerMove(int cell, int player_id, int modified_cell, QString instruction);
     void SlotLaunchInstructionDialog(QString instruction, int cell_idx);
+    void SlotLoadPlayers();
+    void SlotRestartGame();
 signals:
-    void SignalLoadPlayers();
+    void SignalLoadPlayers(const std::vector<std::string>& players_paths);
 
 };

@@ -23,7 +23,7 @@ GUIMainWindow::GUIMainWindow(int width, int height, GUILogicProxy& logic_proxy, 
     dockWidget->setWidget(m_op_panel);
     addDockWidget(Qt::RightDockWidgetArea, dockWidget);
 
-    // connect main window to proxy, connect child widget to main game logic
+    // connect main window to proxy, connect child widet to main game logic
     m_ConnectProxy();
 }
 
@@ -49,9 +49,10 @@ void GUIMainWindow::m_ConnectArena()
     connect(&m_logic_proxy, &GUILogicProxy::SignalPlayerLoad, this, &GUIMainWindow::SlotPlayerLoaded);
     // connect signals responsible for player's movement
     connect(&m_logic_proxy, &GUILogicProxy::SignalPlayerMove, this, &GUIMainWindow::SlotPlayerMove);
-    // connect singals responsible for launching instruction info dialog
+    // connect signals responsible for launching instruction info dialog
     connect(&m_logic_proxy, &GUILogicProxy::SignalInstructionData, this, &GUIMainWindow::SlotLaunchInstructionDialog);
-
+    // connect changing counter 
+    connect(&m_logic_proxy, &GUILogicProxy::SignalChangeCounter, this, &GUIMainWindow::SlotChangeCounter); 
 }
 
 void GUIMainWindow::m_ConnectButtons()
@@ -68,7 +69,9 @@ void GUIMainWindow::m_ConnectButtons()
         LOG_ERR("Load button pointer is invalid, failed to set callback");
         return;
     }
-    connect(temp, &QPushButton::pressed, &m_logic_proxy, &GUILogicProxy::SlotLoadPlayers);
+    // we should connect main window to signal from button, retrieve programs path and then pass signal to logic
+    connect(temp, &QPushButton::pressed, this, &GUIMainWindow::SlotLoadPlayers);
+    connect(this, &GUIMainWindow::SignalLoadPlayers, &m_logic_proxy, &GUILogicProxy::SlotLoadPlayers);
     // connect pause button
     temp = m_toolBar->GetPauseButton();
     if (temp == nullptr)
@@ -94,9 +97,14 @@ void GUIMainWindow::m_ConnectButtons()
     }
     connect(temp, &QPushButton::pressed, &m_logic_proxy, &GUILogicProxy::SlotRestartGame);
     // restart button should be also connected to Arena
-    connect(temp, &QPushButton::pressed, m_arena, &GUIArena::SlotRestartGame);
+    connect(temp, &QPushButton::pressed, this, &GUIMainWindow::SlotRestartGame);
 
     LOG_DBG("Properly set callback for load button");
+}
+
+void GUIMainWindow::SlotChangeCounter(int round_counter)
+{
+    LOG_PASS("ROUND {}", round_counter);
 }
 
 
@@ -111,6 +119,13 @@ void GUIMainWindow::SlotPlayerLoaded(int starting_idx, int instructions_amount, 
 }
 
 
+void GUIMainWindow::SlotRestartGame()
+{
+    // clear arena and stacks
+    m_arena->ClearArena();
+    m_op_panel->ClearStacks();
+}
+
 void GUIMainWindow::SlotPlayerMove(int cell, int player_id, int modified_cell, QString instruction) 
 {
     if (m_arena == nullptr) return;
@@ -124,4 +139,18 @@ void GUIMainWindow::SlotLaunchInstructionDialog(QString instruction, int cell_id
 {
     m_instr_dialog.reset(new GUIInstructionDialog(instruction, cell_idx, this)); // not sure if "this" is needed, to be checked
     m_instr_dialog->show();
+}
+
+
+void GUIMainWindow::SlotLoadPlayers()
+{
+    // retrieve const ref to vector of player paths TODO
+    std::vector<std::string> paths;
+    if (!m_op_panel->GetPlayersPaths(paths))
+    {
+        LOG_ERR("Path for some player has not been chosen");
+        return;
+    }
+    
+    emit SignalLoadPlayers(paths);
 }

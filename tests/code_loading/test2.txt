@@ -10,4 +10,4 @@ attack  MOV pit, @target   ; throw trap using indirect mode
 pit    JMP pit             ; this is the trap — redirects enemy into the pit
 target  DAT #20, #8         ; pointer to place to throw trap
 
-wait    DAT #0, #0
+wait    MOV 0, 1

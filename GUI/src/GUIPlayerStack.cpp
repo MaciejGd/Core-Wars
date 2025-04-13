@@ -16,8 +16,9 @@ void GUIPlayerStack::Update(const QString &stack_operation, int cell_idx)
     // insert new operation at the top of panel
     QString stack_str = m_PrepareStackPrint(stack_operation, cell_idx);
     QTextCursor cursor = textCursor();
-    cursor.movePosition(QTextCursor::Start);
+    cursor.movePosition(QTextCursor::End);
     cursor.insertText(stack_str + "\n", m_format);
+    moveCursor(QTextCursor::End);
     this->setReadOnly(true);
 }
 
@@ -32,6 +33,8 @@ QString GUIPlayerStack::m_PrepareStackPrint(const QString& operation, int cell_i
     // ensure always 4 digits will be printed
     QString cell_str = QString::number(cell_idx);
     QString spacing = QString(4 - cell_str.size(), '0');
+    // add zeros to make all numbers equal length
+    cell_str = spacing + cell_str;
 
     return GUI::OPERATION_PRINT.arg(cell_str, operation);
 }

@@ -20,7 +20,7 @@ public:
     void RunGameLoop();
 
     /// @brief  Function to be executed after load players signal from GUI comes
-    void LoadPlayers();
+    void LoadPlayers(const std::vector<std::string>& paths);
 
     // GUILogic proxy object getter
     GUILogicProxy& GetGUILogicProxy() { return m_gui_proxy; };
@@ -38,6 +38,9 @@ public:
     /// @brief Resume execution of main game loop
     void ResumeMainLoop();
 
+    /// @brief Restar game callback
+    void RestartGame();
+
     /// @brief Callback triggered when instruction data is requested by GUI
     /// @param cell_idx index of memory cell, to get instruction from  
     void SendInstructionDataCb(int cell_idx);
@@ -48,10 +51,12 @@ private:
     std::vector<CPlayer> m_players;
     // interface for logic - GUI communication
     GUILogicProxy m_gui_proxy; 
-    
+    // arena reference
     CArena& m_arena;
     // vector indicating if player is dead pr not
     std::vector<bool> m_dead_players;
+    // rounds counter
+    int m_rounds_last = 0;
 
     int m_active_player = 0;
     bool m_running = true;

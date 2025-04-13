@@ -19,6 +19,7 @@ bool CPlayer::LoadInitialCode(int &starting_index, int &instructions_amount)
     m_tasks.clear();
     // load instructions into the core
     starting_index = m_arena.LoadPlayer(m_codebuilder.GetInstructions(), m_id);
+    // DEBUG 
     m_tasks.push_back(starting_index);
     return true;
 }

@@ -12,16 +12,16 @@ void GUILogicProxy::SlotPauseGame()
     m_pause_game_cb();
 }
 
-void GUILogicProxy::SlotLoadPlayers() 
+void GUILogicProxy::SlotLoadPlayers(const std::vector<std::string>& paths) 
 { 
     LOG_WRN("Execute load players code callback");
-    m_load_game_cb(); 
+    m_load_game_cb(paths); 
 }
 
 void GUILogicProxy::SlotRestartGame() 
 {
     LOG_DBG("Pausing main game loop"); 
-    m_pause_game_cb();
+    m_restart_game_cb();
 }
 
 
