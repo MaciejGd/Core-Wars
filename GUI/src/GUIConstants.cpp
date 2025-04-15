@@ -32,11 +32,17 @@ const QString INSTRUCTION_DIALOG_TITLE = "Instruction at %1";
 const int INSTRUCTION_DIALOG_WIDTH = 200;
 const int INSTRUCTION_DIALOG_HEIGHT = 50;
 
-// related to stack
+// colors
+const QColor DEFAULT_FONT_COLOR = QColorConstants::White;
+const QColor MAIN_WINDOW_COLOR = QColorConstants::DarkGray;
+const QColor TEXT_FIELD_BACKGROUND = QColorConstants::Gray;
 const QColor STACK_BACKGROUND_COLOR = QColorConstants::Gray;
+const QString ARENA_CELL_DEFAULT_COLOR = "white";
+
+// related to stack
 const QString OPERATION_PRINT = "%1: %2";
 
 // cells stylling
-const QString CELL_STYLING = "color: %1; background-color: %2; border: 1px solid lightGrey";
+const QString CELL_STYLING = "font-weight: bold; color: %1; background-color: %2; border: 1px solid lightGrey";
 
 };

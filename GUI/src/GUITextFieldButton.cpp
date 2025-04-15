@@ -1,4 +1,5 @@
 #include "GUITextFieldButton.h"
+#include "GUIUtils.h"
 
 GUITextFieldButton::GUITextFieldButton(int btn_width, int height, const QString& btn_txt, QWidget* parent): 
     QWidget(parent), m_height(height), m_btn_txt(btn_txt), m_btn_width(btn_width) 
@@ -8,6 +9,8 @@ GUITextFieldButton::GUITextFieldButton(int btn_width, int height, const QString&
 
     m_InitButton();
     m_InitTextField();
+
+    // DEBUG
 
     layout->addWidget(m_textfield);
     layout->addWidget(m_btn);
@@ -42,4 +45,5 @@ void GUITextFieldButton::m_InitTextField()
     m_textfield = new QTextEdit(QString{m_player_path.c_str()});
     m_textfield->setFixedHeight(m_height);
     m_textfield->setReadOnly(true);
+    SetColor(m_textfield, GUI::TEXT_FIELD_BACKGROUND);
 }

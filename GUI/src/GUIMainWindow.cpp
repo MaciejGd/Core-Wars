@@ -22,6 +22,9 @@ GUIMainWindow::GUIMainWindow(int width, int height, GUILogicProxy& logic_proxy, 
     dockWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
     dockWidget->setWidget(m_op_panel);
     addDockWidget(Qt::RightDockWidgetArea, dockWidget);
+    // set background color and font of main window
+    SetColor(this, QColorConstants::DarkGray);
+    SetTextColor(this);
 
     // connect main window to proxy, connect child widet to main game logic
     m_ConnectProxy();

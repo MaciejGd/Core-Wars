@@ -3,7 +3,7 @@
 #include <chrono>
 
 #define DEF_PLAYERS_AMOUNT 2
-#define TIME_DELAY 10
+#define TIME_DELAY 5
 
 /// @brief obtain ref to Singleton arena and init two default players
 GameLogic::GameLogic(): m_arena(CArena::GetInstance())

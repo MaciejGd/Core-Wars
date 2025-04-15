@@ -58,15 +58,8 @@ private:
     /// To be initialized when player's handle will be passed
     std::map<int, QString> m_players_colors;
 
-    /// current id of players
-    std::vector<int> m_players_ids; // need to keep track CHANGE
-
-    /* static members */
-    inline static const QString s_def_color = "white";
-
-    // by default we want to leave lightgrey border of width 1px on the cell
-    // std::format will be used later to fill with desired color
-    inline static QString s_def_cell_style = "background-color: %1; border: 1px solid lightGrey";
+    // map player id to player's head (actual player position)
+    std::map<int, int> m_players_heads;
 
 public slots:
 

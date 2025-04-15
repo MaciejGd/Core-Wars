@@ -6,6 +6,8 @@
 #include "GUIOperationalPanel.h"
 #include "GUILogicProxy.h"
 
+#include "GUIUtils.h"
+
 /// Main window of the application
 /// Consists of three main elements:
 /// - Functional buttons
