@@ -95,12 +95,22 @@ void GUIMainWindow::m_ConnectButtons()
     temp = m_toolBar->GetRestartButton();
     if (temp == nullptr)
     {
-        LOG_ERR("Play button pointer is invalid, failed to set callback");
+        LOG_ERR("Restart button pointer is invalid, failed to set callback");
         return;
     }
     connect(temp, &QPushButton::pressed, &m_logic_proxy, &GUILogicProxy::SlotRestartGame);
     // restart button should be also connected to Arena
     connect(temp, &QPushButton::pressed, this, &GUIMainWindow::SlotRestartGame);
+    // speed up button
+    temp = m_toolBar->GetSpeedButtonButton();
+    if (temp == nullptr)
+    {
+        LOG_ERR("Restart button pointer is invalid, failed to set callback");
+        return;
+    }
+    connect(temp, &QPushButton::pressed, &m_logic_proxy, &GUILogicProxy::SlotSpeedUpGame);
+    // restart button should be also connected to Arena
+    connect(temp, &QPushButton::pressed, this, &GUIMainWindow::SlotSpeedUpGame);
 
     LOG_DBG("Properly set callback for load button");
 }
@@ -154,6 +164,12 @@ void GUIMainWindow::SlotLoadPlayers()
         LOG_ERR("Path for some player has not been chosen");
         return;
     }
-    
+    m_arena->ClearArena(); // make sure arena has been cleared before loading new players
     emit SignalLoadPlayers(paths);
+}
+
+void GUIMainWindow::SlotSpeedUpGame()
+{
+    // no implementation for now TODO -> implement
+    ;
 }

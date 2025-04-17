@@ -3,7 +3,7 @@
 #include <chrono>
 
 #define DEF_PLAYERS_AMOUNT 2
-#define TIME_DELAY 5
+#define TIME_DELAY 50
 
 /// @brief obtain ref to Singleton arena and init two default players
 GameLogic::GameLogic(): m_arena(CArena::GetInstance())
@@ -19,6 +19,7 @@ void GameLogic::SetGUIProxyCallbacks()
     m_gui_proxy.SetStartGameCb([this](){ this->RunGameLoop(); });
     m_gui_proxy.SetPauseGameCb([this](){ this->PauseMainLoop(); });
     m_gui_proxy.SetStartGameCb([this](){ this->ResumeMainLoop(); });
+    m_gui_proxy.SetSpeedUpGameCb([this](){ this->SpeedUpGame(); });
     m_gui_proxy.SetInstrDataCb([this](int cell_idx){ this->SendInstructionDataCb(cell_idx); });
     m_gui_proxy.SetRestartGameCb([this](){ this->RestartGame(); });
     m_gui_proxy.SetLoadGameCb([this](const std::vector<std::string>& paths){ this->LoadPlayers(paths); });
@@ -37,14 +38,11 @@ void GameLogic::RunGameLoop()
         // slow down program execution
         end = std::chrono::steady_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-        if (elapsed.count() <= TIME_DELAY)
+        if (elapsed.count() <= m_time_delay)
         {
             continue;
         }
         start = end;
-        // increase rounds counter
-        m_rounds_last++; 
-        m_gui_proxy.SendCounter(m_rounds_last);
 
         int players_active = 0;
         int last_player_active = 0;
@@ -70,6 +68,9 @@ void GameLogic::RunGameLoop()
         {
             // reset players if all had their turn
             m_active_player = 0;
+            // increase rounds counter if all players moved
+            m_rounds_last++; 
+            m_gui_proxy.SendCounter(m_rounds_last);
         }
         if (players_active <= 1)
         {
@@ -147,6 +148,26 @@ void GameLogic::RestartGame()
 {
     // clear arena to whole DAT #0, #0
     m_arena.ClearArena();
+}
+
+void GameLogic::SpeedUpGame()
+{
+    switch (m_time_delay)
+    {
+        case 50:
+            m_time_delay = 25;
+            break;
+        case 25:
+            m_time_delay = 10;
+            break;
+        case 10:
+            m_time_delay = 5;
+            break;
+        default:
+            m_time_delay = 25;
+            break;
+    }
+    LOG_ERR("Time delay is equal to: {}", m_time_delay);
 }
 
 void GameLogic::SendInstructionDataCb(int cell_idx)

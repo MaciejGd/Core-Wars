@@ -18,6 +18,7 @@ public:
     QPushButton* GetRestartButton() { return m_restart_btn; };
     QPushButton* GetPauseButton() { return m_pause_btn; };
     QPushButton* GetPlayButton() { return m_play_btn; };
+    QPushButton* GetSpeedButtonButton() { return m_speedup_btn; }; 
 
 private:
     // buttons

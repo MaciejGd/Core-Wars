@@ -8,8 +8,8 @@ GUIPlayersPanel::GUIPlayersPanel(QWidget* parent): QWidget(parent)
     layout->setSpacing(0);
     layout->setContentsMargins(0, 0, 0, 5);
     // by default create two players
-    m_players.push_back(new GUIPlayerTextField{"player 0:",this});
-    m_players.push_back(new GUIPlayerTextField{"player 1:",this});
+    m_players.push_back(new GUIPlayerTextField{"PLAYER 0:",this});
+    m_players.push_back(new GUIPlayerTextField{"PLAYER 1:",this});
 
     layout->addWidget(m_players[0]);
     layout->addWidget(m_players[1]);

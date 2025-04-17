@@ -36,3 +36,8 @@ void GUILogicProxy::SlotInstructionData(int cell_idx)
     LOG_DBG("Instruction data at index {}, requested by the user.", cell_idx);
     m_instruction_data_cb(cell_idx);
 }
+
+void GUILogicProxy::SlotSpeedUpGame()
+{
+    m_speedup_game_cb();
+}

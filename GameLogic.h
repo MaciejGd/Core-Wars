@@ -38,8 +38,11 @@ public:
     /// @brief Resume execution of main game loop
     void ResumeMainLoop();
 
-    /// @brief Restar game callback
+    /// @brief Restart game callback
     void RestartGame();
+
+    /// @brief Speed up game callback
+    void SpeedUpGame();
 
     /// @brief Callback triggered when instruction data is requested by GUI
     /// @param cell_idx index of memory cell, to get instruction from  
@@ -57,6 +60,8 @@ private:
     std::vector<bool> m_dead_players;
     // rounds counter
     int m_rounds_last = 0;
+
+    int m_time_delay = 50;
 
     int m_active_player = 0;
     bool m_running = true;

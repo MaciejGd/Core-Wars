@@ -25,6 +25,7 @@ public:
     void SetPauseGameCb(slot_cb cb) { m_pause_game_cb = cb; };
     void SetRestartGameCb(slot_cb cb) { m_restart_game_cb = cb; };
     void SetStartGameCb(slot_cb cb) { m_start_game_cb = cb; };
+    void SetSpeedUpGameCb(slot_cb cb) { m_speedup_game_cb = cb; };
     void SetLoadGameCb(load_cb cb) { m_load_game_cb = cb; };
     void SetInstrDataCb(instr_cb cb) { m_instruction_data_cb = cb; }
 
@@ -41,15 +42,17 @@ private:
     slot_cb m_pause_game_cb;
     slot_cb m_restart_game_cb;
     slot_cb m_start_game_cb;
+    slot_cb m_speedup_game_cb;
     load_cb m_load_game_cb;
     instr_cb m_instruction_data_cb;
 
 public slots:
-    void SlotPauseGame();
     void SlotLoadPlayers(const std::vector<std::string>& paths);
+    void SlotInstructionData(int cell_idx);
+    void SlotPauseGame();
     void SlotRestartGame();
     void SlotStartGame();
-    void SlotInstructionData(int cell_idx);
+    void SlotSpeedUpGame();
 
 signals:
     void SignalChangeCounter(int round_counter);

@@ -4,12 +4,11 @@ namespace GUI
 {
 // possible colors for players, as QStrings
 const std::vector<QString> PLAYERS_COLORS = {
-    "red",
-    "green",
-    "blue",
-    "cyan",
-    "magenta",
-    "darkyellow"
+    //"#ffdb15", // yellow
+    "#5a3e71", // purple
+    "#3a86ff", // blue will stay
+    "#c70e32", // red
+    "#326c3c" // green
 };
 // map of color strings to QColor objects
 const std::map<QString, QColor> STR_TO_COL = {
@@ -35,14 +34,14 @@ const int INSTRUCTION_DIALOG_HEIGHT = 50;
 // colors
 const QColor DEFAULT_FONT_COLOR = QColorConstants::White;
 const QColor MAIN_WINDOW_COLOR = QColorConstants::DarkGray;
-const QColor TEXT_FIELD_BACKGROUND = QColorConstants::Gray;
-const QColor STACK_BACKGROUND_COLOR = QColorConstants::Gray;
-const QString ARENA_CELL_DEFAULT_COLOR = "white";
+const QColor TEXT_FIELD_BACKGROUND = QColorConstants::LightGray;
+const QColor STACK_BACKGROUND_COLOR = QColorConstants::LightGray;
+const QString ARENA_CELL_DEFAULT_COLOR = "#cac9c9"; // light grey color
 
 // related to stack
 const QString OPERATION_PRINT = "%1: %2";
 
 // cells stylling
-const QString CELL_STYLING = "font-weight: bold; color: %1; background-color: %2; border: 1px solid lightGrey";
+const QString CELL_STYLING = "font-weight: bold; color: %1; background-color: %2; border: 1px solid #8e99a2";
 
 };

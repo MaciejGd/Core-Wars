@@ -51,6 +51,7 @@ private slots:
     void SlotLaunchInstructionDialog(QString instruction, int cell_idx);
     void SlotLoadPlayers();
     void SlotRestartGame();
+    void SlotSpeedUpGame();
 signals:
     void SignalLoadPlayers(const std::vector<std::string>& players_paths);
 

@@ -45,5 +45,6 @@ void GUITextFieldButton::m_InitTextField()
     m_textfield = new QTextEdit(QString{m_player_path.c_str()});
     m_textfield->setFixedHeight(m_height);
     m_textfield->setReadOnly(true);
-    SetColor(m_textfield, GUI::TEXT_FIELD_BACKGROUND);
+    SetColorBase(m_textfield, GUI::TEXT_FIELD_BACKGROUND);
+    SetTextColorBase(m_textfield, QColorConstants::White);
 }

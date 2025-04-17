@@ -26,6 +26,10 @@ public:
         setStyleSheet(GUI::CELL_STYLING.arg(m_foreground_color, m_background_color));
     };
 
+    /// @brief Clear cell's text and set default color
+    /// @param color color to be set as foreground and background of cell
+    void ClearCell(const QString& color);
+
     /// @brief set Text of QLabel
     /// @param text text to be set in the label 
     void SetText(const QString& text) { m_text = text; };

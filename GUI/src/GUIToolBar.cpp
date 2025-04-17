@@ -8,7 +8,8 @@ GUIToolBar::GUIToolBar(const QString& name, QWidget* parent) : QToolBar(name, pa
     m_play_btn = new QPushButton("PLAY");
     m_load_btn = new QPushButton("LOAD");
     m_restart_btn = new QPushButton("RESTART");
-    m_speedup_btn = new QPushButton("Speed up");
+    //m_speedup_btn = new QPushButton(QString(char(175)));
+    m_speedup_btn = new QPushButton("»");
 
     addWidget(m_pause_btn);
     addWidget(m_play_btn);
