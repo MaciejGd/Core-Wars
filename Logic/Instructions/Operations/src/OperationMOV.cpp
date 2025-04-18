@@ -24,6 +24,8 @@ InstructionResult COperationMOV::Execute(int a_pointer, int b_pointer, int &pc, 
     // B number of instruction pointed by A 
     int IRA_BNUM = arena[pc+a_pointer]->GetBParamValue();
 
+    LOG_WRN("MOV LOG, pc + b_pointer: {}", pc+b_pointer);
+
     auto& IRB = arena[pc + b_pointer]; // to replace
 
     switch (m_modifier)
@@ -63,10 +65,9 @@ InstructionResult COperationMOV::Execute(int a_pointer, int b_pointer, int &pc, 
         default:
             LOG_ERR("Undefined parameter in {}", m_name);
             return InstructionResult::FAIL;
-            break;
     }
-    // update modified cell as it was modified
-    modified_cell = (pc + b_pointer) % ARENA_SIZE;
+    // update modified cell as it was modified, wrap index 
+    modified_cell = (((pc + b_pointer) % ARENA_SIZE) + ARENA_SIZE) % ARENA_SIZE;
     // PC should be increased by one after the operation succeed
     pc = (pc+1) % ARENA_SIZE;
     return InstructionResult::PASS;

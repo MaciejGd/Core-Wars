@@ -86,7 +86,8 @@ InstructionResult COperationDIV::Execute(int a_pointer, int b_pointer, int &pc, 
             LOG_ERR("Undefined parameter in {}", m_name);
             return InstructionResult::FAIL;
     }
-    modified_cell = (pc + b_pointer) % ARENA_SIZE;
+    // wrap modified cell
+    modified_cell = (((pc + b_pointer) % ARENA_SIZE) + ARENA_SIZE) % ARENA_SIZE;
     pc = (pc + 1) % ARENA_SIZE;
     return InstructionResult::PASS;
 }

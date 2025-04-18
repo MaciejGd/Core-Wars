@@ -57,6 +57,7 @@ void GameLogic::RunGameLoop()
             // make a player move
             if (!PlayerMove(m_active_player))
             {
+                LOG_WRN("Killed player {} process", m_active_player);
                 finished[m_active_player] = true;   
                 players_active--;
             }
@@ -123,6 +124,7 @@ bool GameLogic::PlayerMove(int player_id)
     // execute operation for player
     bool operation_result = player.ExecuteTask(modified_cell);
     // send event to GUI
+    LOG_WRN("Sending player move to GUI: pc:{}, player:{}, modified cell: {}, exe instr: {}", cell, player_id, modified_cell, executed_instruction);
     m_gui_proxy.SendPlayerMoveEvent(cell, player_id, modified_cell, executed_instruction);
     if (!operation_result)
     {

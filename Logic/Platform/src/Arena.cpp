@@ -42,6 +42,7 @@ std::unique_ptr<CInstruction> &CArena::operator[](int idx)
     // }
     // return m_arena[idx];
     int wrapped_idx = ((idx % ARENA_SIZE) + ARENA_SIZE) % ARENA_SIZE;
+    LOG_ERR("In ARENA, wrapped index: {}", wrapped_idx);
     return m_arena[wrapped_idx];
     // return m_arena[wrapped_idx];
     // TODO: insert return statement here

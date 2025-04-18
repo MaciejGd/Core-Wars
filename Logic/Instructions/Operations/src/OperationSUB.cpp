@@ -57,7 +57,7 @@ InstructionResult COperationSUB::Execute(int a_pointer, int b_pointer, int &pc, 
             return InstructionResult::FAIL;
     }
     // update modified cell as it was modified
-    modified_cell = (pc + b_pointer) % ARENA_SIZE;
+    modified_cell = (((pc + b_pointer) % ARENA_SIZE) + ARENA_SIZE) % ARENA_SIZE;
     pc = (pc + 1) % ARENA_SIZE;
     return InstructionResult::PASS;
 }
