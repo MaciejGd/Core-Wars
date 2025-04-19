@@ -23,20 +23,12 @@ const char* path = "/home/maciekzgk/code/cpp/studia/qt_project/test.txt";
 //test
 int main(int argc, char *argv[])
 {
-    // Lexer lexer;
-    // TokenContainer tokens = lexer.GetTokens(path);
-    // Parser parser;
-    // if (parser.ParseFile(tokens)) {
-    //     LOG_DBG("Correctly parsed the input file {}", path);
-    // }
-    // else {
-    //     LOG_ERR("Failed to parse input file {}", path);
-    // }
     /* TESTING PARSER */
     // ParserTestMachine test_harness;
-    // test_harness.RunTests();
+    // //test_harness.RunTests();
     // test_harness.SetTestsuiteDir("arithm_operations");
     // test_harness.RunTests();
+    // return 0;
     /* END TESTING PARSER*/
     /* TESTING PARAM COPYING */
     // OperationTestingMachine operators_tests{};
@@ -47,11 +39,14 @@ int main(int argc, char *argv[])
     /* TESTING FINISHING INSTRUCTION SETUP */
     // CodeLoaderTests tests;
     // tests.RunTestsRunner();
-    /* RUNNING GUI*/    
-    
 
     
-
+    /* PSEUDO INSTRUCTIONS */
+    // CCodeBuilder code_builder;
+    // int offset = 0;
+    // code_builder.ProduceInstructions("../tests/code_loading/equ_test.txt", offset);
+    // return 0;
+    /* RUNNING GUI */    
     // Application    
     QApplication app(argc, argv);
 

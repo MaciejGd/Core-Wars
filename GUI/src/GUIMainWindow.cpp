@@ -121,10 +121,10 @@ void GUIMainWindow::SlotChangeCounter(int round_counter)
 }
 
 
-void GUIMainWindow::SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id) 
+void GUIMainWindow::SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id, int offset) 
 {
     if (m_arena == nullptr) return;
-    m_arena->LoadPlayerCode(starting_idx, instructions_amount, player_id);
+    m_arena->LoadPlayerCode(starting_idx, instructions_amount, player_id, offset);
     // pass color generated for player to stack
     if (m_op_panel == nullptr) return;
     m_op_panel->SetPlayerColor(player_id, m_arena->GetPlayerColorString(player_id));

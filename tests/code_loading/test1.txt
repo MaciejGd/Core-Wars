@@ -15,3 +15,7 @@ delay       DAT #2, #0              ; Counter for bombing loop
 
 
 imp_start   MOV 0, 1                ; Imp spiraling through core
+
+ORG bomb-1
+
+END; test if setting start offset works

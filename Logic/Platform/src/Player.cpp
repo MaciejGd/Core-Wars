@@ -3,10 +3,10 @@
 CPlayer::CPlayer(int id): m_id(id), m_arena(CArena::GetInstance())
 {}
 
-bool CPlayer::LoadInitialCode(int &starting_index, int &instructions_amount)
+bool CPlayer::LoadInitialCode(int &starting_index, int &instructions_amount, int& offset)
 {
     // produce instructions from file choosen for a player
-    if (!m_codebuilder.ProduceInstructions(m_file_name))
+    if (!m_codebuilder.ProduceInstructions(m_file_name, offset))
     {
         // if failed quit immediately
         LOG_ERR("Failed to produce instruction from loaded file {}, aborting"
@@ -19,8 +19,8 @@ bool CPlayer::LoadInitialCode(int &starting_index, int &instructions_amount)
     m_tasks.clear();
     // load instructions into the core
     starting_index = m_arena.LoadPlayer(m_codebuilder.GetInstructions(), m_id);
-    // DEBUG 
-    m_tasks.push_back(starting_index);
+    // add task to queue, increased by offset calculated
+    m_tasks.push_back(starting_index + offset);
     return true;
 }
 

@@ -2,8 +2,10 @@
 
 #include <array>
 #include <string>
+#include <iostream>
 #include <string_view>
 #include <algorithm>
+#include <vector>
 
 ///
 /// Enumeration type representing types of tokens 
@@ -91,12 +93,26 @@ public:
     /// @return string consisting Token's params
     std::string PrintFormat() const;   
 
+
+    /// @brief Turn token's type to string and return it
+    /// @return string representing token's type
+    std::string TokenTypeToString() const;
+
 private:
     int m_line; // number of line in which token was gathered
     int m_idx; // column that token ends at
     TokenType m_type;
     std::string m_val;
-    std::string m_TokenTypeToString() const;
     void m_AddCategory(const std::string& lex);
 };
 
+/// @brief function printing lexed line of tokens, for debug purposes
+/// @param line line of tokens
+inline void PrintTokensLine(std::vector<Token>& line)
+{
+    for (auto &x : line)
+    {
+        std::cout << x.value() << "type: " << x.TokenTypeToString() << "|";
+    }
+    std::cout << std::endl;
+}

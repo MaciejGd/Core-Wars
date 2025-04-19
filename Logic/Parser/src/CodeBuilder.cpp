@@ -15,13 +15,13 @@ CCodeBuilder &CCodeBuilder::operator=(CCodeBuilder &&other)
     return *this;
 }
 
-bool CCodeBuilder::ProduceInstructions(std::string_view file_name)
+bool CCodeBuilder::ProduceInstructions(std::string_view file_name, int& offset)
 {
     // make sure to clean any previous instructions from m_instructions vector
     m_file_name = file_name;
     m_instructions.clear();
     // if processing file failed
-    if (m_ProcessProgramFile() == false)
+    if (m_ProcessProgramFile(offset) == false)
     {
         LOG_ERR("Failed to create instructions from file {}", m_file_name);
         return false;
@@ -32,10 +32,10 @@ bool CCodeBuilder::ProduceInstructions(std::string_view file_name)
     return true;
 }
 
-bool CCodeBuilder::m_ProcessProgramFile()
+bool CCodeBuilder::m_ProcessProgramFile(int &offset)
 {
     TokenContainer tokens = m_lexer.GetTokens(m_file_name);
-    if (CParser::ParseFile(tokens, m_instructions) == ParseResult::PARSE_OK)
+    if (m_parser.ParseFile(tokens, m_instructions, offset) == ParseResult::PARSE_OK)
     {
         LOG_DBG("Properly parsed file, and produced set of initial instructions");
         return true;

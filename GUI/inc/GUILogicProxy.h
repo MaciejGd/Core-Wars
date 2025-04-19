@@ -32,10 +32,11 @@ public:
     // signal senders
     void SendCounter(int round_counter) { emit SignalChangeCounter(round_counter); };
     void SendPlayerMoveEvent(int cell, int player_id, int modified_cell, const std::string& instruction) { emit SignalPlayerMove(cell, player_id, modified_cell, QString(instruction.c_str())); };
-    void SendPlayerLoadEvent(int starting_idx, int instructions_amount, int player_id)  
-                            { emit SignalPlayerLoad(starting_idx, instructions_amount, player_id); };
+    void SendPlayerLoadEvent(int starting_idx, int instructions_amount, int player_id, int offset)  
+                            { emit SignalPlayerLoad(starting_idx, instructions_amount, player_id, offset); };
     void SendInstructionData(const std::string& instruction, int cell_idx) { emit SignalInstructionData(QString(instruction.c_str()), cell_idx); };
 
+    /// @brief Poll events awaiting in queue
     void CheckPendingEvents();
 
 private:
@@ -57,6 +58,6 @@ public slots:
 signals:
     void SignalChangeCounter(int round_counter);
     void SignalPlayerMove(int cell, int player_id, int modified_cell, QString instruction); // cell to be passed to main menu
-    void SignalPlayerLoad(int starting_idx, int instructions_amount, int player_id);
+    void SignalPlayerLoad(int starting_idx, int instructions_amount, int player_id, int offset);
     void SignalInstructionData(QString instruction, int cell_idx);
 };

@@ -33,8 +33,9 @@ public:
     /// @param starting_idx starting index of loaded players code
     /// @param instructions_amount amount of instructions to be loaded to Core
     /// @param player_id id number of player that is making a move
+    /// @param offset offset of the program counter in relation to first instruction
     /// @return boolean indicating result of operations
-    void LoadPlayerCode(int starting_idx, int instructions_amount, int player_id);
+    void LoadPlayerCode(int starting_idx, int instructions_amount, int player_id, int offset);
 
     /// @brief Return reference to player's color
     /// @param player_id id of player to get color from

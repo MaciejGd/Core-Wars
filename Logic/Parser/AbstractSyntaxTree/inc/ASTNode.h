@@ -15,12 +15,12 @@
     LOG_ERR("Error in parsing file {} line: {}, idx: {}, ", \
         file_name, failing_token.line(), failing_token.idx());\
 
-// parsing return codes
+/// Parsing return codes, possible values:
+/// - PARSE_FAIL: failed to parse
+/// - PARSE_OK:   succeed to parse
 enum ParseResult {
-    PARSE_END,
-    PARSE_OK, // tells parser that Node has been parsed proprly (token SHALL NOT be removed)
-    PARSE_NEXT_TOKEN, // tells parser to skip current token, as it is valid
-    PARSE_FAIL // indicates unproper Node during the parsing
+    PARSE_FAIL,  // indicates unproper Node during the parsing
+    PARSE_OK     // tells parser that Node has been parsed proprly (token SHALL NOT be removed)
 };
 
 

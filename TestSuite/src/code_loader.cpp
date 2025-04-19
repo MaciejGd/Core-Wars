@@ -64,8 +64,8 @@ void CodeLoaderTests::m_ShowArenaLoad(const std::string &file_name, CPlayer& pla
 {
     m_arena.ClearArena();
     player.SetFileName(file_name);
-    int dummy1, dummy2;
-    player.LoadInitialCode(dummy1, dummy2);
+    int dummy1, dummy2, offset;
+    player.LoadInitialCode(dummy1, dummy2, offset);
     int starting_index = player.GetPC();
     // print arena around the first index to check if it has been filled right
     for (int i = starting_index - 30; i < starting_index + 30; i++)

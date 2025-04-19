@@ -95,7 +95,7 @@ void GUIArena::MakePlayerMove(int cell, int player_id, int modified_cell)
 }
 
 
-void GUIArena::LoadPlayerCode(int starting_idx, int instructions_amount, int player_id)
+void GUIArena::LoadPlayerCode(int starting_idx, int instructions_amount, int player_id, int offset)
 {
     // generate color for a player
     m_GeneratePlayerColor(player_id);
@@ -117,7 +117,7 @@ void GUIArena::LoadPlayerCode(int starting_idx, int instructions_amount, int pla
     }
     // set record in players heads map
     m_players_heads[player_id] = starting_idx;
-    m_cells[starting_idx]->SetCellFocused(player_col);
+    m_cells[starting_idx + offset]->SetCellFocused(player_col);
 }
 
 

@@ -18,8 +18,9 @@ public:
     /// @brief Parse file for player, create instructions and load them into Core
     /// @param starting_index index at which players code should be loaded
     /// @param instructions_amount amount of instructions to be loaded
+    /// @param offset program coutner offset to the first instruction
     /// @return boolean indicating result of loading code to core
-    bool LoadInitialCode(int &starting_index, int &instructions_amount);
+    bool LoadInitialCode(int &starting_index, int &instructions_amount, int& offset);
 
     /// @brief Execute operation, at first index of process queue
     /// @param modified_cell update modified_cell if any cell has been modified during execution

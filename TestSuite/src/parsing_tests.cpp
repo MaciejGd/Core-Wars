@@ -50,7 +50,8 @@ std::string ParserTestMachine::m_GetParsingResult(const std::string &file_name)
     TokenContainer tokens = m_lexer.GetTokens(file_name);
     std::string result = "";
     std::vector<std::unique_ptr<CInstruction>> instructions;
-    if (CParser::ParseFile(tokens, instructions))
+    int offset = 0;
+    if (m_parser.ParseFile(tokens, instructions, offset))
     {
         m_PrintParsedInstructions(instructions); // if succeed then print parsed instructions
         return ";PASS";

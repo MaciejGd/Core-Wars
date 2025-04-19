@@ -31,21 +31,10 @@ int CArena::Fold(int pointer)
 
 std::unique_ptr<CInstruction> &CArena::operator[](int idx)
 {
-    // prevent 
-    // if (idx >= ARENA_SIZE)
-    // {
-    //     return m_arena[idx % ARENA_SIZE];
-    // }
-    // else if (idx < 0)
-    // {
-    //     return m_arena[(idx % ARENA_SIZE) + ARENA_SIZE + 1];
-    // }
-    // return m_arena[idx];
+    // wrap index before accessing arena
     int wrapped_idx = ((idx % ARENA_SIZE) + ARENA_SIZE) % ARENA_SIZE;
     LOG_ERR("In ARENA, wrapped index: {}", wrapped_idx);
     return m_arena[wrapped_idx];
-    // return m_arena[wrapped_idx];
-    // TODO: insert return statement here
 }
 
 void CArena::ClearArena()

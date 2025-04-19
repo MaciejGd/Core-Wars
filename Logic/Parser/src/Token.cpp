@@ -1,7 +1,7 @@
 #include "Token.h"
 #include "logger.h"
 
-std::string Token::m_TokenTypeToString() const
+std::string Token::TokenTypeToString() const
 {
     switch (m_type) 
     {
@@ -83,5 +83,5 @@ Token::Token(int _line, int _idx, std::string_view lex): m_val(lex), m_line(_lin
 
 std::string Token::PrintFormat() const
 {
-    return "[loc:{line:" + std::to_string(m_line) + "}{idx:"+ std::to_string(m_idx) + "}]->[type:" + m_TokenTypeToString() + "|val:" + m_val + "]";
+    return "[loc:{line:" + std::to_string(m_line) + "}{idx:"+ std::to_string(m_idx) + "}]->[type:" + TokenTypeToString() + "|val:" + m_val + "]";
 }

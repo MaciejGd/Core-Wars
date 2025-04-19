@@ -46,7 +46,7 @@ private:
 
 private slots:
     void SlotChangeCounter(int round_counter);
-    void SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id);
+    void SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id, int offset);
     void SlotPlayerMove(int cell, int player_id, int modified_cell, QString instruction);
     void SlotLaunchInstructionDialog(QString instruction, int cell_idx);
     void SlotLoadPlayers();

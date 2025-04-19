@@ -1,0 +1,16 @@
+;name stone
+
+test EQU 5+1+2*32-12
+test_new EQU 2+new_test-2 * haha
+
+ORG new_test
+
+
+
+start  mov.i <2, 3       ; [1]
+       add.f d1, start   ; [2]
+       jmp   start       ; [3]
+       dat   #test, 12          ; [4]
+d1     dat   #-4, #4     ; [5]
+
+end 2+3-21                ; [6]

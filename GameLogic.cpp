@@ -106,9 +106,10 @@ void GameLogic::LoadPlayers(const std::vector<std::string>& paths)
     for (int i = 0; i < PLAYERS_AMOUNT; i++)
     {
         // load code to logic arena
-        m_players[i].LoadInitialCode(starting_idx, instructions_amount);
+        int offset = 0;
+        m_players[i].LoadInitialCode(starting_idx, instructions_amount, offset);
         // send event to GUIArena so it can color cells respectively
-        m_gui_proxy.SendPlayerLoadEvent(starting_idx, instructions_amount, i);
+        m_gui_proxy.SendPlayerLoadEvent(starting_idx, instructions_amount, i, offset);
     }
     // first load players codes, then start the game
     //RunGameLoop(); // TODO
@@ -166,7 +167,7 @@ void GameLogic::SpeedUpGame()
             m_time_delay = 5;
             break;
         default:
-            m_time_delay = 25;
+            m_time_delay = 50;
             break;
     }
     LOG_ERR("Time delay is equal to: {}", m_time_delay);

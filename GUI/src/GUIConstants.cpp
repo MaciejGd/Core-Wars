@@ -36,12 +36,13 @@ const QColor DEFAULT_FONT_COLOR = QColorConstants::White;
 const QColor MAIN_WINDOW_COLOR = QColorConstants::DarkGray;
 const QColor TEXT_FIELD_BACKGROUND = QColorConstants::LightGray;
 const QColor STACK_BACKGROUND_COLOR = QColorConstants::LightGray;
-const QString ARENA_CELL_DEFAULT_COLOR = "#cac9c9"; // light grey color
+// const QString ARENA_CELL_DEFAULT_COLOR = "#cac9c9"; // light grey color
+const QString ARENA_CELL_DEFAULT_COLOR = "#D3D3D3"; // light grey color
 
 // related to stack
 const QString OPERATION_PRINT = "%1: %2";
 
 // cells stylling
-const QString CELL_STYLING = "font-weight: bold; color: %1; background-color: %2; border: 1px solid #8e99a2";
+const QString CELL_STYLING = "font-weight: bold; color: %1; background-color: %2; border-top: 1px solid  #8e99a2; border-left: 1px solid #8e99a2";
 
 };
