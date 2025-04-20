@@ -1,5 +1,6 @@
 ; Vampire strategy
 
+
 start   SPL attack          ; split off to start attacking
         JMP wait           ; main process goes to clean up or wait
 
@@ -11,3 +12,7 @@ pit    JMP pit             ; this is the trap — redirects enemy into the pit
 target  DAT #20, #8         ; pointer to place to throw trap
 
 wait    MOV 0, 1
+
+attack EQU koniec + 1
+END attack
+

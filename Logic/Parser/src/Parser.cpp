@@ -55,10 +55,10 @@ bool CParser::m_ParseLine(const std::vector<Token> &tokens_row, std::unique_ptr<
     return m_TraverseAST(tokens_queue, node_stack, instruction);
 }
 
-
-bool CParser::m_RemoveLabels(TokenContainer &tokens)
-{   
+bool CParser::m_GatherLabels(TokenContainer& tokens)
+{
     // map holding 
+    LOG_DBG("Gathering labels");
     int n = tokens.size();
     for (int i = 0; i < n; i++) 
     {   
@@ -81,10 +81,40 @@ bool CParser::m_RemoveLabels(TokenContainer &tokens)
                 first_token.line(), first_token.value(), prevFound.line());
             return false;
         }
-        // psuh label to the labels map
+        // push label to the labels map
         m_labels[first_token.value()] = i;
     }
-    // after finding labels, and their associated line nums, switch labels names with relative nums
+    return true;
+}
+
+bool CParser::m_RemoveLabels(TokenContainer &tokens)
+{   
+    // gather labels from tokens container
+    if (!m_GatherLabels(tokens))
+    {
+        return false;
+    }
+    // replace labels with equ expressions
+    if (!m_ReplaceLineTagWithEqu()) 
+    {
+        return false;
+    }
+    // switch labels in expression indicating start of the program
+    if (!m_SwitchLabels(m_prog_start, 0))
+    {
+        return false;
+    }
+    // switch labels in container
+    if (!m_SwitchLabelsInFile(tokens))
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool CParser::m_SwitchLabelsInFile(TokenContainer &tokens)
+{
     for (int i = 0; i < tokens.size(); i++) 
     {
         LOG_WRN("Tokens line before labels switching");
@@ -96,10 +126,6 @@ bool CParser::m_RemoveLabels(TokenContainer &tokens)
         LOG_WRN("Tokens line after labels switching");
         PrintTokensLine(tokens[i]);
     }
-    for (const auto& x: m_labels)
-    {
-        std::cout << "Found label: " << x.first << std::endl;
-    }
     // after switching is done we can remove labels declarations from start of the lines
     for (const auto& label : m_labels) 
     {
@@ -108,7 +134,6 @@ bool CParser::m_RemoveLabels(TokenContainer &tokens)
     }
     return true;
 }
-
 
 bool CParser::m_AnalyzePseudoInstructions(TokenContainer &tokens)
 {
@@ -227,8 +252,6 @@ int CParser::m_EvaluateStartIndex()
     {
         return 0;
     }
-    // first switch labels to coressponding numerical values
-    m_SwitchLabels(m_prog_start, 0);
     // parse arithmetic expression
     CExprParser arithm_parser;
     if (arithm_parser.EvaluateExpression(m_prog_start, res) == ParseResult::PARSE_OK)
@@ -270,4 +293,30 @@ void CParser::m_ClearContainers()
     m_equ_map.clear();
     m_prog_start.clear();
     m_labels.clear();
+}
+
+bool CParser::m_ReplaceLineTagWithEqu()
+{
+    // if we have labels map, we should switch all labels if they are in equ map
+    for (const auto& equ : m_equ_map)
+    {
+        std::string label_name = equ.first;
+        if (m_labels.find(label_name) == m_labels.end())
+        {
+            continue;
+        }
+        // we can switch label with label only, so throw an error when vector len is bigger than one
+        // and first token is not label
+        if (equ.second.size() != 1 || equ.second[0].type() != TokenType::LABEL)
+        {
+            LOG_ERR("Cannot switch label line tag at line: {} with \"{}\"", m_labels[label_name], StrTokensLine(equ.second));
+            return false;
+        }
+        // switch labels
+        m_labels[equ.second[0].value()] = m_labels[label_name];
+        // remove original 
+        m_labels.erase(label_name);
+    }
+    LOG_PASS("Properly replaced tag");
+    return true;
 }

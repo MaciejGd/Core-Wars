@@ -28,11 +28,21 @@ private:
     bool m_ParseLine(const std::vector<Token>& tokens_row, std::unique_ptr<CInstruction>& instruction);
 
 
+    /// @brief Gether label tags of lines
+    /// @param tokens container of tokens to be analyzed
+    /// @return boolean indicating success of operation
+    bool m_GatherLabels(TokenContainer& tokens);
+
     /// @brief Removes labels and place relative numbers in its place
     /// @param tokens two dimensional array of tokens
     /// @return bool indicating status of removing labels operation
     bool m_RemoveLabels(TokenContainer& tokens);
 
+
+    /// @brief Switch labels in token container to proper values
+    /// @param tokens container of tokens to be analyzed
+    /// @return boolean indicating success of switching labels
+    bool m_SwitchLabelsInFile(TokenContainer& tokens);
 
     /// @brief Function for switching labels to associated expressions
     /// @param tokens stl container of Tokens to be analyzed
@@ -61,6 +71,9 @@ private:
 
     /// @brief Clear or containers of CParser object
     void m_ClearContainers();
+
+    /// @brief replace label tag of the line with value declared with EQU pseudo operation
+    bool m_ReplaceLineTagWithEqu();
     
     // map we will store label values to be switched with EQU label
     std::map<std::string, std::vector<Token>> m_equ_map;

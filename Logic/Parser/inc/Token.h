@@ -108,11 +108,27 @@ private:
 
 /// @brief function printing lexed line of tokens, for debug purposes
 /// @param line line of tokens
-inline void PrintTokensLine(std::vector<Token>& line)
+template<template <typename T> class Container>
+void PrintTokensLine(const Container<Token>& line)
 {
     for (auto &x : line)
     {
-        std::cout << x.value() << "type: " << x.TokenTypeToString() << "|";
+        std::cout << x.value() << " ";
     }
     std::cout << std::endl;
+}
+
+/// @brief Return vector token in a form of string
+/// @param line container of Tokens to be analyzed
+/// @return string made of tokens values
+template<template <typename T> class Container>
+std::string StrTokensLine(const Container<Token>& line)
+{
+    std::string ret = "";
+    for (auto& x : line)
+    {
+        ret += x.value();
+        ret += " ";
+    }
+    return ret;
 }
