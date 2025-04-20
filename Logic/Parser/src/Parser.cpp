@@ -13,7 +13,9 @@
 
 bool CParser::ParseFile(TokenContainer &tokens, std::vector<std::unique_ptr<CInstruction>>& instructions, int &offset)
 {
+    // clear members before parsing
     m_ClearContainers();
+    m_error_msg = "";
     // DEBUG
     m_AnalyzePseudoInstructions(tokens);
     // remove labels from the line starts perform some initial checking
@@ -77,8 +79,10 @@ bool CParser::m_GatherLabels(TokenContainer& tokens)
             // if label is redefined throw an error
             int prev_occ = m_labels[first_token.value()];
             const Token& prevFound = tokens[prev_occ][0];
-            LOG_ERR("Error in parsing, line: {}, Label {} already declared in code in line: {}",
+            // update error msg
+            m_error_msg = std::format("Error in parsing, line: {}, Label {} already declared in code in line: {}",
                 first_token.line(), first_token.value(), prevFound.line());
+            LOG_ERR(m_error_msg);
             return false;
         }
         // push label to the labels map
@@ -117,14 +121,10 @@ bool CParser::m_SwitchLabelsInFile(TokenContainer &tokens)
 {
     for (int i = 0; i < tokens.size(); i++) 
     {
-        LOG_WRN("Tokens line before labels switching");
-        PrintTokensLine(tokens[i]);
         if (!m_SwitchLabels(tokens[i], i))
         {
             return false;
         }
-        LOG_WRN("Tokens line after labels switching");
-        PrintTokensLine(tokens[i]);
     }
     // after switching is done we can remove labels declarations from start of the lines
     for (const auto& label : m_labels) 
@@ -144,7 +144,6 @@ bool CParser::m_AnalyzePseudoInstructions(TokenContainer &tokens)
     std::vector<int> erase_idxs; // we are sure indexes are pushed to vector increasingly
     for (int i = 0; i < tokens.size() && !end_analyzing; i++)
     {
-        std::cout << "Size of tokens vector " << tokens[i].size() << std::endl;
         for (int j = 0; j < tokens[i].size(); j++)
         {
             Token& next_token = tokens[i][j];
@@ -158,19 +157,22 @@ bool CParser::m_AnalyzePseudoInstructions(TokenContainer &tokens)
                 // line with EQU should look like this: label EQU new_label/value, so throw error if EQU is not on second position in line
                 if (j != 1)
                 {
-                    LOG_ERR("Label should precede EQU occurence, and it is NOT present!");
+                    m_error_msg = "Label should precede EQU occurence, and it is NOT present!";
+                    LOG_ERR(m_error_msg);
                     return false;
                 }
                 if (tokens[i][j-1].type() != TokenType::LABEL)
                 {
-                    LOG_ERR("Token preceding EQU pseudo operation should be of type Label, but is: {}", 
+                    m_error_msg = std::format("Token preceding EQU pseudo operation should be of type Label, but is: {}", 
                                 tokens[i][j-1].TokenTypeToString());
+                    LOG_ERR(m_error_msg);
                     return false;
                 }
                 // if equ is last token in line, return false
                 if (j == tokens[i].size() - 1)
                 {
-                    LOG_ERR("Value, label or expresion expected after EQU pseudo-operation");
+                    m_error_msg = "Value, label or expresion expected after EQU pseudo-operation";
+                    LOG_ERR(m_error_msg);
                     return false;
                 }
                 // create new vector from this line from range token + 1 to the end of line
@@ -208,38 +210,8 @@ bool CParser::m_AnalyzePseudoInstructions(TokenContainer &tokens)
     for (; erase_idx >= 0; erase_idx--)
     {
         // remove line from tokens list
-        //std::cout << "Erasing vector: " << tokens.size() << std::endl;
         LOG_DBG("Removing line at index {}", erase_idxs[erase_idx]);
         tokens.erase(tokens.begin() + erase_idxs[erase_idx]);
-    }
-    // debug print
-    std::cout << "PRINTING TOKENS: " << std::endl;
-    for (int i = 0; i < tokens.size(); i++)
-    {
-        for (int j = 0; j < tokens[i].size(); j++)
-        {
-            std::cout << tokens[i][j].value() << " "; 
-        }
-        std::cout << std::endl;
-    }
-    std::cout << "PROG START EXPRESSION: " << std::endl;
-    for (auto &x : m_prog_start)
-    {
-        std::cout << x.value() << " ";
-    }
-    std::cout << std::endl;
-    
-    int idx = 0;
-    std::cout << "EQU MAP" << std::endl;
-    for (const auto& x: m_equ_map)
-    {
-        std::cout << "At idx: " << idx << " | Value: " << x.first << " -> ";
-        for (const auto& y : x.second)
-        {
-            std::cout << y.value() << " ";
-        }
-        std::cout << std::endl;
-        idx++;
     }
     return true;
 }
@@ -264,7 +236,7 @@ int CParser::m_EvaluateStartIndex()
 bool CParser::m_TraverseAST(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
                             std::unique_ptr<CInstruction>& instruction)
 {
-
+    // check recursion breaking conditions
     if (tokens.size() == 0 && nodes.size() != 0) 
     {
         return false;
@@ -280,7 +252,7 @@ bool CParser::m_TraverseAST(std::deque<Token> &tokens, std::stack<std::unique_pt
 
     std::unique_ptr<CASTNode> next_node = std::move(nodes.top());
     nodes.pop();
-
+    // evaluate next token
     if (next_node->Eval(tokens, nodes, instruction) == ParseResult::PARSE_FAIL)
     {
         return false;
@@ -309,7 +281,8 @@ bool CParser::m_ReplaceLineTagWithEqu()
         // and first token is not label
         if (equ.second.size() != 1 || equ.second[0].type() != TokenType::LABEL)
         {
-            LOG_ERR("Cannot switch label line tag at line: {} with \"{}\"", m_labels[label_name], StrTokensLine(equ.second));
+            m_error_msg = std::format("Cannot switch label line tag at line: {} with \"{}\"", m_labels[label_name], StrTokensLine(equ.second));
+            LOG_ERR(m_error_msg);
             return false;
         }
         // switch labels

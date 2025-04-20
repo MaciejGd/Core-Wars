@@ -1,6 +1,7 @@
 #include "GameLogic.h"
 #include "logger.h"
 #include <chrono>
+#include <array>
 
 #define DEF_PLAYERS_AMOUNT 2
 #define TIME_DELAY 50
@@ -76,10 +77,13 @@ void GameLogic::RunGameLoop()
         if (players_active <= 1)
         {
             LOG_DBG("Only one player left, quit, player {} won!!!", last_player_active);
+            // unload players
+            m_loaded = false;
             break;
         }
     }
 }
+
 
 void GameLogic::LoadPlayers(const std::vector<std::string>& paths)
 {
@@ -91,28 +95,34 @@ void GameLogic::LoadPlayers(const std::vector<std::string>& paths)
     // TODO, change a bit logic of setting string for a player? not necessarily
     m_players[0].SetFileName("../tests/code_loading/test1.txt");
     m_players[1].SetFileName("../tests/code_loading/test2.txt");
-    // check if paths amount is equal to players, if not return
-    // To be done in final version
-    // if (paths.size() != m_players.size())
-    // {
-    //     LOG_ERR("Paths passed not equal to ");
-    // }
-    // for (int i = 0; i < m_players.size(); i++)
-    // {
-    //     m_players[i].SetFileName(paths[i]);
-    // }
+    // parse players and load code to Core
+    LoadPlayersCode();
+    // first load players codes, then start the game
+    //RunGameLoop(); // TODO
+}
 
-    int starting_idx, instructions_amount;
+void GameLogic::LoadPlayersCode()
+{
+    // store starting idx, instructions amount and offset of each player in a array
+    std::vector<std::array<int,3>> players_data(PLAYERS_AMOUNT, {0,0,0});
     for (int i = 0; i < PLAYERS_AMOUNT; i++)
     {
         // load code to logic arena
-        int offset = 0;
-        m_players[i].LoadInitialCode(starting_idx, instructions_amount, offset);
-        // send event to GUIArena so it can color cells respectively
-        m_gui_proxy.SendPlayerLoadEvent(starting_idx, instructions_amount, i, offset);
+        // if failed to parse input file, abort whole operation
+        if (!m_players[i].LoadInitialCode(players_data[i][0], players_data[i][1], players_data[i][2]))
+        {
+            LOG_ERR("Aborting operation as player: {}, code failed to be parsed successfully", i);
+            std::string error_msg = "Parsing error in " + m_players[i].GetFileName() + ":\n " + m_players[i].GetErrorMessage();
+            m_gui_proxy.SendShowInfoDialog(error_msg, true);
+            return;
+        }
     }
-    // first load players codes, then start the game
-    //RunGameLoop(); // TODO
+    // send signal to load players code if parsing of all warriors succeed
+    for (int i = 0; i < PLAYERS_AMOUNT; i++)
+    {
+        m_gui_proxy.SendPlayerLoadEvent(players_data[i][0], players_data[i][1], i, players_data[i][2]);
+    }
+    m_loaded = true;
 }
 
 bool GameLogic::PlayerMove(int player_id)
@@ -149,8 +159,10 @@ void GameLogic::ResumeMainLoop()
 
 void GameLogic::RestartGame()
 {
-    // clear arena to whole DAT #0, #0
+    // clean up arena
     m_arena.ClearArena();
+    // load code for players back on arena 
+    LoadPlayersCode();
 }
 
 void GameLogic::SpeedUpGame()

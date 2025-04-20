@@ -52,6 +52,7 @@ private slots:
     void SlotLoadPlayers();
     void SlotRestartGame();
     void SlotSpeedUpGame();
+    void SlotShowInfoDialog(const QString& msg, bool critical);
 signals:
     void SignalLoadPlayers(const std::vector<std::string>& players_paths);
 

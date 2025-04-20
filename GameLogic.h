@@ -19,8 +19,11 @@ public:
     /// @brief Function implementing game loop
     void RunGameLoop();
 
-    /// @brief  Function to be executed after load players signal from GUI comes
+    /// @brief Function to be executed after load players signal from GUI comes
     void LoadPlayers(const std::vector<std::string>& paths);
+
+    /// @brief Function that parses code for players and sends signal back to GUI
+    void LoadPlayersCode();
 
     // GUILogic proxy object getter
     GUILogicProxy& GetGUILogicProxy() { return m_gui_proxy; };
@@ -64,5 +67,12 @@ private:
     int m_time_delay = 50;
 
     int m_active_player = 0;
-    bool m_running = true;
+
+    // bool - are warriors fighting
+    bool m_running = false;
+    // bool - are warriors codes loaded
+    bool m_loaded = false;
+
+    // paths to warriors loaded to core at the moment
+    std::vector<std::string> m_paths;
 };

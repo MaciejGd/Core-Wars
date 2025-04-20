@@ -56,6 +56,8 @@ void GUIMainWindow::m_ConnectArena()
     connect(&m_logic_proxy, &GUILogicProxy::SignalInstructionData, this, &GUIMainWindow::SlotLaunchInstructionDialog);
     // connect changing counter 
     connect(&m_logic_proxy, &GUILogicProxy::SignalChangeCounter, this, &GUIMainWindow::SlotChangeCounter); 
+    // connect signal responsible for sending info messages from game logic to GUI
+    connect(&m_logic_proxy, &GUILogicProxy::SignalShowInfoDialog, this, &GUIMainWindow::SlotShowInfoDialog); 
 }
 
 void GUIMainWindow::m_ConnectButtons()
@@ -172,4 +174,28 @@ void GUIMainWindow::SlotSpeedUpGame()
 {
     // no implementation for now TODO -> implement
     ;
+}
+
+void GUIMainWindow::SlotShowInfoDialog(const QString& msg, bool critical)
+{
+    QMessageBox msg_box;
+    if (critical == true)
+    {
+        msg_box.setIcon(QMessageBox::Critical);
+    }
+    else {
+        msg_box.setIcon(QMessageBox::Information);
+    }
+    msg_box.setText(msg);
+    msg_box.setStandardButtons(QMessageBox::Ok);
+    msg_box.setDefaultButton(QMessageBox::Ok);
+    msg_box.setParent(this);
+    msg_box.setWindowModality(Qt::WindowModal);
+
+    // move message box to the center of application
+    QRect parentGeometry = this->geometry();
+    QPoint centerPos = parentGeometry.center() - msg_box.rect().center()/2;
+    msg_box.move(centerPos);
+
+    msg_box.exec();
 }

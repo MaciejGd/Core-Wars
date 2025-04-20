@@ -32,7 +32,21 @@ public:
     inline void SetFileName(std::string_view file_name) { m_file_name = file_name; }
 
     /// @brief Get first element from processing queue (Program Counter PC)
-    const int GetPC() const { return m_tasks.front(); };  
+    /// @return next task to be executed by player
+    const inline int GetPC() const { return m_tasks.front(); };  
+
+    /// @brief Check if program has been loaded for player
+    /// @return boolean indicating if program has been loaded for player
+    const inline bool IsProgramLoaded() const { return m_file_name.empty(); };
+
+    /// @brief Get error message from the process of parsing
+    /// @return error message in form of string 
+    const std::string GetErrorMessage() const { return m_codebuilder.GetErrorMessage(); };
+
+
+    /// @brief Get file name that has been set for player
+    /// @return file name set for player
+    const std::string GetFileName() const { return m_file_name; };
 private:
     // player's id
     int m_id;

@@ -42,11 +42,11 @@ int main(int argc, char *argv[])
 
     
     /* PSEUDO INSTRUCTIONS */
-    CCodeBuilder code_builder;
-    int offset = 0;
+    // CCodeBuilder code_builder;
+    // int offset = 0;
     // code_builder.ProduceInstructions("../tests/code_loading/equ_test.txt", offset);
-    code_builder.ProduceInstructions("../tests/code_loading/test2.txt", offset);
-    return 0;
+    // code_builder.ProduceInstructions("../tests/code_loading/test2.txt", offset);
+    // return 0;
     /* RUNNING GUI */    
     // Application    
     QApplication app(argc, argv);

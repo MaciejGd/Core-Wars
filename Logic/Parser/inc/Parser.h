@@ -20,13 +20,16 @@ public:
     /// @param offset offset to program counter from the first instruction
     /// @return boolean value indicating result of parsing a file
     bool ParseFile(TokenContainer& tokens, std::vector<std::unique_ptr<CInstruction>>& instructions, int& offset);
+
+    /// @brief Get error message genrated during parsing
+    /// @return error message
+    inline const std::string GetErrorMessage() const { return m_error_msg; };
 private:
     /// @brief Parse one row of tokens
     /// @param tokens_row vector of Tokens to be parsed
     /// @param instructions unique_ptr of CInstruction, to be modified during parsing of the line
     /// @return boolean indicating result of parsing a line
     bool m_ParseLine(const std::vector<Token>& tokens_row, std::unique_ptr<CInstruction>& instruction);
-
 
     /// @brief Gether label tags of lines
     /// @param tokens container of tokens to be analyzed
@@ -37,7 +40,6 @@ private:
     /// @param tokens two dimensional array of tokens
     /// @return bool indicating status of removing labels operation
     bool m_RemoveLabels(TokenContainer& tokens);
-
 
     /// @brief Switch labels in token container to proper values
     /// @param tokens container of tokens to be analyzed
@@ -51,13 +53,13 @@ private:
     template<template<typename T> class Container>
     bool m_SwitchLabels(Container<Token>& tokens, int line_idx);
 
-
     /// @brief Analyze pseudo instructions END, ORG, EQU separately 
     /// @param tokens container with lexed tokens
     /// @return bool indicating status of analyzing pseudo instructions operations
     bool m_AnalyzePseudoInstructions(TokenContainer& tokens);
 
-
+    /// @brief Parse arithmetic expression to count index of starting operation for the player
+    /// @return offset of first operation executed in relation to first operation of parsed code
     int m_EvaluateStartIndex();
 
     /// @brief Recursive function for traversing Abstract Syntax Tree
@@ -83,6 +85,9 @@ private:
 
     // map for storing labels with line of their occurence
     std::map<std::string, int> m_labels;
+
+    std::string m_error_msg;
+
 };
 
 

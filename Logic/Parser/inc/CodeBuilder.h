@@ -38,6 +38,10 @@ public:
     /// @brief Get amount of instructions created
     /// @return amount of instructions created
     const int GetInstructionsAmount() const { return m_instructions.size(); }; 
+
+    /// @brief Get error message from the process of parsing warrior's code
+    /// @return error message in form of string
+    const std::string GetErrorMessage() const { return m_parser.GetErrorMessage(); };
 private:
     std::vector<std::unique_ptr<CInstruction>> m_instructions;
     CLexer m_lexer;
