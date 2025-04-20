@@ -10,7 +10,7 @@
 // before so we do not need to care about that
 
 ParseResult CASTLine::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes, 
-    std::unique_ptr<CInstruction>& instruction)
+    std::unique_ptr<CInstruction>& instruction, std::string& error_msg)
 {
     nodes.push(std::make_unique<CASTOptionalParam>());
     nodes.push(std::make_unique<CASTParameter>());

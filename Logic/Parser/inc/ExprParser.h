@@ -8,6 +8,9 @@ public:
 
     ParseResult EvaluateExpression(std::deque<Token>& tokens, int& result);
 
+    /// @brief Get error message genarated during parsing
+    /// @return error message in the form of string 
+    inline const std::string GetErrorMessage() const { return m_error_msg; };
 private:
     void m_TranslateToPostfix(std::deque<Token>& input, std::deque<Token>& postfix);
 
@@ -20,5 +23,8 @@ private:
     ParseResult m_TraverseNodes(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes);
     
     int m_EvaluateArithmeticExpression(std::deque<Token>& tokens);
+
+    // need to store error message 
+    std::string m_error_msg;
 
 };

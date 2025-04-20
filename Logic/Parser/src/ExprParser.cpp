@@ -7,7 +7,7 @@
 
 ParseResult CExprParser::EvaluateExpression(std::deque<Token>& tokens, int& result)
 {
-    // parse arithmetic expression
+    m_error_msg = ""; // clear error message
     std::deque<Token> arithmetic_tokens(tokens.begin(), tokens.end());
     if (m_ParseArithmeticExpression(arithmetic_tokens) == ParseResult::PARSE_FAIL)
     {
@@ -57,7 +57,7 @@ ParseResult CExprParser::m_TraverseNodes(std::deque<Token> &tokens, std::stack<s
     //LOG_WRN("Top token to be parsed: {}", tokens.front().PrintFormat());
     // needed dummy CInstruction pointer to use Eval function 
     std::unique_ptr<CInstruction> dummy_instruction = nullptr; 
-    if (top_node->Eval(tokens, nodes, dummy_instruction) == ParseResult::PARSE_FAIL)
+    if (top_node->Eval(tokens, nodes, dummy_instruction, m_error_msg) == ParseResult::PARSE_FAIL)
     {
         return ParseResult::PARSE_FAIL;
     }

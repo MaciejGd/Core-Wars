@@ -93,7 +93,7 @@ void GameLogic::LoadPlayers(const std::vector<std::string>& paths)
     }
     LOG_WRN("In load players callback, main game loop");
     // TODO, change a bit logic of setting string for a player? not necessarily
-    m_players[0].SetFileName("../tests/code_loading/test1.txt");
+    m_players[0].SetFileName("../tests/arithm_operations/test5.txt");
     m_players[1].SetFileName("../tests/code_loading/test2.txt");
     // parse players and load code to Core
     LoadPlayersCode();
@@ -105,18 +105,25 @@ void GameLogic::LoadPlayersCode()
 {
     // store starting idx, instructions amount and offset of each player in a array
     std::vector<std::array<int,3>> players_data(PLAYERS_AMOUNT, {0,0,0});
+    std::string error_msg = "";
     for (int i = 0; i < PLAYERS_AMOUNT; i++)
     {
         // load code to logic arena
         // if failed to parse input file, abort whole operation
         if (!m_players[i].LoadInitialCode(players_data[i][0], players_data[i][1], players_data[i][2]))
         {
-            LOG_ERR("Aborting operation as player: {}, code failed to be parsed successfully", i);
-            std::string error_msg = "Parsing error in " + m_players[i].GetFileName() + ":\n " + m_players[i].GetErrorMessage();
-            m_gui_proxy.SendShowInfoDialog(error_msg, true);
-            return;
+            LOG_ERR("Parsing file for player {} failed", i);
+            error_msg += "Parsing error in " + m_players[i].GetFileName() + ":\n " + m_players[i].GetErrorMessage();
+            error_msg += "\n\n";
         }
     }
+    // if error is not empty, some parsing failed so we should abort whole operation
+    if (error_msg != "")
+    {
+        m_gui_proxy.SendShowInfoDialog(error_msg, true);
+        return;
+    }
+    
     // send signal to load players code if parsing of all warriors succeed
     for (int i = 0; i < PLAYERS_AMOUNT; i++)
     {

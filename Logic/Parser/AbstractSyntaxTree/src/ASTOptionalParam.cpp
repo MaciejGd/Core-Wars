@@ -3,7 +3,7 @@
 #include "ASTEndLine.h"
 
 ParseResult CASTOptionalParam::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
-                        std::unique_ptr<CInstruction>& instruction)
+                        std::unique_ptr<CInstruction>& instruction, std::string& error_msg)
 {
     Token& next_token = tokens.front();
     tokens.pop_front();
@@ -21,5 +21,7 @@ ParseResult CASTOptionalParam::Eval(std::deque<Token> &tokens, std::stack<std::u
     }
     PARSING_FAIL(CLexer::s_file_name, next_token);
     LOG_ERR("Line should end in here, or coma indicating second parameter should be passed" );
+    error_msg = std::format("In line {}, idx {}, either \",\" or \"EndLine\" expected, got \"{}\"",  
+        next_token.line(), next_token.idx(), next_token.value());
     return ParseResult::PARSE_FAIL;
 }

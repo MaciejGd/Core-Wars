@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     // operators_tests.RunTests();
     // DefaultModSetterTests tests;
     // tests.RunTests();
-
+    // return 0;
     /* TESTING FINISHING INSTRUCTION SETUP */
     // CodeLoaderTests tests;
     // tests.RunTestsRunner();

@@ -24,7 +24,7 @@
 
 
 ParseResult CASTOperation::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes, 
-    std::unique_ptr<CInstruction>& instruction)
+    std::unique_ptr<CInstruction>& instruction, std::string& error_msg)
 {
     // if token type is operation then parsing succeed and add CASTModifier to m_rhs
     Token& next_token = tokens.front();
@@ -34,19 +34,20 @@ ParseResult CASTOperation::Eval(std::deque<Token>& tokens, std::stack<std::uniqu
     {
         PARSING_FAIL(CLexer::s_file_name, next_token);
         LOG_ERR("Line should start with operator but starts with token => {}", next_token.PrintFormat());
+        error_msg = std::format("In line {}, idx {}, operator expected, got \"{}\"",  
+            next_token.line(), next_token.idx(), next_token.value());
         return ParseResult::PARSE_FAIL;
     }
     // if operation token successfully parsed, push modifier to stack
-    if (m_SetOperation(next_token, instruction) == false)
+    if (m_SetOperation(next_token, instruction, error_msg) == false)
     {
         return ParseResult::PARSE_FAIL;
     }
     nodes.push(std::make_unique<CASTModifier>());
     return ParseResult::PARSE_OK;
-
 }
 
-bool CASTOperation::m_SetOperation(Token &token, std::unique_ptr<CInstruction> &instruction)
+bool CASTOperation::m_SetOperation(Token &token, std::unique_ptr<CInstruction> &instruction, std::string& error_msg)
 {
     std::string op_string = token.value();
 
@@ -122,6 +123,8 @@ bool CASTOperation::m_SetOperation(Token &token, std::unique_ptr<CInstruction> &
     {
         PARSING_FAIL(CLexer::s_file_name, token);
         LOG_ERR("Instruction not recognized");
+        error_msg = std::format("In line {}, idx {}, operation \"{}\" NOT recognized.",  
+            token.line(), token.idx(), token.value());
         return false;
     }
     return true;

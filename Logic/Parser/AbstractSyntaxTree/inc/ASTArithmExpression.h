@@ -17,7 +17,7 @@
 class CASTArithmExpression : public CASTNode {
 public:
     ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
-                        std::unique_ptr<CInstruction>& instruction) override;
+                        std::unique_ptr<CInstruction>& instruction, std::string& error_msg) override;
 };
     
     /// @brief Class representing NewArithmExpression node in Abstract Syntax Tree
@@ -29,5 +29,5 @@ public:
     ///
 class CASTArithmNewExpression : public CASTNode {
     ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
-                        std::unique_ptr<CInstruction>& instruction) override;
+                        std::unique_ptr<CInstruction>& instruction, std::string& error_msg) override;
 };

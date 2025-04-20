@@ -5,7 +5,7 @@
 // ARITHMEXPRESSION := TERM ARITHMNEWEXPRESSION
 
 ParseResult CASTArithmExpression::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
-                        std::unique_ptr<CInstruction>& instruction)
+                        std::unique_ptr<CInstruction>& instruction, std::string& error_msg)
 {
     nodes.push(std::make_unique<CASTArithmNewExpression>());
     nodes.push(std::make_unique<CASTTerm>());
@@ -17,7 +17,7 @@ ParseResult CASTArithmExpression::Eval(std::deque<Token> &tokens, std::stack<std
 // I wont create separate node for arithm operator but rather check 
 // next token for being arithm op in NewExpression itself
 ParseResult CASTArithmNewExpression::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
-                        std::unique_ptr<CInstruction>& instruction)
+                        std::unique_ptr<CInstruction>& instruction, std::string& error_msg)
 {
     Token& next_token = tokens.front();
     if (next_token.type() == TokenType::ARITHM_OPS) 

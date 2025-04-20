@@ -5,7 +5,7 @@
 #include "ASTArithmExpression.h"
 
 ParseResult CASTTerm::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
-                        std::unique_ptr<CInstruction>& instruction)
+                        std::unique_ptr<CInstruction>& instruction, std::string& error_msg)
 {
     Token next_token = tokens.front();
     // number can be signed, so we need to check if + or - is present
@@ -32,5 +32,7 @@ ParseResult CASTTerm::Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr
     }
     PARSING_FAIL(CLexer::s_file_name, next_token);
     LOG_ERR("Token should be either label, number or opening bracket but is {}", next_token.PrintFormat());
+    error_msg = std::format("In line {}, idx {}, either label, number or opening bracket expected, got \"{}\"",  
+        next_token.line(), next_token.idx(), next_token.value());
     return ParseResult::PARSE_FAIL;
 }

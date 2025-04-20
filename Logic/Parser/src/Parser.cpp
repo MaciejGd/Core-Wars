@@ -253,7 +253,7 @@ bool CParser::m_TraverseAST(std::deque<Token> &tokens, std::stack<std::unique_pt
     std::unique_ptr<CASTNode> next_node = std::move(nodes.top());
     nodes.pop();
     // evaluate next token
-    if (next_node->Eval(tokens, nodes, instruction) == ParseResult::PARSE_FAIL)
+    if (next_node->Eval(tokens, nodes, instruction, m_error_msg) == ParseResult::PARSE_FAIL)
     {
         return false;
     }

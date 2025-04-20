@@ -6,7 +6,7 @@
 
 
 ParseResult CASTModifier::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes, 
-    std::unique_ptr<CInstruction>& instruction)
+    std::unique_ptr<CInstruction>& instruction, std::string& error_msg)
 {
     Token& next_token = tokens.front();
     if (next_token.type() != TokenType::MODIFIERS)
@@ -17,14 +17,14 @@ ParseResult CASTModifier::Eval(std::deque<Token>& tokens, std::stack<std::unique
     }
     // modifier found
     tokens.pop_front();
-    if (m_SetModifier(next_token, instruction) == false)
+    if (m_SetModifier(next_token, instruction, error_msg) == false)
     {
         return ParseResult::PARSE_FAIL;
     }
     return ParseResult::PARSE_OK;    
 }
 
-bool CASTModifier::m_SetModifier(Token &token, std::unique_ptr<CInstruction> &instruction)
+bool CASTModifier::m_SetModifier(Token &token, std::unique_ptr<CInstruction> &instruction, std::string& error_msg)
 {
     std::string modifier = token.value();
     LOG_DBG("Modifier value: {}", modifier)
@@ -60,6 +60,8 @@ bool CASTModifier::m_SetModifier(Token &token, std::unique_ptr<CInstruction> &in
     {
         PARSING_FAIL(CLexer::s_file_name, token);
         LOG_ERR("Modifier value has not been recognized");
+        error_msg = std::format("In line {}, idx {}, \"{}\" is not recognizable modifier value.",  
+            token.line(), token.idx(), token.value());
         return false;
     }
     return true;
