@@ -18,14 +18,27 @@ public:
     QPushButton* GetRestartButton() { return m_restart_btn; };
     QPushButton* GetPauseButton() { return m_pause_btn; };
     QPushButton* GetPlayButton() { return m_play_btn; };
-    QPushButton* GetSpeedButtonButton() { return m_speedup_btn; }; 
+    QPushButton* GetSpeedUpButton() { return m_speedup_btn; }; 
+    QPushButton* GetSlowDownButton() { return m_slowdown_btn; };
 
 private:
+    void m_InitButton(QPushButton*& btn, const QString& title);
+    void m_InitSpeedLabel();
+    void m_AdjustPlaySpeed(bool speedup);
     // buttons
     QPushButton* m_play_btn;
     QPushButton* m_pause_btn;
     QPushButton* m_load_btn;
     QPushButton* m_restart_btn;
     QPushButton* m_speedup_btn;
-    
+    QPushButton* m_slowdown_btn;
+    QLabel* m_game_speed;
+    // string indicating speed of program execution
+
+    QString m_play_speed = "x1.0";
+
+private slots:
+    void SlotSpeedUp();
+    void SlotSlowDown();
+
 };

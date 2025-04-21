@@ -39,5 +39,12 @@ void GUILogicProxy::SlotInstructionData(int cell_idx)
 
 void GUILogicProxy::SlotSpeedUpGame()
 {
+    LOG_DBG("Calling speed up callback");
     m_speedup_game_cb();
+}
+
+void GUILogicProxy::SlotSlowDownGame()
+{
+    LOG_DBG("Calling slow down callback");
+    m_slowdown_game_cb();
 }

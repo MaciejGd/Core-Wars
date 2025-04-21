@@ -17,7 +17,16 @@ public:
     /// @brief Sets text in the textfield
     /// @param text 
     void SetText(const QString& text);
+
+    /// @brief Get text from textfield
+    /// @return text from text field in form of QString
     const QString GetText() const;
+
+    /// @brief set fixed width of text textfield
+    void SetTextfieldWidth(int width);
+    
+    /// @brief set fixed height of the textfield
+    void SetTextfieldHeight(int height);
 
     /// @brief Function that lets setting method of the class as a button callback
     /// @tparam T type of the calling class

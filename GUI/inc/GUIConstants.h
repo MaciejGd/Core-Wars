@@ -20,7 +20,10 @@ extern const int ARENA_HEIGHT;
 extern const QString INSTRUCTION_DIALOG_TITLE;
 extern const int INSTRUCTION_DIALOG_WIDTH;
 extern const int INSTRUCTION_DIALOG_HEIGHT;
-// related to stack
+
+// toolbar
+extern const int TOOLBAR_BUTTON_HEIGHT;
+extern const int TOOLBAR_BUTTON_WIDTH;
 
 extern const QString OPERATION_PRINT;
 // cells styling 
@@ -32,6 +35,8 @@ extern const QColor TEXT_FIELD_BACKGROUND;
 extern const QColor STACK_BACKGROUND_COLOR;
 extern const QString ARENA_CELL_DEFAULT_COLOR;
 
-
+// player path choose
+extern const int PLAYER_PATH_TEXTFIELD_WIDTH;
+extern const int PLAYER_PATH_TEXTFIELD_HEIGHT;
 
 };

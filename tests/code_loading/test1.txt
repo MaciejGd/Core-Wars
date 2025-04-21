@@ -4,7 +4,7 @@ bomber      MOV bomb, @target       ; Bomb a memory location indirectly
             ADD #7, target          ; Increment target pointer
             DJN.a bomber, delay       ; Loop unless delay counter hits 0
 
-            ;SPL imp_start          ; run imp
+            SPL imp_start          ; run imp
             JMP bomber              ; run imp  
 
 bomb        DAT #200, #200           

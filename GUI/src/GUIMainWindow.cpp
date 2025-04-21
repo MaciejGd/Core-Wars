@@ -4,7 +4,7 @@
 GUIMainWindow::GUIMainWindow(int width, int height, GUILogicProxy& logic_proxy, QWidget* parent):  m_logic_proxy(logic_proxy), QMainWindow(parent) 
 {    
     setWindowTitle("Core Wars");
-    setFixedSize(width, height);
+    //setFixedSize(width, height);
 
     // set batlle field
     m_arena = new GUIArena(80, 100, this);
@@ -104,17 +104,20 @@ void GUIMainWindow::m_ConnectButtons()
     // restart button should be also connected to Arena
     connect(temp, &QPushButton::pressed, this, &GUIMainWindow::SlotRestartGame);
     // speed up button
-    temp = m_toolBar->GetSpeedButtonButton();
+    temp = m_toolBar->GetSpeedUpButton();
     if (temp == nullptr)
     {
-        LOG_ERR("Restart button pointer is invalid, failed to set callback");
+        LOG_ERR("SpeedUp button pointer is invalid, failed to set callback");
         return;
     }
     connect(temp, &QPushButton::pressed, &m_logic_proxy, &GUILogicProxy::SlotSpeedUpGame);
-    // restart button should be also connected to Arena
-    connect(temp, &QPushButton::pressed, this, &GUIMainWindow::SlotSpeedUpGame);
-
-    LOG_DBG("Properly set callback for load button");
+    // handle slow down button signal
+    temp = m_toolBar->GetSlowDownButton();
+    if (temp == nullptr)
+    {
+        LOG_ERR("SlowDown button pointer is invalid, failed to set callback");
+    }
+    connect(temp, &QPushButton::pressed, &m_logic_proxy, &GUILogicProxy::SlotSlowDownGame);
 }
 
 void GUIMainWindow::SlotChangeCounter(int round_counter)
@@ -168,12 +171,6 @@ void GUIMainWindow::SlotLoadPlayers()
     }
     m_arena->ClearArena(); // make sure arena has been cleared before loading new players
     emit SignalLoadPlayers(paths);
-}
-
-void GUIMainWindow::SlotSpeedUpGame()
-{
-    // no implementation for now TODO -> implement
-    ;
 }
 
 void GUIMainWindow::SlotShowInfoDialog(const QString& msg, bool critical)

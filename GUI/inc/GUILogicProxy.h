@@ -26,16 +26,25 @@ public:
     inline void SetRestartGameCb(slot_cb cb) { m_restart_game_cb = cb; };
     inline void SetStartGameCb(slot_cb cb) { m_start_game_cb = cb; };
     inline void SetSpeedUpGameCb(slot_cb cb) { m_speedup_game_cb = cb; };
+    inline void SetSlowDownGameCb(slot_cb cb) { m_slowdown_game_cb = cb; };
     inline void SetLoadGameCb(load_cb cb) { m_load_game_cb = cb; };
     inline void SetInstrDataCb(instr_cb cb) { m_instruction_data_cb = cb; }
 
     // signal senders
-    inline void SendCounter(int round_counter) { emit SignalChangeCounter(round_counter); };
-    inline void SendPlayerMoveEvent(int cell, int player_id, int modified_cell, const std::string& instruction) { emit SignalPlayerMove(cell, player_id, modified_cell, QString(instruction.c_str())); };
+    inline void SendCounter(int round_counter) 
+                            { emit SignalChangeCounter(round_counter); };
+
+    inline void SendPlayerMoveEvent(int cell, int player_id, int modified_cell, const std::string& instruction) 
+                            { emit SignalPlayerMove(cell, player_id, modified_cell, QString(instruction.c_str())); };
+
     inline void SendPlayerLoadEvent(int starting_idx, int instructions_amount, int player_id, int offset)  
                             { emit SignalPlayerLoad(starting_idx, instructions_amount, player_id, offset); };
-    inline void SendInstructionData(const std::string& instruction, int cell_idx) { emit SignalInstructionData(QString(instruction.c_str()), cell_idx); };
-    inline void SendShowInfoDialog(const std::string& msg, bool critical) { emit SignalShowInfoDialog(QString(msg.c_str()), critical); };
+
+    inline void SendInstructionData(const std::string& instruction, int cell_idx) 
+                            { emit SignalInstructionData(QString(instruction.c_str()), cell_idx); };
+
+    inline void SendShowInfoDialog(const std::string& msg, bool critical = false) 
+                            { emit SignalShowInfoDialog(QString(msg.c_str()), critical); };
 
     /// @brief Poll events awaiting in queue
     void CheckPendingEvents();
@@ -45,6 +54,7 @@ private:
     slot_cb m_restart_game_cb;
     slot_cb m_start_game_cb;
     slot_cb m_speedup_game_cb;
+    slot_cb m_slowdown_game_cb;
     load_cb m_load_game_cb;
     instr_cb m_instruction_data_cb;
 
@@ -55,6 +65,7 @@ public slots:
     void SlotRestartGame();
     void SlotStartGame();
     void SlotSpeedUpGame();
+    void SlotSlowDownGame();
 
 signals:
     void SignalChangeCounter(int round_counter);

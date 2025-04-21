@@ -33,6 +33,16 @@ const QString GUITextFieldButton::GetText() const
     return m_textfield->toPlainText();
 }
 
+void GUITextFieldButton::SetTextfieldWidth(int width)
+{
+    m_textfield->setFixedWidth(width);
+}
+
+void GUITextFieldButton::SetTextfieldHeight(int height)
+{
+    m_textfield->setFixedHeight(height);
+}
+
 void GUITextFieldButton::m_InitButton() 
 {
     m_btn = new QPushButton{};

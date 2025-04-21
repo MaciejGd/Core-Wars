@@ -44,8 +44,9 @@ public:
     /// @brief Restart game callback
     void RestartGame();
 
-    /// @brief Speed up game callback
-    void SpeedUpGame();
+    /// @brief Change speed of the game
+    /// @param bool indicating if we are speeding up or slowing down
+    void ChangeGameSpeed(bool speedup);
 
     /// @brief Callback triggered when instruction data is requested by GUI
     /// @param cell_idx index of memory cell, to get instruction from  

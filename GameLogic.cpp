@@ -20,7 +20,8 @@ void GameLogic::SetGUIProxyCallbacks()
     m_gui_proxy.SetStartGameCb([this](){ this->RunGameLoop(); });
     m_gui_proxy.SetPauseGameCb([this](){ this->PauseMainLoop(); });
     m_gui_proxy.SetStartGameCb([this](){ this->ResumeMainLoop(); });
-    m_gui_proxy.SetSpeedUpGameCb([this](){ this->SpeedUpGame(); });
+    m_gui_proxy.SetSpeedUpGameCb([this](){ this->ChangeGameSpeed(true); });
+    m_gui_proxy.SetSlowDownGameCb([this](){ this->ChangeGameSpeed(false); });
     m_gui_proxy.SetInstrDataCb([this](int cell_idx){ this->SendInstructionDataCb(cell_idx); });
     m_gui_proxy.SetRestartGameCb([this](){ this->RestartGame(); });
     m_gui_proxy.SetLoadGameCb([this](const std::vector<std::string>& paths){ this->LoadPlayers(paths); });
@@ -77,6 +78,8 @@ void GameLogic::RunGameLoop()
         if (players_active <= 1)
         {
             LOG_DBG("Only one player left, quit, player {} won!!!", last_player_active);
+            std::string info_msg = std::format("Player {} won!!!", last_player_active);
+            m_gui_proxy.SendShowInfoDialog(info_msg);
             // unload players
             m_loaded = false;
             break;
@@ -93,7 +96,7 @@ void GameLogic::LoadPlayers(const std::vector<std::string>& paths)
     }
     LOG_WRN("In load players callback, main game loop");
     // TODO, change a bit logic of setting string for a player? not necessarily
-    m_players[0].SetFileName("../tests/arithm_operations/test5.txt");
+    m_players[0].SetFileName("../tests/code_loading/test1.txt");
     m_players[1].SetFileName("../tests/code_loading/test2.txt");
     // parse players and load code to Core
     LoadPlayersCode();
@@ -172,24 +175,27 @@ void GameLogic::RestartGame()
     LoadPlayersCode();
 }
 
-void GameLogic::SpeedUpGame()
+void GameLogic::ChangeGameSpeed(bool speedup)
 {
     switch (m_time_delay)
     {
+        case 100:
+            m_time_delay = (speedup) ? 50 : 100;
+            break;
         case 50:
-            m_time_delay = 25;
+            m_time_delay = (speedup) ? 25 : 100;
             break;
         case 25:
-            m_time_delay = 10;
+            m_time_delay = (speedup) ? 10 : 50;
             break;
         case 10:
-            m_time_delay = 5;
+            m_time_delay = (speedup) ? 5  : 25;
             break;
         default:
-            m_time_delay = 50;
+            m_time_delay = (speedup) ? 5 : 10;
             break;
     }
-    LOG_ERR("Time delay is equal to: {}", m_time_delay);
+    LOG_ERR("Time delay is equal to: {}ms", m_time_delay);
 }
 
 void GameLogic::SendInstructionDataCb(int cell_idx)

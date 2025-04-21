@@ -13,6 +13,6 @@ target  DAT #20, #8         ; pointer to place to throw trap
 
 wait    MOV 0, 1
 
-attack EQU koniec + 1
+attack EQU koniec
 END attack
 

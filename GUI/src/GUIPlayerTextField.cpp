@@ -2,6 +2,7 @@
 #include "logger.h"
 
 #include "GUIUtils.h"
+#include "GUIConstants.h"
 
 #include <iostream>
 
@@ -17,10 +18,7 @@ GUIPlayerTextField::GUIPlayerTextField(const QString& player_name, QWidget* pare
     m_InitLabel(player_name);
     m_InitTextField();
 
-    // DEBUG
-    //SetColor(m_player_id, QColorConstants::DarkCyan);
-    m_player_id->setAlignment(Qt::AlignLeft);
-    
+    m_player_id->setAlignment(Qt::AlignLeft);    
 
     layout->addWidget(m_player_id, Qt::AlignLeft);
     //outer_layout->addWidget(inner_wgt);
@@ -43,7 +41,8 @@ void GUIPlayerTextField::m_InitTextField()
     // initialize textfield
     m_textfield = new GUITextFieldButton(BTN_WIDTH, TEXT_FIELD_HEIGHT, "TEST");
     m_textfield->SetButtonCallback(this, &GUIPlayerTextField::ChoosePlayersCb);
-    m_textfield->setFixedHeight(TEXT_FIELD_HEIGHT); 
+    m_textfield->setFixedHeight(TEXT_FIELD_HEIGHT);
+    m_textfield->SetTextfieldWidth(GUI::PLAYER_PATH_TEXTFIELD_WIDTH); 
 }
 
 void GUIPlayerTextField::ChoosePlayersCb() 

@@ -31,6 +31,10 @@ const QString INSTRUCTION_DIALOG_TITLE = "Instruction at %1";
 const int INSTRUCTION_DIALOG_WIDTH = 200;
 const int INSTRUCTION_DIALOG_HEIGHT = 50;
 
+// toolbar
+extern const int TOOLBAR_BUTTON_HEIGHT = 20;
+extern const int TOOLBAR_BUTTON_WIDTH  = 90;
+
 // colors
 const QColor DEFAULT_FONT_COLOR = QColorConstants::White;
 const QColor MAIN_WINDOW_COLOR = QColorConstants::DarkGray;
@@ -44,5 +48,10 @@ const QString OPERATION_PRINT = "%1: %2";
 
 // cells stylling
 const QString CELL_STYLING = "font-weight: bold; color: %1; background-color: %2; border-top: 1px solid  #8e99a2; border-left: 1px solid #8e99a2";
+
+// player path choose
+const int PLAYER_PATH_TEXTFIELD_WIDTH = 300;
+const int PLAYER_PATH_TEXTFIELD_HEIGHT = 20;
+
 
 };

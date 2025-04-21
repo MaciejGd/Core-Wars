@@ -1,5 +1,6 @@
 #include "GUIOperationalPanel.h"
 #include "logger.h"
+#include "GUIUtils.h"
 
 GUIOperationalPanel::GUIOperationalPanel(QWidget* parent): QWidget(parent) 
 {
@@ -10,6 +11,8 @@ GUIOperationalPanel::GUIOperationalPanel(QWidget* parent): QWidget(parent)
     layout->setSpacing(0);
     layout->addWidget(m_players_panel);
     layout->addWidget(m_stacks);
+    // debug
+    //SetColor(this, QColor("magenta"));
     
 }
 
