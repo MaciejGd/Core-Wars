@@ -22,9 +22,12 @@ public:
     /// @param cell memory cell to be modified
     /// @param player_id player moving
     /// @return boolean indicating status of operation
-    bool MakePlayerMove(int cell, int player_id, int modified_cell);    
+    bool MakePlayerMove(int cell, int player_id, int modified_cell); 
 
+    /// @brief Reset internal counter and change GUI counter to one 
+    void ResetCounter();
 private:
+    int m_round_cnt = 0;
     GUILogicProxy& m_logic_proxy;
     // widget for arena
     GUIArena* m_arena;
@@ -45,7 +48,6 @@ private:
     void m_ConnectArena();
 
 private slots:
-    void SlotChangeCounter(int round_counter);
     void SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id, int offset);
     void SlotPlayerMove(int cell, int player_id, int modified_cell, QString instruction);
     void SlotLaunchInstructionDialog(QString instruction, int cell_idx);

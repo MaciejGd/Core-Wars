@@ -5,6 +5,8 @@
 
 #include <random>
 
+#define PLAYERS_AMOUNT 2 // TODO reconsider that
+
 CArena CArena::s_instance;
 
 

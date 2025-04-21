@@ -24,6 +24,7 @@ extern const int INSTRUCTION_DIALOG_HEIGHT;
 // toolbar
 extern const int TOOLBAR_BUTTON_HEIGHT;
 extern const int TOOLBAR_BUTTON_WIDTH;
+extern const QString MAX_ROUNDS;
 
 extern const QString OPERATION_PRINT;
 // cells styling 
@@ -39,4 +40,6 @@ extern const QString ARENA_CELL_DEFAULT_COLOR;
 extern const int PLAYER_PATH_TEXTFIELD_WIDTH;
 extern const int PLAYER_PATH_TEXTFIELD_HEIGHT;
 
+// amount of players taking part in game
+extern int PLAYERS_AMOUNT;
 };

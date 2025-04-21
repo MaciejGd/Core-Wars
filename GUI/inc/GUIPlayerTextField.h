@@ -17,6 +17,9 @@ public:
     /// @brief Get player path shown in textfield
     /// @return player path as string
     const std::string& GetPlayerPath() { return m_player_path; };
+
+    /// @brief Set color of the player
+    void SetColor(const QString& color);
 private:
     // path to a player's code
     std::string m_player_path;

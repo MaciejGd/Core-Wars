@@ -3,7 +3,8 @@
 #include <chrono>
 #include <array>
 
-#define DEF_PLAYERS_AMOUNT 2
+#define PLAYERS_AMOUNT 2
+#define MAX_ROUNDS 8000
 #define TIME_DELAY 50
 
 /// @brief obtain ref to Singleton arena and init two default players
@@ -45,6 +46,14 @@ void GameLogic::RunGameLoop()
             continue;
         }
         start = end;
+        // end battle as a draw if rounds counter is greater than max limit
+        if (m_rounds_last >= MAX_ROUNDS)
+        {
+            LOG_DBG("None of the players won over {} rounds, result of fight is a draw", MAX_ROUNDS);
+            std::string info_msg = std::format("None of the players won over {} rounds\n Result of the battle is a draw", MAX_ROUNDS);
+            m_gui_proxy.SendShowInfoDialog(info_msg, false);
+            return;
+        }
 
         int players_active = 0;
         int last_player_active = 0;
@@ -73,7 +82,6 @@ void GameLogic::RunGameLoop()
             m_active_player = 0;
             // increase rounds counter if all players moved
             m_rounds_last++; 
-            m_gui_proxy.SendCounter(m_rounds_last);
         }
         if (players_active <= 1)
         {
@@ -100,12 +108,12 @@ void GameLogic::LoadPlayers(const std::vector<std::string>& paths)
     m_players[1].SetFileName("../tests/code_loading/test2.txt");
     // parse players and load code to Core
     LoadPlayersCode();
-    // first load players codes, then start the game
-    //RunGameLoop(); // TODO
 }
 
 void GameLogic::LoadPlayersCode()
 {
+    // reset rounds of the battle
+    m_rounds_last = 0;
     // store starting idx, instructions amount and offset of each player in a array
     std::vector<std::array<int,3>> players_data(PLAYERS_AMOUNT, {0,0,0});
     std::string error_msg = "";
@@ -163,6 +171,13 @@ void GameLogic::PauseMainLoop()
 
 void GameLogic::ResumeMainLoop() 
 {
+    if (m_loaded == false)
+    {
+        LOG_ERR("Programs for players has not been loaded to Core yet, aborting operation");
+        std::string info_msg = "Warriors has not been loaded to Core, please choose warriors first";
+        m_gui_proxy.SendShowInfoDialog(info_msg, true);
+        return;
+    } 
     m_running = true;
     RunGameLoop();
 }
@@ -212,9 +227,9 @@ void GameLogic::SendInstructionDataCb(int cell_idx)
 
 void GameLogic::m_InitPlayers()
 {
-    LOG_DBG("Initializing {} players", DEF_PLAYERS_AMOUNT);
+    LOG_DBG("Initializing {} players", PLAYERS_AMOUNT);
     m_players.clear();
-    for (int i = 0; i < DEF_PLAYERS_AMOUNT; i++)
+    for (int i = 0; i < PLAYERS_AMOUNT; i++)
     {
         // player id will be its index in vector
         m_players.push_back(std::move(CPlayer(i)));

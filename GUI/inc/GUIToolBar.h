@@ -14,6 +14,9 @@ class GUIToolBar : public QToolBar {
 public:
     GUIToolBar(const QString& name = "", QWidget* parent = nullptr);
 
+    /// @brief Increase rounds counter shown in label
+    void SetCounter(int value);
+
     QPushButton* GetLoadButton() { return m_load_btn; };
     QPushButton* GetRestartButton() { return m_restart_btn; };
     QPushButton* GetPauseButton() { return m_pause_btn; };
@@ -24,6 +27,7 @@ public:
 private:
     void m_InitButton(QPushButton*& btn, const QString& title);
     void m_InitSpeedLabel();
+    void m_InitRoundsCnt();
     void m_AdjustPlaySpeed(bool speedup);
     // buttons
     QPushButton* m_play_btn;
@@ -33,9 +37,11 @@ private:
     QPushButton* m_speedup_btn;
     QPushButton* m_slowdown_btn;
     QLabel* m_game_speed;
+    QLabel* m_rounds_cnt;
     // string indicating speed of program execution
 
     QString m_play_speed = "x1.0";
+    QString m_rounds_str = "ROUND: %1/%2";
 
 private slots:
     void SlotSpeedUp();

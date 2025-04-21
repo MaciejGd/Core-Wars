@@ -1,5 +1,5 @@
 #include "GUIMainWindow.h"
-
+#include "GUIConstants.h"
 
 GUIMainWindow::GUIMainWindow(int width, int height, GUILogicProxy& logic_proxy, QWidget* parent):  m_logic_proxy(logic_proxy), QMainWindow(parent) 
 {    
@@ -30,6 +30,12 @@ GUIMainWindow::GUIMainWindow(int width, int height, GUILogicProxy& logic_proxy, 
     m_ConnectProxy();
 }
 
+void GUIMainWindow::ResetCounter()
+{
+    m_round_cnt = 1;
+    // change GUI counter
+    m_toolBar->SetCounter(m_round_cnt);
+}
 
 void GUIMainWindow::m_ConnectProxy()
 {
@@ -54,8 +60,6 @@ void GUIMainWindow::m_ConnectArena()
     connect(&m_logic_proxy, &GUILogicProxy::SignalPlayerMove, this, &GUIMainWindow::SlotPlayerMove);
     // connect signals responsible for launching instruction info dialog
     connect(&m_logic_proxy, &GUILogicProxy::SignalInstructionData, this, &GUIMainWindow::SlotLaunchInstructionDialog);
-    // connect changing counter 
-    connect(&m_logic_proxy, &GUILogicProxy::SignalChangeCounter, this, &GUIMainWindow::SlotChangeCounter); 
     // connect signal responsible for sending info messages from game logic to GUI
     connect(&m_logic_proxy, &GUILogicProxy::SignalShowInfoDialog, this, &GUIMainWindow::SlotShowInfoDialog); 
 }
@@ -120,25 +124,22 @@ void GUIMainWindow::m_ConnectButtons()
     connect(temp, &QPushButton::pressed, &m_logic_proxy, &GUILogicProxy::SlotSlowDownGame);
 }
 
-void GUIMainWindow::SlotChangeCounter(int round_counter)
-{
-    LOG_PASS("ROUND {}", round_counter);
-}
-
-
 void GUIMainWindow::SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id, int offset) 
 {
+    ResetCounter();
     if (m_arena == nullptr) return;
     m_arena->LoadPlayerCode(starting_idx, instructions_amount, player_id, offset);
     // pass color generated for player to stack
     if (m_op_panel == nullptr) return;
     m_op_panel->SetPlayerColor(player_id, m_arena->GetPlayerColorString(player_id));
+    // pass color generated for player to 
     LOG_DBG("Player color has been set");
 }
 
 
 void GUIMainWindow::SlotRestartGame()
 {
+    ResetCounter();
     // clear arena and stacks
     m_arena->ClearArena();
     m_op_panel->ClearStacks();
@@ -150,6 +151,12 @@ void GUIMainWindow::SlotPlayerMove(int cell, int player_id, int modified_cell, Q
     m_arena->MakePlayerMove(cell, player_id, modified_cell);
     if (m_op_panel == nullptr) return;
     m_op_panel->UpdatePlayersStack(player_id, instruction, cell);
+    // if player id equal to players amount-1 we are sure that round ended
+    if (player_id == GUI::PLAYERS_AMOUNT - 1)
+    {
+        m_round_cnt++;
+        m_toolBar->SetCounter(m_round_cnt);
+    }
 }
 
 
@@ -167,6 +174,8 @@ void GUIMainWindow::SlotLoadPlayers()
     if (!m_op_panel->GetPlayersPaths(paths))
     {
         LOG_ERR("Path for some player has not been chosen");
+        QString info_msg = "Please choose paths for players before trying to load the code";
+        SlotShowInfoDialog(info_msg, true);
         return;
     }
     m_arena->ClearArena(); // make sure arena has been cleared before loading new players

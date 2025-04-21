@@ -16,7 +16,8 @@ GUIFileExplorerDialog::GUIFileExplorerDialog(const QString& file_path, QWidget* 
 QTreeView* GUIFileExplorerDialog::m_InitFileSystemView() 
 {
     m_filesystem = new QFileSystemModel;
-    m_filesystem->setRootPath(QDir::currentPath());
+    //m_filesystem->setRootPath(QDir::currentPath());
+    m_filesystem->setRootPath("");
 
     QTreeView *tree = new QTreeView(this);
     tree->setModel(m_filesystem);

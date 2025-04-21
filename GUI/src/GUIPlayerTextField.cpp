@@ -21,10 +21,14 @@ GUIPlayerTextField::GUIPlayerTextField(const QString& player_name, QWidget* pare
     m_player_id->setAlignment(Qt::AlignLeft);    
 
     layout->addWidget(m_player_id, Qt::AlignLeft);
-    //outer_layout->addWidget(inner_wgt);
     layout->addWidget(m_textfield);
-
     setLayout(layout);
+}
+
+void GUIPlayerTextField::SetColor(const QString &color)
+{
+    // set foreground color of the m_player_id label
+    m_player_id->setStyleSheet(QString("font-weight: 300; color: %1; background-color: lightgray").arg(color));
 }
 
 void GUIPlayerTextField::m_InitLabel(const QString& player_name) 
@@ -32,14 +36,13 @@ void GUIPlayerTextField::m_InitLabel(const QString& player_name)
     // initialize label with player name
     m_player_id = new QLabel{};
     m_player_id->setText(player_name);
-    m_player_id->setAlignment(Qt::AlignCenter);
-    m_player_id->setFixedHeight(TEXT_FIELD_HEIGHT);
+    m_player_id->setStyleSheet(QString("font-weight: 300; color: black; background-color: lightgray"));
 }
 
 void GUIPlayerTextField::m_InitTextField()
 {
     // initialize textfield
-    m_textfield = new GUITextFieldButton(BTN_WIDTH, TEXT_FIELD_HEIGHT, "TEST");
+    m_textfield = new GUITextFieldButton(BTN_WIDTH, TEXT_FIELD_HEIGHT, "choose file");
     m_textfield->SetButtonCallback(this, &GUIPlayerTextField::ChoosePlayersCb);
     m_textfield->setFixedHeight(TEXT_FIELD_HEIGHT);
     m_textfield->SetTextfieldWidth(GUI::PLAYER_PATH_TEXTFIELD_WIDTH); 

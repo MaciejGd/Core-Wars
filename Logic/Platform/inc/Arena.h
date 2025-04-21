@@ -9,8 +9,6 @@
 #define ARENA_SIZE 8000
 #define RW_LIMIT 8000
 
-#define PLAYERS_AMOUNT 2 // TODO need reconsideration
-
 class CInstruction;
 
 /// Singleton class holding logic behind arena

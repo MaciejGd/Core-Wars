@@ -31,9 +31,6 @@ public:
     inline void SetInstrDataCb(instr_cb cb) { m_instruction_data_cb = cb; }
 
     // signal senders
-    inline void SendCounter(int round_counter) 
-                            { emit SignalChangeCounter(round_counter); };
-
     inline void SendPlayerMoveEvent(int cell, int player_id, int modified_cell, const std::string& instruction) 
                             { emit SignalPlayerMove(cell, player_id, modified_cell, QString(instruction.c_str())); };
 
@@ -68,7 +65,6 @@ public slots:
     void SlotSlowDownGame();
 
 signals:
-    void SignalChangeCounter(int round_counter);
     void SignalPlayerMove(int cell, int player_id, int modified_cell, QString instruction); // cell to be passed to main menu
     void SignalPlayerLoad(int starting_idx, int instructions_amount, int player_id, int offset);
     void SignalInstructionData(QString instruction, int cell_idx);
