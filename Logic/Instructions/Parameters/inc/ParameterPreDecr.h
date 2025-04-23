@@ -2,7 +2,8 @@
 
 #include "Parameter.h"
 
-
+/// Class representing parameter with address mode of 
+/// type "PreDecrementing".
 class CParameterPreDecr : public CParameter {
 public:
     CParameterPreDecr() = default;

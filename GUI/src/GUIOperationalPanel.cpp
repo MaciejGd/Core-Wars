@@ -37,7 +37,6 @@ void GUIOperationalPanel::SetPlayerColor(int player_id, const QString &color)
     m_players_panel->SetPlayerColor(player_id, color);
 }
 
-
 void GUIOperationalPanel::ClearStacks()
 {
     if (m_stacks == nullptr)

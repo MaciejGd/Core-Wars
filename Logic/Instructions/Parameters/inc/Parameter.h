@@ -3,6 +3,9 @@
 #include <string>
 #include <memory>
 
+/// Class representing parameter of the instruction.
+/// Derived classes should implement EvaluateParameter method
+/// which counts the pointer, basing on parameter value
 class CParameter {
 public:
     CParameter() = default;
@@ -16,12 +19,28 @@ public:
     /// @return unique pointer to newly created object
     virtual std::unique_ptr<CParameter> clone() const = 0;
 
+    /// @brief Count pointer basing on the pointer's value
+    /// @param pc program counter of the player
+    virtual void EvaluateParameter(int pc) = 0;
+
+    /// @brief Value of the parameter getter
+    /// @return value of the parameter
     const int GetValue() const { return m_val; }
+
+    /// @brief Identify type of the parameter
+    /// @return string indicating parameter's type
     virtual const std::string Identify() const { return ""; };
+
+    /// @brief Value of the parameter setter
+    /// @param value value to be set as parameter value
     void SetValue(int value);
+
+    /// @brief Check if value for the parameter has been set
+    /// @return boolean indicating if value for parameter has been set 
     const bool ValueIsSet() const;
 
-    virtual void EvaluateParameter(int pc) = 0;
+    /// @brief Getter of the parameter's pointer
+    /// @return parameter's pointer
     const int GetPointer() const { return m_pointer; };
 protected:
     int m_val;

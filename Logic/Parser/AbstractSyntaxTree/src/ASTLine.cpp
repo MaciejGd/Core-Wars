@@ -9,7 +9,7 @@
 // modifier can start with label however it got removed 
 // before so we do not need to care about that
 
-ParseResult CASTLine::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes, 
+ParseResult CASTLine::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<IASTNode>>& nodes, 
     std::unique_ptr<CInstruction>& instruction, std::string& error_msg)
 {
     nodes.push(std::make_unique<CASTOptionalParam>());

@@ -20,7 +20,7 @@ private:
 
     ParseResult m_ParseArithmeticExpression(std::deque<Token>& tokens);
 
-    ParseResult m_TraverseNodes(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes);
+    ParseResult m_TraverseNodes(std::deque<Token>& tokens, std::stack<std::unique_ptr<IASTNode>>& nodes);
     
     int m_EvaluateArithmeticExpression(std::deque<Token>& tokens);
 

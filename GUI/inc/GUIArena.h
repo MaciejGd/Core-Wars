@@ -17,6 +17,10 @@ class GUIArena : public QWidget {
 public:
     GUIArena(int rows, int cols, QWidget *parent = nullptr);
     
+    /// @brief Override of eventFilter which helps capturinf events sent to Arena cells
+    /// @param obj pressed Arena cell
+    /// @param event evemt captured
+    /// @return boolean indicating if event should be passed further
     bool eventFilter(QObject* obj, QEvent* event) override;
 
     /// @brief Clear colors of all cells in arena to default value
@@ -61,9 +65,6 @@ private:
 
     // map player id to player's head (actual player position)
     std::map<int, int> m_players_heads;
-
-public slots:
-
 signals:
     void SignalRequestInstructionData(int cell_idx);
 };

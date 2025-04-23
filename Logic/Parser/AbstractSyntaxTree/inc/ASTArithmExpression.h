@@ -14,9 +14,9 @@
 /// 
 /// - NewArithmExpression:= ARITHM_OP NewArithmExpression
 /// 
-class CASTArithmExpression : public CASTNode {
+class CASTArithmExpression : public IASTNode {
 public:
-    ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
+    ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<IASTNode>> &nodes,
                         std::unique_ptr<CInstruction>& instruction, std::string& error_msg) override;
 };
     
@@ -27,7 +27,7 @@ public:
     ///
     /// - NewArithmExpression := ARITHM_OP ArithmExpression |
     ///
-class CASTArithmNewExpression : public CASTNode {
-    ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
+class CASTArithmNewExpression : public IASTNode {
+    ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<IASTNode>> &nodes,
                         std::unique_ptr<CInstruction>& instruction, std::string& error_msg) override;
 };

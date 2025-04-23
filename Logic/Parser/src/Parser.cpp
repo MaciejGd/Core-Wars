@@ -48,7 +48,7 @@ bool CParser::ParseFile(TokenContainer &tokens, std::vector<std::unique_ptr<CIns
 bool CParser::m_ParseLine(const std::vector<Token> &tokens_row, std::unique_ptr<CInstruction>& instruction)
 {
     // initialize node stack and tokens queue needed for parsing
-    std::stack<std::unique_ptr<CASTNode>> node_stack;
+    std::stack<std::unique_ptr<IASTNode>> node_stack;
     std::deque<Token> tokens_queue(tokens_row.begin(), tokens_row.end());
     // Instruction to be created based on parsed line
     // add line node to the stack
@@ -233,7 +233,7 @@ int CParser::m_EvaluateStartIndex()
     return 0;
 }
 
-bool CParser::m_TraverseAST(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes,
+bool CParser::m_TraverseAST(std::deque<Token> &tokens, std::stack<std::unique_ptr<IASTNode>> &nodes,
                             std::unique_ptr<CInstruction>& instruction)
 {
     // check recursion breaking conditions
@@ -250,7 +250,7 @@ bool CParser::m_TraverseAST(std::deque<Token> &tokens, std::stack<std::unique_pt
         return true;
     }
 
-    std::unique_ptr<CASTNode> next_node = std::move(nodes.top());
+    std::unique_ptr<IASTNode> next_node = std::move(nodes.top());
     nodes.pop();
     // evaluate next token
     if (next_node->Eval(tokens, nodes, instruction, m_error_msg) == ParseResult::PARSE_FAIL)

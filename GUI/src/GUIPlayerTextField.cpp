@@ -43,22 +43,22 @@ void GUIPlayerTextField::m_InitTextField()
 {
     // initialize textfield
     m_textfield = new GUITextFieldButton(BTN_WIDTH, TEXT_FIELD_HEIGHT, "choose file");
-    m_textfield->SetButtonCallback(this, &GUIPlayerTextField::ChoosePlayersCb);
+    m_textfield->SetButtonCallback(this, &GUIPlayerTextField::SlotChoosePlayers);
     m_textfield->setFixedHeight(TEXT_FIELD_HEIGHT);
     m_textfield->SetTextfieldWidth(GUI::PLAYER_PATH_TEXTFIELD_WIDTH); 
 }
 
-void GUIPlayerTextField::ChoosePlayersCb() 
+void GUIPlayerTextField::SlotChoosePlayers() 
 {
     LOG_DBG("Launching file explorer");
     m_file_explorer = std::make_unique<GUIFileExplorerDialog>(m_textfield->GetText(), this);
     m_file_explorer->show();
     // connect tool bar with file search window (will be moved to another widget)
-    connect(m_file_explorer.get(), &GUIFileExplorerDialog::FilePathChanged, 
-        this, &GUIPlayerTextField::PlayerPathChangedCb);
+    connect(m_file_explorer.get(), &GUIFileExplorerDialog::SignalFilePathChanged, 
+        this, &GUIPlayerTextField::SlotPlayerPathChanged);
 }
 
-void GUIPlayerTextField::PlayerPathChangedCb(QString& path) 
+void GUIPlayerTextField::SlotPlayerPathChanged(QString& path) 
 {
     LOG_DBG("New path for a player is {}", path.toStdString());
     m_textfield->SetText(path);

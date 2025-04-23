@@ -2,7 +2,8 @@
 
 #include "Parameter.h"
 
-
+/// Class representing parameter with address mode of 
+/// type "PostIncrementing".
 class CParameterPostInc : public CParameter {
 public:
     CParameterPostInc() = default;

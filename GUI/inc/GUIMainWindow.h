@@ -18,16 +18,9 @@ class GUIMainWindow : public QMainWindow {
 public:
     GUIMainWindow(int width, int height, GUILogicProxy& logic_proxy, QWidget* parent = nullptr);
 
-    /// @brief Show player's move in GUI
-    /// @param cell memory cell to be modified
-    /// @param player_id player moving
-    /// @return boolean indicating status of operation
-    bool MakePlayerMove(int cell, int player_id, int modified_cell); 
-
-    /// @brief Reset internal counter and change GUI counter to one 
-    void ResetCounter();
 private:
     int m_round_cnt = 0;
+    bool m_loading = false;
     GUILogicProxy& m_logic_proxy;
     // widget for arena
     GUIArena* m_arena;
@@ -46,6 +39,9 @@ private:
 
     /// @brief connect slots and signals related to GUIArena
     void m_ConnectArena();
+
+    /// @brief Reset internal counter and change GUI counter to one 
+    void m_ResetCounter();
 
 private slots:
     void SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id, int offset);

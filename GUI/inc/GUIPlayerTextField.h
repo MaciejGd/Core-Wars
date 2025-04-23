@@ -40,8 +40,8 @@ private:
 
 private slots:
     // setting new path to player's code
-    void PlayerPathChangedCb(QString& path);
+    void SlotPlayerPathChanged(QString& path);
     // lauching fileview on button press
-    void ChoosePlayersCb();
+    void SlotChoosePlayers();
     
 };

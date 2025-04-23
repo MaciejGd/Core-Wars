@@ -67,7 +67,7 @@ private:
     /// @param nodes stack that next nodes will be pushed to
     /// @param instruction pointer to instruction to be modified during parsing line
     /// @return boolean indicating result of the parsing
-    bool m_TraverseAST(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes,
+    bool m_TraverseAST(std::deque<Token>& tokens, std::stack<std::unique_ptr<IASTNode>>& nodes,
                         std::unique_ptr<CInstruction>& instruction);
 
 

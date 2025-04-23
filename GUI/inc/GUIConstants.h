@@ -42,4 +42,11 @@ extern const int PLAYER_PATH_TEXTFIELD_HEIGHT;
 
 // amount of players taking part in game
 extern int PLAYERS_AMOUNT;
+
+// file explorer
+extern const int FILE_EXPLORER_HEIGHT;
+extern const int FILE_EXPLORER_WIDTH;
+extern const int FILE_EXPLORER_TEXTFIELD_HEIGHT;
+extern const int FILE_EXPLORER_LOAD_BTN_WIDTH;
+extern const QString FILE_EXPLORER_WINDOW_TITLE;
 };

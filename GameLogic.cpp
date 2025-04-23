@@ -83,7 +83,7 @@ void GameLogic::RunGameLoop()
             // increase rounds counter if all players moved
             m_rounds_last++; 
         }
-        if (players_active <= 1)
+        if (players_active <= 1 && m_running == true)
         {
             LOG_DBG("Only one player left, quit, player {} won!!!", last_player_active);
             std::string info_msg = std::format("Player {} won!!!", last_player_active);
@@ -107,12 +107,14 @@ void GameLogic::LoadPlayers(const std::vector<std::string>& paths)
     m_players[0].SetFileName("../tests/code_loading/test1.txt");
     m_players[1].SetFileName("../tests/code_loading/test2.txt");
     // parse players and load code to Core
+    m_running = false; // pause game
     LoadPlayersCode();
 }
 
 void GameLogic::LoadPlayersCode()
 {
     // reset rounds of the battle
+    m_arena.ClearArena();
     m_rounds_last = 0;
     // store starting idx, instructions amount and offset of each player in a array
     std::vector<std::array<int,3>> players_data(PLAYERS_AMOUNT, {0,0,0});
@@ -140,6 +142,7 @@ void GameLogic::LoadPlayersCode()
     {
         m_gui_proxy.SendPlayerLoadEvent(players_data[i][0], players_data[i][1], i, players_data[i][2]);
     }
+    LOG_DBG("Loading players to Core succeeded, send info to GUI");
     m_loaded = true;
 }
 
@@ -185,7 +188,7 @@ void GameLogic::ResumeMainLoop()
 void GameLogic::RestartGame()
 {
     // clean up arena
-    m_arena.ClearArena();
+    //m_arena.ClearArena();
     // load code for players back on arena 
     LoadPlayersCode();
 }

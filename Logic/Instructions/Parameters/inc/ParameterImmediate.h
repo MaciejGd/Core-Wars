@@ -3,6 +3,8 @@
 #include "Parameter.h"
 
 
+/// Class representing parameter with address mode of 
+/// type "Immediate".
 class CParameterImmediate : public CParameter {
 public:
     CParameterImmediate() = default;

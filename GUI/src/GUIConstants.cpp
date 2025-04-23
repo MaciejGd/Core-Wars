@@ -55,4 +55,12 @@ const int PLAYER_PATH_TEXTFIELD_HEIGHT = 20;
 
 // amount of players playing, 2 by default
 int PLAYERS_AMOUNT = 2;
+
+// file explorer
+const int FILE_EXPLORER_HEIGHT =            400;
+const int FILE_EXPLORER_WIDTH =             600;
+const int FILE_EXPLORER_TEXTFIELD_HEIGHT =  30;
+const int FILE_EXPLORER_LOAD_BTN_WIDTH =    100;
+const QString FILE_EXPLORER_WINDOW_TITLE = "choose warrior";
+
 };

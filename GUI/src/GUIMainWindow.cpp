@@ -30,7 +30,7 @@ GUIMainWindow::GUIMainWindow(int width, int height, GUILogicProxy& logic_proxy, 
     m_ConnectProxy();
 }
 
-void GUIMainWindow::ResetCounter()
+void GUIMainWindow::m_ResetCounter()
 {
     m_round_cnt = 1;
     // change GUI counter
@@ -126,7 +126,6 @@ void GUIMainWindow::m_ConnectButtons()
 
 void GUIMainWindow::SlotPlayerLoaded(int starting_idx, int instructions_amount, int player_id, int offset) 
 {
-    ResetCounter();
     if (m_arena == nullptr) return;
     m_arena->LoadPlayerCode(starting_idx, instructions_amount, player_id, offset);
     // pass color generated for player to stack
@@ -139,7 +138,7 @@ void GUIMainWindow::SlotPlayerLoaded(int starting_idx, int instructions_amount, 
 
 void GUIMainWindow::SlotRestartGame()
 {
-    ResetCounter();
+    m_ResetCounter();
     // clear arena and stacks
     m_arena->ClearArena();
     m_op_panel->ClearStacks();
@@ -169,7 +168,8 @@ void GUIMainWindow::SlotLaunchInstructionDialog(QString instruction, int cell_id
 
 void GUIMainWindow::SlotLoadPlayers()
 {
-    // retrieve const ref to vector of player paths TODO
+    m_ResetCounter();    
+    // retrieve const ref to vector of player paths
     std::vector<std::string> paths;
     if (!m_op_panel->GetPlayersPaths(paths))
     {
@@ -179,6 +179,7 @@ void GUIMainWindow::SlotLoadPlayers()
         return;
     }
     m_arena->ClearArena(); // make sure arena has been cleared before loading new players
+    m_op_panel->ClearStacks();
     emit SignalLoadPlayers(paths);
 }
 

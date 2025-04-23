@@ -73,7 +73,4 @@ private:
     bool m_running = false;
     // bool - are warriors codes loaded
     bool m_loaded = false;
-
-    // paths to warriors loaded to core at the moment
-    std::vector<std::string> m_paths;
 };

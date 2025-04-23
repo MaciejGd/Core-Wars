@@ -2,7 +2,8 @@
 
 #include "Parameter.h"
 
-
+/// Class representing parameter with address mode of 
+/// type "Indirect".
 class CParameterIndirect : public CParameter {
 public:
     CParameterIndirect() = default;

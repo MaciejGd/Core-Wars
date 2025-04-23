@@ -23,7 +23,7 @@
 
 
 
-ParseResult CASTOperation::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<CASTNode>>& nodes, 
+ParseResult CASTOperation::Eval(std::deque<Token>& tokens, std::stack<std::unique_ptr<IASTNode>>& nodes, 
     std::unique_ptr<CInstruction>& instruction, std::string& error_msg)
 {
     // if token type is operation then parsing succeed and add CASTModifier to m_rhs

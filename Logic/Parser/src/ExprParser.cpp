@@ -33,13 +33,13 @@ ParseResult CExprParser::m_ParseArithmeticExpression(std::deque<Token> &tokens)
 {
     // we assume proper tokens has been already prepared for us
     // we need to create a stack of nodes
-    std::stack<std::unique_ptr<CASTNode>> nodes;
+    std::stack<std::unique_ptr<IASTNode>> nodes;
     nodes.push(std::make_unique<CASTArithmExpression>());
 
     return m_TraverseNodes(tokens, nodes);
 }
 
-ParseResult CExprParser::m_TraverseNodes(std::deque<Token> &tokens, std::stack<std::unique_ptr<CASTNode>> &nodes)
+ParseResult CExprParser::m_TraverseNodes(std::deque<Token> &tokens, std::stack<std::unique_ptr<IASTNode>> &nodes)
 {
     // tokens arent necessarily empty after paring arithm op, in fact should be
     if (tokens.empty())
@@ -52,7 +52,7 @@ ParseResult CExprParser::m_TraverseNodes(std::deque<Token> &tokens, std::stack<s
     } 
     //take top node from a stack and evaluate it 
     //LOG_WRN("In file {} | Stack size: {}", CLexer::s_file_name, nodes.size());
-    std::unique_ptr<CASTNode> top_node = std::move(nodes.top());
+    std::unique_ptr<IASTNode> top_node = std::move(nodes.top());
     nodes.pop();
     //LOG_WRN("Top token to be parsed: {}", tokens.front().PrintFormat());
     // needed dummy CInstruction pointer to use Eval function 
