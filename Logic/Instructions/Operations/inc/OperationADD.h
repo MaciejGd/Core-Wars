@@ -3,7 +3,8 @@
 #include "Operation.h"
 
 
-
+/// Class implementing ADD RedCode operation.
+/// Perform adding.
 class COperationADD : public COperation {
 public:
     COperationADD();

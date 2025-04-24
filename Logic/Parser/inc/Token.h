@@ -63,15 +63,12 @@ bool findInArray(const std::array<T, N>& arr, T value)
     return false;
 };
 
-///
 /// Class representing single lexical unit of RedCode code
-/// 
 /// Token is described by four main attributes:
 /// 1. line - line of token's occurence
 /// 2. idx - column of token's ending
 /// 3. type - type of Token, described in TokenType enum
 /// 4. value - string representing part of text, that token describes
-/// 
 class Token {
 public:
     Token() {};

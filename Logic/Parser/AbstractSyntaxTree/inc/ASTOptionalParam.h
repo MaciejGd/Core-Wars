@@ -3,6 +3,7 @@
 
 #include "ASTNode.h"
 
+/// Class representing optional parameter parsing node.
 class CASTOptionalParam : public IASTNode {
 public:
     ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<IASTNode>> &nodes,

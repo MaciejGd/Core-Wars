@@ -1,7 +1,7 @@
 #include "ASTNode.h"
 
 
-/// @brief Class representing modifier Node. Modifier is optional 
+/// Class representing modifier parsing node. Modifier is optional 
 /// feature of every operation.
 class CASTModifier : public IASTNode {
 public:

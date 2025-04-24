@@ -1,0 +1,5 @@
+; scissors code, scan for other players and bomb arena where they are found
+scn add   #10, ptr
+ptr jmz.f scn, 5
+    mov.i 2, >ptr
+    jmp   -1

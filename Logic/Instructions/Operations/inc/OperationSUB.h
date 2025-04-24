@@ -3,7 +3,8 @@
 #include "Operation.h"
 
 
-
+/// Class implementing MUL RedCode operation.
+/// Perform arithmetic substracting.
 class COperationSUB : public COperation {
 public:
     COperationSUB();

@@ -104,8 +104,17 @@ void GameLogic::LoadPlayers(const std::vector<std::string>& paths)
     }
     LOG_WRN("In load players callback, main game loop");
     // TODO, change a bit logic of setting string for a player? not necessarily
-    m_players[0].SetFileName("../tests/code_loading/test1.txt");
-    m_players[1].SetFileName("../tests/code_loading/test2.txt");
+    if (paths.size() != m_players.size())
+    {
+        LOG_ERR("Paths for not all players has been set!!!");
+        return;
+    }
+    for (int i = 0; i < paths.size(); i++)
+    {
+        m_players[i].SetFileName(paths[i]);
+    }
+    // m_players[0].SetFileName("../tests/code_loading/test1.txt");
+    // m_players[1].SetFileName("../tests/code_loading/test2.txt");
     // parse players and load code to Core
     m_running = false; // pause game
     LoadPlayersCode();

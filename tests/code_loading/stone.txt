@@ -1,9 +1,9 @@
 ;name stone
 
-start  mov.i <2, 3       ; [1]
-       add.f d1, start   ; [2]
-       jmp   start       ; [3]
-       dat   #0          ; [4]
-d1     dat   #-4, #4     ; [5]
+start  mov.i <2, 3       
+       add.f d1, start   
+       jmp   start       
+       dat   #0          
+d1     dat   #-4, #4     
 
-end start                ; [6]
+end start             

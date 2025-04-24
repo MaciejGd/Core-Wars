@@ -13,6 +13,12 @@
 
 bool CParser::ParseFile(TokenContainer &tokens, std::vector<std::unique_ptr<CInstruction>>& instructions, int &offset)
 {
+    // first check if TokenContainer is empty, if so, either lexing failed or directory was passed as argument
+    if (tokens.size() == 0)
+    {
+        m_error_msg = "Either file failed to be opened, or directory got chosen. Please choose correct RedCode file";
+        return false;
+    }
     // clear members before parsing
     m_ClearContainers();
     m_error_msg = "";
@@ -21,7 +27,7 @@ bool CParser::ParseFile(TokenContainer &tokens, std::vector<std::unique_ptr<CIns
     // remove labels from the line starts perform some initial checking
     if (!m_RemoveLabels(tokens))
     {
-        return ParseResult::PARSE_FAIL;
+        return false;
     }
     for (int i = 0; i < tokens.size(); i++)
     {
@@ -38,10 +44,10 @@ bool CParser::ParseFile(TokenContainer &tokens, std::vector<std::unique_ptr<CIns
         if (!m_ParseLine(tokens[i], instructions.back()))
         {
             LOG_ERR("Error in parsing, quiting execution");        
-            return ParseResult::PARSE_FAIL;
+            return false;
         }
     }
-    return ParseResult::PARSE_OK;
+    return true;
 }
 
 
@@ -102,6 +108,10 @@ bool CParser::m_RemoveLabels(TokenContainer &tokens)
     if (!m_ReplaceLineTagWithEqu()) 
     {
         return false;
+    }
+    for (const auto& x : m_labels)
+    {
+        LOG_WRN("Found label: {}", x.first);
     }
     // switch labels in expression indicating start of the program
     if (!m_SwitchLabels(m_prog_start, 0))

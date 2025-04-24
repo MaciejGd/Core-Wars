@@ -36,6 +36,7 @@ void GUIFileExplorerDialog::m_InitTextField(const QString& file_path)
     m_textfield->SetButtonCallback(this, &GUIFileExplorerDialog::m_OnLoadButtonPressed);
     m_textfield->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_textfield->SetText(file_path);
+    m_textfield->SetReadOnly(false);
 }
 
 void GUIFileExplorerDialog::SlotOnFileSelected(const QItemSelection &selected, const QItemSelection &deselected) 

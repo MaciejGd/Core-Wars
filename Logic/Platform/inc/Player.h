@@ -2,7 +2,6 @@
 
 #include "Arena.h"
 #include "CodeBuilder.h"
-#include "PlayerHead.h"
 
 #include <deque>
 #include <string>

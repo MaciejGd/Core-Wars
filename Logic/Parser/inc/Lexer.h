@@ -6,9 +6,10 @@
 #include <Token.h>
 
 using TokenContainer = std::vector<std::vector<Token>>;
-// TODO - turn it into a class with only static fields as Parser??? to consider that
 
-/// @brief Singleton for creating token list from input file
+/// Class responsible for lexical analysis of input RedCode file.
+/// Its main task is to create TokenContainer filled with tokens retrieved
+/// during analysis, that we can feed parser with.
 class CLexer {
 public:
     /// name of the file currently lexed

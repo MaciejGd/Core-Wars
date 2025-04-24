@@ -3,7 +3,8 @@
 #include "Operation.h"
 
 
-
+/// Class implementing RedCode MOD operation.
+/// Perform modulo operation. Kill process if modulo by zero.
 class COperationMOD : public COperation {
 public:
     COperationMOD();

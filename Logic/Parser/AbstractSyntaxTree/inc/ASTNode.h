@@ -24,9 +24,15 @@ enum ParseResult {
 };
 
 
-// evaluation of node
+/// Interface for all parsing nodes
 class IASTNode {
 public:
+    /// @brief Evaluate parsing node
+    /// @param tokens deque of tokens to be analyzed during parsing
+    /// @param nodes stack of nodes, push nodes got during evaluation of current node to stack
+    /// @param instruction instruction built during process of parsing
+    /// @param error_msg error message generated during parsing node
+    /// @return ParseResult enumeration type indicating if parsing succeeded or failed
     virtual ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<IASTNode>> &nodes,
         std::unique_ptr<CInstruction>& instruction, std::string& error_msg) = 0;
 };

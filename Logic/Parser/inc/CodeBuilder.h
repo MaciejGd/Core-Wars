@@ -7,6 +7,8 @@
 #include <vector>
 #include <string>
 
+/// Class responsible for conducting process of lexing, parsing 
+/// and managing instructions produced, during the performed process.
 class CCodeBuilder {
 public:
     CCodeBuilder() = default;

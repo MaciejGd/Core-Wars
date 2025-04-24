@@ -2,8 +2,8 @@
 
 #include "Operation.h"
 
-
-
+/// Class implementing SPL RedCode operation.
+/// Create new process starting from addresss specified 
 class COperationSPL : public COperation {
 public:
     COperationSPL();

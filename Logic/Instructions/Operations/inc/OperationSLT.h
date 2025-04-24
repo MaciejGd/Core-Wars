@@ -3,7 +3,8 @@
 #include "Operation.h"
 
 
-
+/// Class implementing SLT RedCode operation.
+/// Compare two values, jump 2 cells if first val less than second one
 class COperationSLT : public COperation {
 public:
     COperationSLT();

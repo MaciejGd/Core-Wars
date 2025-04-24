@@ -4,6 +4,8 @@
 
 
 
+/// Widget representing dialog that shows instruction currently stored at
+/// memory cell specified by index
 class GUIInstructionDialog : public QDialog {
     Q_OBJECT
 public:

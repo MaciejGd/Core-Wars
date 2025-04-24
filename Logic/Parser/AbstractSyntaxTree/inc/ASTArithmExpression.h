@@ -2,31 +2,17 @@
 
 #include "ASTNode.h"
 
-/// @brief Class representing Arithmetic Expression node in Abstract Syntax Tree
-/// 
-/// Grammar rules for expressions are 
-///
-/// 1. ArithmExpression := Term 
-/// 
-/// 2. ArithmExpression := Term NewArithmExpression
-///
-/// Where NewArithmExpression is described as follows:
-/// 
-/// - NewArithmExpression:= ARITHM_OP NewArithmExpression
-/// 
+/// Class representing arithmetic expressions parsing node.
 class CASTArithmExpression : public IASTNode {
 public:
     ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<IASTNode>> &nodes,
                         std::unique_ptr<CInstruction>& instruction, std::string& error_msg) override;
 };
     
-    /// @brief Class representing NewArithmExpression node in Abstract Syntax Tree
-    ///
-    /// Introduced as fullfill to Expression node. CASTNewArithmExpression can be skipped, its
-    /// grammar rule is like follow
-    ///
-    /// - NewArithmExpression := ARITHM_OP ArithmExpression |
-    ///
+/// Class representing "arithm new expression" parsing node.
+/// Introduced as fullfill to Expression node. CASTNewArithmExpression can be skipped, its
+/// grammar rule is like follow
+/// - NewArithmExpression := ARITHM_OP ArithmExpression |
 class CASTArithmNewExpression : public IASTNode {
     ParseResult Eval(std::deque<Token> &tokens, std::stack<std::unique_ptr<IASTNode>> &nodes,
                         std::unique_ptr<CInstruction>& instruction, std::string& error_msg) override;

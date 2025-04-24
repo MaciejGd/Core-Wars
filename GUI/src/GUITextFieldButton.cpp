@@ -56,5 +56,5 @@ void GUITextFieldButton::m_InitTextField()
     m_textfield->setFixedHeight(m_height);
     m_textfield->setReadOnly(true);
     SetColorBase(m_textfield, GUI::TEXT_FIELD_BACKGROUND);
-    SetTextColorBase(m_textfield, QColorConstants::White);
+    SetTextColorBase(m_textfield, QColorConstants::Black);
 }

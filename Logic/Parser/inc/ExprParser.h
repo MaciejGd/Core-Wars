@@ -2,6 +2,7 @@
 #include "ASTNode.h"
 #include <memory>
 
+/// Class responsible for parsing arithmetic expressions
 class CExprParser {
 public:
     CExprParser() = default;

@@ -4,6 +4,8 @@
 
 #include "GUIConstants.h"
 
+/// Small widget for representing Core cell. Implements interface for changing text,
+/// color, setting focus etc.
 class GUIMemoryCell : public QLabel {
 public:
     GUIMemoryCell(QWidget* parent=nullptr):QLabel(parent), m_background_color("white"),

@@ -5,10 +5,8 @@
 
 #include <memory>
 
-/// @brief Widget for displaying and storing path to player's code
-/// 
+/// Widget for displaying and storing path to player's code
 /// Displays, store and let the user choose the path to player's code
-///
 class GUIPlayerTextField : public QWidget {
     Q_OBJECT
 public:

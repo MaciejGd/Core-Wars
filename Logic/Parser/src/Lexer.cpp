@@ -4,6 +4,9 @@
 #include <fstream>
 #include <cerrno>
 #include <algorithm>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 TokenContainer CLexer::GetTokens(std::string_view file_path)
 {
@@ -13,6 +16,11 @@ TokenContainer CLexer::GetTokens(std::string_view file_path)
     if (!file_contents.is_open()) 
     {
         LOG_ERR("Error for path: {} {}", file_path, std::strerror(errno));
+        return TokenContainer();
+    }
+    if (fs::is_directory(fs::path(file_path)))
+    {
+        LOG_ERR("File path is directory, please choose regular file");
         return TokenContainer();
     }
     std::string line;

@@ -3,13 +3,10 @@
 #include "Operation.h"
 
 
-
-/// 
 /// Class representing DAT operation
 /// Calling execute method of DAT operation
 /// will cause killing process, no extra 
 /// computations are needed
-///
 class COperationDAT : public COperation {
 public:
     COperationDAT();

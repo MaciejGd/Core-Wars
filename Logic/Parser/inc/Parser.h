@@ -7,10 +7,8 @@
 #include <vector>
 #include <map>
 
-/// @brief Class checking if grammar rules of RedCode language 
-///
+/// Class checking if grammar rules of RedCode language 
 /// has been met. Analyze tokens retrieved during the process of lexical
-///
 /// analysis and builts initial instructions for a player based on that.
 class CParser {
 public:
@@ -121,6 +119,8 @@ bool CParser::m_SwitchLabels(Container<Token>& tokens, int line_idx)
         if (m_labels.find(curr.value()) == m_labels.end())
         {
             LOG_ERR("In line {}, idx {}, using label: {} that has not been previously declared",
+                curr.line(), curr.idx(), curr.value());
+            m_error_msg = std::format("In line {}, idx {}, using label: {} that has not been previously declared",
                 curr.line(), curr.idx(), curr.value());
             return false;
         }

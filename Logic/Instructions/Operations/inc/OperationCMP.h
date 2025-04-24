@@ -3,7 +3,8 @@
 #include "Operation.h"
 
 
-
+/// Class implementing CMP RedCode operation.
+/// Compare two values, jump 2 cells if comparing succeed
 class COperationCMP : public COperation {
 public:
     COperationCMP();

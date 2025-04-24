@@ -4,6 +4,8 @@
 
 
 
+/// Class implementing RedCode JMP operation.
+/// Jump to specified memmory address.
 class COperationJMP : public COperation {
 public:
     COperationJMP();

@@ -3,7 +3,8 @@
 #include "Operation.h"
 
 
-
+/// Class implementing DIV RedCode operation.
+/// Perform division, kill process if dividing by zero.
 class COperationDIV : public COperation {
 public:
     COperationDIV();
