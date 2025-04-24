@@ -189,9 +189,11 @@ void GUIMainWindow::SlotShowInfoDialog(const QString& msg, bool critical)
     if (critical == true)
     {
         msg_box.setIcon(QMessageBox::Critical);
+        msg_box.setWindowTitle("error");
     }
     else {
         msg_box.setIcon(QMessageBox::Information);
+        msg_box.setWindowTitle("info");
     }
     msg_box.setText(msg);
     msg_box.setStandardButtons(QMessageBox::Ok);

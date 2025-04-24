@@ -30,7 +30,6 @@ void GameLogic::SetGUIProxyCallbacks()
 
 void GameLogic::RunGameLoop()
 {
-    std::vector<bool> finished(m_players.size(), false);
     auto start = std::chrono::steady_clock::now();
     auto end = start; 
     
@@ -60,7 +59,7 @@ void GameLogic::RunGameLoop()
         for(m_active_player; m_active_player < m_players.size() && m_running; m_active_player++)
         {
             // if player already dead, skip him
-            if (finished[m_active_player] == true)
+            if (m_dead_players[m_active_player] == true)
             {
                 continue;
             }
@@ -69,7 +68,7 @@ void GameLogic::RunGameLoop()
             if (!PlayerMove(m_active_player))
             {
                 LOG_WRN("Killed player {} process", m_active_player);
-                finished[m_active_player] = true;   
+                m_dead_players[m_active_player] = true;   
                 players_active--;
             }
             else {
@@ -123,6 +122,7 @@ void GameLogic::LoadPlayers(const std::vector<std::string>& paths)
 void GameLogic::LoadPlayersCode()
 {
     // reset rounds of the battle
+    m_dead_players = std::vector<bool>(m_players.size(), false);
     m_arena.ClearArena();
     m_rounds_last = 0;
     // store starting idx, instructions amount and offset of each player in a array
