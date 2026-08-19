@@ -8,7 +8,7 @@
 #include <iostream>
 #include <format>
 
-#define PREFIX_LEN 10
+#define PREFIX_LEN 25
 #define FILENAME_LEN 40
 
 #define FILENAME std::filesystem::path(__FILE__).filename().string()
@@ -59,5 +59,5 @@ void _log(std::string_view prefix, std::string_view msg, TextColor color, std::s
 #define LOG_DBG(msg, ...) _log("DEBUG", msg, TextColor::WHITE, FILENAME, __LINE__, ##__VA_ARGS__);
 #define LOG_ERR(msg, ...) _log("ERROR", msg, TextColor::RED, FILENAME, __LINE__, ##__VA_ARGS__);
 #define LOG_WRN(msg, ...) _log("WARN",  msg, TextColor::YELLOW, FILENAME, __LINE__, ##__VA_ARGS__);
-#define LOG_PASS(msg, ...) _log("TESTCASE",  msg, TextColor::GREEN, FILENAME, __LINE__, ##__VA_ARGS__);
-#define LOG_FAIL(msg, ...) _log("TESTCASE",  msg, TextColor::RED, FILENAME, __LINE__, ##__VA_ARGS__);
+#define LOG_PASS(msg, ...) _log("TESTCASE_PASS",  msg, TextColor::GREEN, FILENAME, __LINE__, ##__VA_ARGS__);
+#define LOG_FAIL(msg, ...) _log("TESTCASE_FAIL",  msg, TextColor::RED, FILENAME, __LINE__, ##__VA_ARGS__);

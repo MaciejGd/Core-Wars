@@ -1,0 +1,5 @@
+;PASS
+; single plus and minus before var should be possible
+
+MOV.I @-1
+MOV.A $+3

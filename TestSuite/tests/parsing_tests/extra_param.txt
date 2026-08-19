@@ -1,0 +1,6 @@
+;FAIL
+        ORG START
+
+START   MOV #1, 2, 3
+
+; should fail too many parameters passed!

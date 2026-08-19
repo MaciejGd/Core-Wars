@@ -1,0 +1,4 @@
+;FAIL
+; cannot place to arithm operators next to each other, besides situation when last sign indicates number sign
+
+MOV.A -2 + * 4

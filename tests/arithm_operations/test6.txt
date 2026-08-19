@@ -1,4 +1,0 @@
-;PASS
-; it is possible to type additional + or - sign before number, which indicate sign
-
-MOV.A - 2 * + 4

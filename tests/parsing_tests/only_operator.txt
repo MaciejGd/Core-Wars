@@ -1,4 +1,0 @@
-;FAIL
-MOV
-
-; should fail as too little information has been provided for operation to run

@@ -1,4 +1,0 @@
-;PASS
-                MOV 0, 1
-
-; should obviously pass parsing

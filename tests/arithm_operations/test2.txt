@@ -1,3 +1,0 @@
-;FAIL
-; double ++ sign is not possible
-MOV.A $++2

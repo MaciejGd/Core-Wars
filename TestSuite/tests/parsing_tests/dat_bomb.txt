@@ -1,0 +1,9 @@
+;PASS        
+        ORG START
+
+START   ADD #4, PTR
+        MOV #0, @PTR
+        JMP START
+PTR     DAT #0, 5
+
+; different addressing modes, labels usage

@@ -1,3 +1,0 @@
-;PASS
-; brackets on number should be possible
-MOV.A #-4*(-2)

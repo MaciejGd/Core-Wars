@@ -1,0 +1,9 @@
+CMakeFiles/
+CMakeCache.txt
+.qt/
+GUI_autogen/
+meta_types/
+*.cmake
+*.a
+main
+Makefile

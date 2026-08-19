@@ -1,0 +1,4 @@
+;PASS
+; some more arithm expression parsing test
+
+MOV @-2 + 8 * (6 / 3) + 3  

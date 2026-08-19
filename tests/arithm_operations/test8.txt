@@ -1,7 +1,0 @@
-;PASS
-; example of long and complicated arithm expr that should pass parsing
-
-
-START   ADD.I     2, 3
-LABEL   MOV       4, 2
-        MOV.B   #(12 * -2 + 2) - (12 - 1)/(-2 / -1)

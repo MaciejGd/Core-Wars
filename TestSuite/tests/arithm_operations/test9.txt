@@ -1,0 +1,4 @@
+;PASS
+; number - -number should be technically possible as it is substracting minus number
+
+MOV.A #-2--3

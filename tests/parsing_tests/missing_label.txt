@@ -1,7 +1,0 @@
-;FAIL
-        ORG START
-
-START   JMP MISSING_LABEL
-
-
-; should fail, cannot use labels that are not declared!

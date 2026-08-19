@@ -1,0 +1,6 @@
+;FAIL
+        ORG START
+
+START   MOV.ZZ #1, 2
+
+; should fail, as .zz is not a valid modifier!

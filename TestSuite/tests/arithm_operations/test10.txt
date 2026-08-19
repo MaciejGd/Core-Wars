@@ -1,0 +1,3 @@
+;FAIL
+; combination of + - as a sign should not be possible
+MOV.A @ +-2
